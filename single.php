@@ -1,1 +1,1 @@
-<h1>Single</h1>
+<h1>Single test</h1>
