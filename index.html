@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mota</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="conteneur-principal">
+      <div class="logo">
+        <img class="logo" src="./images/logo/logo-mota.png" alt="logo Nathalie Mota" />
+      </div>
+      <nav class="menu" aria-label="Menu principal">
+        <a class="element-menu" href="#accueil">Accueil</a>
+        <a class="element-menu" href="#a-propos">À propos</a>
+        <a class="element-menu" href="#contact">Contact</a>
+      </nav>
+    </div>
+    <div class="image-header">
+      <img class="image-header" src="./images/Header.png" alt="image montrant des personnes de dos regardant d'autres personnes sous des lumières - inscription 'photographe event' sur l'image" />
+    </div>
+  </header>
+
+  <main>
+    <section class="galerie" id="galerie">
+      <div class="zone-filtres">
+        <div class="filtres">
+          <label for="filtre-categorie" class="titre-filtres">Catégories</label>
+          <select id="filtre-categorie">
+            <option value="">Toutes</option>
+            <option value="reception">Réception</option>
+            <option value="mariage">Mariage</option>
+            <option value="concert">Concert</option>
+            <option value="television">Télévision</option>
+          </select>
+        </div>
+
+        <div class="filtres">
+          <label for="filtre-format" class="titre-filtres">Formats</label>
+          <select id="filtre-format">
+            <option value="">Tous</option>
+            <option value="paysage">Paysage</option>
+            <option value="portrait">Portrait</option>
+          </select>
+        </div>
+
+        <div class="filtres">
+          <label for="filtre-tri" class="titre-filtres">Trier par</label>
+          <select id="filtre-tri">
+            <option value="recente">Plus récentes</option>
+            <option value="ancienne">Plus anciennes</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grille-images">
+  <article class="carte" data-categorie="reception" data-format="paysage" data-date="2019-01-01">
+    <img src="./images/nathalie-0.jpeg" alt="Santé !" />
+  </article>
+  <article class="carte" data-categorie="reception" data-format="paysage" data-date="2020-01-01">
+    <img src="./images/nathalie-1.jpeg" alt="Et bon anniversaire !" />
+  </article>
+  <article class="carte" data-categorie="concert" data-format="paysage" data-date="2021-01-01">
+    <img src="./images/nathalie-2.jpeg" alt="Let's party!" />
+  </article>
+  <article class="carte" data-categorie="mariage" data-format="portrait" data-date="2019-01-01">
+    <img src="./images/nathalie-3.jpeg" alt="Tout est installé" />
+  </article>
+  <article class="carte" data-categorie="mariage" data-format="portrait" data-date="2020-01-01">
+    <img src="./images/nathalie-4.jpeg" alt="Vers l'éternité" />
+  </article>
+  <article class="carte" data-categorie="mariage" data-format="portrait" data-date="2021-01-01">
+    <img src="./images/nathalie-5.jpeg" alt="Embrassez la mariée" />
+  </article>
+  <article class="carte" data-categorie="mariage" data-format="paysage" data-date="2020-01-01">
+    <img src="./images/nathalie-6.jpeg" alt="Dansons ensemble" />
+  </article>
+  <article class="carte" data-categorie="mariage" data-format="paysage" data-date="2019-01-01">
+    <img src="./images/nathalie-7.jpeg" alt="Le menu" />
+  </article>
+  <article class="carte" data-categorie="concert" data-format="portrait" data-date="2021-01-01">
+    <img src="./images/nathalie-8.jpeg" alt="Au bal masqué" />
+  </article>
+  <article class="carte" data-categorie="mariage" data-format="paysage" data-date="2022-01-01">
+    <img src="./images/nathalie-9.jpeg" alt="Let's dance!" />
+  </article>
+  <article class="carte" data-categorie="television" data-format="paysage" data-date="2022-01-01">
+    <img src="./images/nathalie-10.jpeg" alt="Jour de match" />
+  </article>
+  <article class="carte" data-categorie="concert" data-format="paysage" data-date="2022-01-01">
+    <img src="./images/nathalie-11.jpeg" alt="Préparation" />
+  </article>
+  <article class="carte" data-categorie="concert" data-format="paysage" data-date="2022-01-01">
+    <img src="./images/nathalie-12.jpeg" alt="Bière ou eau plate ?" />
+  </article>
+  <article class="carte" data-categorie="mariage" data-format="portrait" data-date="2022-01-01">
+    <img src="./images/nathalie-13.jpeg" alt="Bouquet final" />
+  </article>
+  <article class="carte" data-categorie="mariage" data-format="portrait" data-date="2022-01-01">
+    <img src="./images/nathalie-14.jpeg" alt="Du soir au matin" />
+  </article>
+  <article class="carte" data-categorie="mariage" data-format="portrait" data-date="2022-01-01">
+    <img src="./images/nathalie-15.jpeg" alt="Team mariée" />
+  </article>
+</div>
+
+
+
+      <p id="btn-charger-plus" class="afficher-plus">Charger plus</p>
+    </section>
+  </main>
+
+  <footer class="pied-de-page">
+    <ul class="ul-pied-de-page">
+      <li><a href="#mentions-legales">Mentions légales</a></li>
+      <li><a href="#vie-privee">Vie privée</a></li>
+      <li><a href="#tous-droits-reserves">Tous droits réservés</a></li>
+    </ul>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
