@@ -9,8 +9,10 @@
 <body <?php body_class(); ?>>
 
 <nav>
-	<img src="<?php echo get_template_directory_uri();?>/screenshot.png" width="200" alt="logo">
-	<a href="#">Lien 1</a>
-	<a href="#">Lien 2</a>
-	<a href="#">Lien 3</a>
+	<img src="<?php echo get_template_directory_uri();?>/images/logo/logo-mota.png" width="200" alt="logo">
+	<a href="#accueil">Accueil</a>
+	<a href="#a-propos">À propos</a>
+	<a href="#" id="open-contact">Contact</a>
 </nav>
+
+
