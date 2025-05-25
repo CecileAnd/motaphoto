@@ -4,10 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mota</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- CSS Lightbox2 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -16,114 +18,181 @@
       <div class="logo">
         <img class="logo" src="./images/logo/logo-mota.png" alt="logo Nathalie Mota" />
       </div>
-      <nav class="menu" aria-label="Menu principal">
+      <button class="burger-menu" aria-label="Ouvrir le menu">
+      ☰
+    </button>
+      <nav class="menu" aria-label="Menu principal" id="main-menu">
         <a class="element-menu" href="#accueil">Accueil</a>
         <a class="element-menu" href="#a-propos">À propos</a>
-        <a class="element-menu" href="#contact">Contact</a>
+        <a id="contact-link" class="element-menu" href="#contact">Contact</a>
       </nav>
     </div>
     <div class="image-header">
       <img class="image-header" src="./images/Header.png" alt="image montrant des personnes de dos regardant d'autres personnes sous des lumières - inscription 'photographe event' sur l'image" />
     </div>
   </header>
-
   <main>
     <section class="galerie" id="galerie">
       <div class="zone-filtres">
-        <div class="filtres">
-          <label for="filtre-categorie" class="titre-filtres">Catégories</label>
-          <select id="filtre-categorie">
-            <option value="">Toutes</option>
-            <option value="reception">Réception</option>
-            <option value="mariage">Mariage</option>
-            <option value="concert">Concert</option>
-            <option value="television">Télévision</option>
-          </select>
-        </div>
-
-        <div class="filtres">
-          <label for="filtre-format" class="titre-filtres">Formats</label>
-          <select id="filtre-format">
-            <option value="">Tous</option>
-            <option value="paysage">Paysage</option>
-            <option value="portrait">Portrait</option>
-          </select>
-        </div>
-
-        <div class="filtres">
-          <label for="filtre-tri" class="titre-filtres">Trier par</label>
-          <select id="filtre-tri">
-            <option value="recente">Plus récentes</option>
-            <option value="ancienne">Plus anciennes</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="grille-images">
-  <article class="carte" data-categorie="reception" data-format="paysage" data-date="2019-01-01">
-    <img src="./images/nathalie-0.jpeg" alt="Santé !" />
+  <div class="filtres-gauche">
+    <div class="filtres" data-filtre="categorie">
+      <button class="filtre-bouton">
+        <span class="texte-filtre">Catégories</span> <span class="chevron">&#9013;</span>
+      </button>
+      <ul class="filtre-options">
+        <li data-value="">&nbsp;</li>
+        <li data-value="reception">Réception</li>
+        <li data-value="mariage">Mariage</li>
+        <li data-value="concert">Concert</li>
+        <li data-value="television">Télévision</li>
+      </ul>
+    </div>
+    <div class="filtres" data-filtre="format">
+      <button class="filtre-bouton">
+        <span class="texte-filtre">Formats</span> <span class="chevron">&#9013;</span>
+      </button>
+      <ul class="filtre-options">
+        <li data-value="">&nbsp;</li>
+        <li data-value="paysage">Paysage</li>
+        <li data-value="portrait">Portrait</li>
+      </ul>
+    </div>
+  </div>
+  <div class="filtres-droite">
+    <div class="filtres" data-filtre="tri">
+      <button class="filtre-bouton">
+        <span class="texte-filtre">Trier&nbsp;par</span> <span class="chevron">&#9013;</span>
+      </button>
+      <ul class="filtre-options">
+        <li data-value="recente">Plus récentes</li>
+        <li data-value="ancienne">Plus anciennes</li>
+      </ul>
+    </div>
+  </div>
+</div>
+  <div class="grille-images">
+  <article class="carte" data-categorie="reception" data-format="paysage" data-date="2019-01-01" data-reference="bf2385" data-type="Argentique">
+    <a href="./images/nathalie-0.jpeg" data-lightbox="galerie" data-title="Santé !">
+      <img src="./images/nathalie-0.jpeg" alt="Santé !" />
+      <div class="icone-fullscreen"><img class="grande-icone-fullscreen" src="images/icons/fullscreen.svg" alt="Agrandir" /></div>
+    </a>
   </article>
-  <article class="carte" data-categorie="reception" data-format="paysage" data-date="2020-01-01">
-    <img src="./images/nathalie-1.jpeg" alt="Et bon anniversaire !" />
+  <article class="carte" data-categorie="reception" data-format="paysage" data-date="2020-01-01" data-reference="bf2386" data-type="Argentique">
+    <a href="./images/nathalie-1.jpeg" data-lightbox="galerie" data-title="Et bon anniversaire !">
+      <img src="./images/nathalie-1.jpeg" alt="Et bon anniversaire !" />
+      <div class="icone-fullscreen"><img class="grande-icone-fullscreen" src="images/icons/fullscreen.svg" alt="Agrandir" /></div>
+    </a>
   </article>
-  <article class="carte" data-categorie="concert" data-format="paysage" data-date="2021-01-01">
-    <img src="./images/nathalie-2.jpeg" alt="Let's party!" />
+  <article class="carte" data-categorie="concert" data-format="paysage" data-date="2021-01-01" data-reference="bf2387" data-type="Numérique">
+    <a href="./images/nathalie-2.jpeg" data-lightbox="galerie" data-title="Let's party!">
+      <img src="./images/nathalie-2.jpeg" alt="Let's party!" />
+      <div class="icone-fullscreen"><img class="grande-icone-fullscreen" src="images/icons/fullscreen.svg" alt="Agrandir" /></div>
+    </a>
   </article>
-  <article class="carte" data-categorie="mariage" data-format="portrait" data-date="2019-01-01">
-    <img src="./images/nathalie-3.jpeg" alt="Tout est installé" />
+  <article class="carte" data-categorie="mariage" data-format="portrait" data-date="2019-01-01" data-reference="bf2388" data-type="Argentique">
+    <a href="./images/nathalie-3.jpeg" data-lightbox="galerie" data-title="Tout est installé">
+      <img src="./images/nathalie-3.jpeg" alt="Tout est installé" />
+      <div class="icone-fullscreen"><img class="grande-icone-fullscreen" src="images/icons/fullscreen.svg" alt="Agrandir" /></div>
+    </a>
   </article>
-  <article class="carte" data-categorie="mariage" data-format="portrait" data-date="2020-01-01">
-    <img src="./images/nathalie-4.jpeg" alt="Vers l'éternité" />
+  <article class="carte" data-categorie="mariage" data-format="portrait" data-date="2020-01-01" data-reference="bf2389" data-type="Numérique">
+    <a href="./images/nathalie-4.jpeg" data-lightbox="galerie" data-title="Vers l'éternité">
+      <img src="./images/nathalie-4.jpeg" alt="Vers l'éternité" />
+      <div class="icone-fullscreen"><img class="grande-icone-fullscreen" src="images/icons/fullscreen.svg" alt="Agrandir" /></div>
+    </a>
   </article>
-  <article class="carte" data-categorie="mariage" data-format="portrait" data-date="2021-01-01">
-    <img src="./images/nathalie-5.jpeg" alt="Embrassez la mariée" />
+  <article class="carte" data-categorie="mariage" data-format="portrait" data-date="2021-01-01" data-reference="bf2390" data-type="Numérique">
+    <a href="./images/nathalie-5.jpeg" data-lightbox="galerie" data-title="Embrassez la mariée">
+      <img src="./images/nathalie-5.jpeg" alt="Embrassez la mariée" />
+      <div class="icone-fullscreen"><img class="grande-icone-fullscreen" src="images/icons/fullscreen.svg" alt="Agrandir" /></div>
+    </a>
   </article>
-  <article class="carte" data-categorie="mariage" data-format="paysage" data-date="2020-01-01">
-    <img src="./images/nathalie-6.jpeg" alt="Dansons ensemble" />
+  <article class="carte" data-categorie="mariage" data-format="paysage" data-date="2020-01-01" data-reference="bf2391" data-type="Numérique">
+    <a href="./images/nathalie-6.jpeg" data-lightbox="galerie" data-title="Dansons ensemble">
+      <img src="./images/nathalie-6.jpeg" alt="Dansons ensemble" />
+      <div class="icone-fullscreen"><img class="grande-icone-fullscreen" src="images/icons/fullscreen.svg" alt="Agrandir" /></div>
+    </a>
   </article>
-  <article class="carte" data-categorie="mariage" data-format="paysage" data-date="2019-01-01">
-    <img src="./images/nathalie-7.jpeg" alt="Le menu" />
+  <article class="carte" data-categorie="mariage" data-format="paysage" data-date="2019-01-01" data-reference="bf2392" data-type="Numérique">
+    <a href="./images/nathalie-7.jpeg" data-lightbox="galerie" data-title="Le menu">
+      <img src="./images/nathalie-7.jpeg" alt="Le menu" />
+      <div class="icone-fullscreen"><img class="grande-icone-fullscreen" src="images/icons/fullscreen.svg" alt="Agrandir" /></div>
+    </a>
   </article>
-  <article class="carte" data-categorie="concert" data-format="portrait" data-date="2021-01-01">
-    <img src="./images/nathalie-8.jpeg" alt="Au bal masqué" />
+  <article class="carte" data-categorie="concert" data-format="portrait" data-date="2021-01-01" data-reference="bf2393" data-type="Numérique">
+    <a href="./images/nathalie-8.jpeg" data-lightbox="galerie" data-title="Au bal masqué">
+      <img src="./images/nathalie-8.jpeg" alt="Au bal masqué" />
+      <div class="icone-fullscreen"><img class="grande-icone-fullscreen" src="images/icons/fullscreen.svg" alt="Agrandir" /></div>
+    </a>
   </article>
-  <article class="carte" data-categorie="mariage" data-format="paysage" data-date="2022-01-01">
-    <img src="./images/nathalie-9.jpeg" alt="Let's dance!" />
+  <article class="carte" data-categorie="mariage" data-format="paysage" data-date="2022-01-01" data-reference="bf2394" data-type="Numérique">
+    <a href="./images/nathalie-9.jpeg" data-lightbox="galerie" data-title="Let's dance!">
+      <img src="./images/nathalie-9.jpeg" alt="Let's dance!" />
+      <div class="icone-fullscreen"><img class="grande-icone-fullscreen" src="images/icons/fullscreen.svg" alt="Agrandir" /></div>
+    </a>
   </article>
-  <article class="carte" data-categorie="television" data-format="paysage" data-date="2022-01-01">
-    <img src="./images/nathalie-10.jpeg" alt="Jour de match" />
+  <article class="carte" data-categorie="television" data-format="paysage" data-date="2022-01-01" data-reference="bf2395" data-type="Numérique">
+    <a href="./images/nathalie-10.jpeg" data-lightbox="galerie" data-title="Jour de match">
+      <img src="./images/nathalie-10.jpeg" alt="Jour de match" />
+      <div class="icone-fullscreen"><img class="grande-icone-fullscreen" src="images/icons/fullscreen.svg" alt="Agrandir" /></div>
+    </a>
   </article>
-  <article class="carte" data-categorie="concert" data-format="paysage" data-date="2022-01-01">
-    <img src="./images/nathalie-11.jpeg" alt="Préparation" />
+  <article class="carte" data-categorie="concert" data-format="paysage" data-date="2022-01-01" data-reference="bf2396" data-type="Argentique">
+    <a href="./images/nathalie-11.jpeg" data-lightbox="galerie" data-title="Préparation">
+      <img src="./images/nathalie-11.jpeg" alt="Préparation" />
+      <div class="icone-fullscreen"><img class="grande-icone-fullscreen" src="images/icons/fullscreen.svg" alt="Agrandir" /></div>
+    </a>
   </article>
-  <article class="carte" data-categorie="concert" data-format="paysage" data-date="2022-01-01">
-    <img src="./images/nathalie-12.jpeg" alt="Bière ou eau plate ?" />
+  <article class="carte" data-categorie="concert" data-format="paysage" data-date="2022-01-01" data-reference="bf2397" data-type="Numérique">
+    <a href="./images/nathalie-12.jpeg" data-lightbox="galerie" data-title="Bière ou eau plate ?">
+      <img src="./images/nathalie-12.jpeg" alt="Bière ou eau plate ?" />
+      <div class="icone-fullscreen"><img class="grande-icone-fullscreen" src="images/icons/fullscreen.svg" alt="Agrandir" /></div>
+    </a>
   </article>
-  <article class="carte" data-categorie="mariage" data-format="portrait" data-date="2022-01-01">
-    <img src="./images/nathalie-13.jpeg" alt="Bouquet final" />
+  <article class="carte" data-categorie="mariage" data-format="portrait" data-date="2022-01-01" data-reference="bf2398" data-type="Numérique">
+    <a href="./images/nathalie-13.jpeg" data-lightbox="galerie" data-title="Bouquet final">
+      <img src="./images/nathalie-13.jpeg" alt="Bouquet final" />
+      <div class="icone-fullscreen"><img class="grande-icone-fullscreen" src="images/icons/fullscreen.svg" alt="Agrandir" /></div>
+    </a>
   </article>
-  <article class="carte" data-categorie="mariage" data-format="portrait" data-date="2022-01-01">
-    <img src="./images/nathalie-14.jpeg" alt="Du soir au matin" />
+  <article class="carte" data-categorie="mariage" data-format="portrait" data-date="2022-01-01" data-reference="bf2399" data-type="Argentique">
+    <a href="./images/nathalie-14.jpeg" data-lightbox="galerie" data-title="Du soir au matin">
+      <img src="./images/nathalie-14.jpeg" alt="Du soir au matin" />
+      <div class="icone-fullscreen"><img class="grande-icone-fullscreen" src="images/icons/fullscreen.svg" alt="Agrandir" /></div>
+    </a>
   </article>
-  <article class="carte" data-categorie="mariage" data-format="portrait" data-date="2022-01-01">
-    <img src="./images/nathalie-15.jpeg" alt="Team mariée" />
+  <article class="carte" data-categorie="mariage" data-format="portrait" data-date="2022-01-01" data-reference="bf2400" data-type="Numérique">
+    <a href="./images/nathalie-15.jpeg" data-lightbox="galerie" data-title="Team mariée">
+      <img src="./images/nathalie-15.jpeg" alt="Team mariée" />
+      <div class="icone-fullscreen"><img class="grande-icone-fullscreen" src="images/icons/fullscreen.svg" alt="Agrandir" /></div>
+    </a>
   </article>
 </div>
-
-
-
-      <p id="btn-charger-plus" class="afficher-plus">Charger plus</p>
-    </section>
-  </main>
-
+<div class="zone-bouton">
+  <div id="btn-charger-plus" class="charger-plus">Charger plus</div>
+</div>
+</section>
+</main>
   <footer class="pied-de-page">
     <ul class="ul-pied-de-page">
-      <li><a href="#mentions-legales">Mentions légales</a></li>
-      <li><a href="#vie-privee">Vie privée</a></li>
-      <li><a href="#tous-droits-reserves">Tous droits réservés</a></li>
+      <li class="li-pied-de-page"><a href="#mentions-legales">Mentions légales</a></li>
+      <li class="li-pied-de-page"><a href="#vie-privee">Vie privée</a></li>
+      <li class="li-pied-de-page">Tous droits réservés</li>
     </ul>
   </footer>
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <button class="close-modal" aria-label="Fermer la modale">&times;</button>
+    <h2>Contactez-nous</h2>
+    <div id="contact-modal" class="modal">
+    <?php echo do_shortcode('[contact-form-7 id="3c6e00f" title="Contact"]'); ?>
+    </div>
+  </div>
+</div>
 
   <script src="script.js"></script>
+  <!-- JS Lightbox2 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+
 </body>
 </html>
