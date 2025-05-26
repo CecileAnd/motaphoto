@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // filtres sélectionnés
   let filtreCategorie = "";
   let filtreFormat = "";
-  let filtreTri = "recente";
+  let filtreTri = ""; // ← vide pour tri par numéro d’image par défaut
 
   // afficher cartes filtrées et triées
   function appliquerFiltresEtTri() {
@@ -24,11 +24,24 @@ document.addEventListener('DOMContentLoaded', function () {
       return matchCat && matchFmt;
     });
 
-    cartesFiltrees.sort((a, b) => {
-      const dateA = new Date(a.dataset.date);
-      const dateB = new Date(b.dataset.date);
-      return filtreTri === 'ancienne' ? dateA - dateB : dateB - dateA;
-    });
+    if (filtreTri === 'ancienne' || filtreTri === 'recente') {
+      cartesFiltrees.sort((a, b) => {
+        const dateA = new Date(a.dataset.date);
+        const dateB = new Date(b.dataset.date);
+        return filtreTri === 'ancienne' ? dateA - dateB : dateB - dateA;
+      });
+    } else {
+      // Tri par numéro d’image dans le nom du fichier
+      cartesFiltrees.sort((a, b) => {
+        const getNumeroImage = (carte) => {
+          const img = carte.querySelector('img');
+          const src = img ? img.getAttribute('src') : '';
+          const match = src.match(/nathalie-(\d+)\.jpe?g/i);
+          return match ? parseInt(match[1], 10) : 0;
+        };
+        return getNumeroImage(a) - getNumeroImage(b);
+      });
+    }
 
     afficherCartesLimite(limiteAffichage);
   }
@@ -65,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
       option.addEventListener('click', e => {
         e.stopPropagation();
         const valeur = option.getAttribute('data-value');
-        btn.innerHTML = option.textContent + ' <span class="chevron">▼</span>';
+        btn.innerHTML = option.textContent + ' <span class="chevron">⌄</span>';
 
         const typeFiltre = filtre.getAttribute('data-filtre');
         if (typeFiltre === 'categorie') filtreCategorie = valeur;
@@ -86,7 +99,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   appliquerFiltresEtTri();
 });
-
 
 // menu burger
 document.addEventListener('DOMContentLoaded', () => {
@@ -114,45 +126,44 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-const contactLink = document.getElementById("contact-link");
-const modal = document.getElementById("modal");
-const closeModalButton = modal.querySelector(".close-modal");
+  const contactLink = document.getElementById("contact-link");
+  const modal = document.getElementById("modal");
+  const closeModalButton = modal.querySelector(".close-modal");
 
-contactLink.addEventListener("click", (e) => {
-  e.preventDefault(); // Empêche le lien de changer de page
-  modal.classList.add("active");
-});
+  contactLink.addEventListener("click", (e) => {
+    e.preventDefault(); // Empêche le lien de changer de page
+    modal.classList.add("active");
+  });
 
-closeModalButton.addEventListener("click", () => {
-  modal.classList.remove("active");
-});
-
-modal.addEventListener("click", (event) => {
-  if (event.target === modal) {
+  closeModalButton.addEventListener("click", () => {
     modal.classList.remove("active");
-  }
-});
+  });
 
-document.querySelectorAll('.carte').forEach(carte => {
-  // création des éléments
-  const iconeOeil = document.createElement('div');
-  iconeOeil.className = 'icone-oeil';
-  iconeOeil.innerHTML = '👁'; 
+  modal.addEventListener("click", (event) => {
+    if (event.target === modal) {
+      modal.classList.remove("active");
+    }
+  });
 
-  const iconeFull = document.createElement('div');
-  iconeFull.className = 'icone-fullscreen';
-  iconeFull.innerHTML = '⛶'; 
+  document.querySelectorAll('.carte').forEach(carte => {
+    // création des éléments
+    const iconeOeil = document.createElement('div');
+    iconeOeil.className = 'icone-oeil';
+    iconeOeil.innerHTML = '👁'; 
 
-  const infosBas = document.createElement('div');
-  infosBas.className = 'infos-bas';
-  const titre = carte.querySelector('img').alt;
-  const categorie = carte.dataset.categorie;
-  infosBas.innerHTML = `<span>${titre.toUpperCase()}</span><span>${categorie.toUpperCase()}</span>`;
+    const iconeFull = document.createElement('div');
+    iconeFull.className = 'icone-fullscreen';
+    iconeFull.innerHTML = '⛶'; 
 
-  // insertion dans la carte
-  carte.appendChild(iconeOeil);
-  carte.appendChild(iconeFull);
-  carte.appendChild(infosBas);
-});
+    const infosBas = document.createElement('div');
+    infosBas.className = 'infos-bas';
+    const titre = carte.querySelector('img').alt;
+    const categorie = carte.dataset.categorie;
+    infosBas.innerHTML = `<span>${titre.toUpperCase()}</span><span>${categorie.toUpperCase()}</span>`;
 
+    // insertion dans la carte
+    carte.appendChild(iconeOeil);
+    carte.appendChild(iconeFull);
+    carte.appendChild(infosBas);
+  });
 });
