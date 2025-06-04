@@ -104,6 +104,10 @@ button.filtre-bouton,
   font-family: "Space Mono";
 }
 
+header {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
 .conteneur-principal {
   display: flex;
   justify-content: space-between;
@@ -126,6 +130,7 @@ button.filtre-bouton,
   cursor: pointer;
   z-index: 100;
   margin-right: -2%;
+  width: 12vw;
 }
 
 .menu {
@@ -441,6 +446,7 @@ button.filtre-bouton {
 .page-detail .container-detail .image-detail {
   max-width: 50%;
   padding-bottom: 0;
+  padding-left: 1vw;
   margin-bottom: -1vh;
   flex: 1;
 }
