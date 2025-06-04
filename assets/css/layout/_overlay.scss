@@ -8,23 +8,25 @@
     display: block;
     width: 100%;
     height: 100%;
-    color: white;
+    color: #fff;
     position: relative;
   }
 
-  img {
+  img.image-carte {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
+    color: #fff;
     transition: transform 0.3s ease;
   }
 
-  &:hover img {
+  &:hover img.image-carte {
     transform: scale(1.05);
+    color: #fff;
   }
 
-  a .overlay {
+  .overlay {
     top: 0;
     left: 0;
     width: 100%;
@@ -34,8 +36,8 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 15px;
     background-color: rgba(0,0,0,0.7);
+    padding: 15px;
   }
 
 
@@ -50,9 +52,21 @@
     text-align: right;
   }
 
+  .icone-oeil {
+    width: 100%;
+    text-align: center;
+  }
+
   .infos-bas {
     width: 100%;
     display: flex;
     justify-content: space-between;
+  }
+
+  .icone-full img {
+    width: 5%;
+  }
+  .icone-oeil img {
+    width: 7%;
   }
 }
