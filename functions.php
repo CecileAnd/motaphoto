@@ -1,90 +1,92 @@
 <?php
+// 1. Déclaration du Custom Post Type "photos"
 function create_photo_post_type() {
-    register_post_type('photo',
-        array(
-            'labels' => array(
-                'name' => __('Photos'),
-                'singular_name' => __('Photo')
-            ),
-            'public' => true,
-            'has_archive' => true,
-            'menu_icon' => 'dashicons-format-image',
-            'supports' => array('title', 'thumbnail'),
-            'show_in_rest' => true,
-            'rewrite' => array('slug' => 'photos'),
-        )
-    );
+    register_post_type('photos', [
+        'labels' => [
+            'name' => __('Photos'),
+            'singular_name' => __('Photo'),
+        ],
+        'public' => true,
+        'has_archive' => true,
+        'menu_icon' => 'dashicons-format-image',
+        'supports' => ['title', 'thumbnail', 'editor'],
+        'show_in_rest' => true,
+        'rewrite' => ['slug' => 'photos'],
+    ]);
 }
 add_action('init', 'create_photo_post_type');
 
+// 2. Déclaration des taxonomies personnalisées
 function create_photo_taxonomies() {
-    // Taxonomie Catégorie
-    register_taxonomy(
-        'photo_categorie',
-        'photo',
-        array(
-            'label' => __('Catégories'),
-            'hierarchical' => true,
-            'show_in_rest' => true,
-            'rewrite' => array('slug' => 'categorie-photo'),
-        )
-    );
-
-    // Taxonomie Format
-    register_taxonomy(
-        'photo_format',
-        'photo',
-        array(
-            'label' => __('Formats'),
-            'hierarchical' => true,
-            'show_in_rest' => true,
-            'rewrite' => array('slug' => 'format-photo'),
-        )
-    );
+    register_taxonomy('photo_categorie', 'photos', [
+        'label' => __('Catégories'),
+        'hierarchical' => true,
+        'show_in_rest' => true,
+        'rewrite' => ['slug' => 'categorie-photo'],
+    ]);
+    register_taxonomy('photo_format', 'photos', [
+        'label' => __('Formats'),
+        'hierarchical' => true,
+        'show_in_rest' => true,
+        'rewrite' => ['slug' => 'format-photo'],
+    ]);
 }
 add_action('init', 'create_photo_taxonomies');
 
-function rsc_import_custom_meta_and_thumbnail() {
-    // Chemin vers ton CSV dans le dossier wp-content/uploads (par exemple)
-    $csv_file = WP_CONTENT_DIR . '/uploads/import.csv';
+// 3. Fonction d’import depuis CSV, sans doublons
+function import_photos_from_csv() {
+    $csv_path = WP_CONTENT_DIR . '/uploads/photos.csv';
 
-    if (!file_exists($csv_file)) {
-        return; // Fichier CSV absent, on arrête
+    if (!file_exists($csv_path)) {
+        // Fichier absent, on ne fait rien (pas d'erreur affichée)
+        return;
     }
 
-    if (($handle = fopen($csv_file, 'r')) !== false) {
-        $header = fgetcsv($handle);
-        while (($data = fgetcsv($handle)) !== false) {
-            // Récupérer les données selon l'ordre des colonnes
-            $row = array_combine($header, $data);
-            $title = $row['post_title'];
-            $reference = $row['meta:reference'];
-            $annee = $row['meta:annee'];
-            $format = $row['meta:format'];
-            $type = $row['meta:type'];
-            $thumbnail_id = intval($row['meta:_thumbnail_id']);
-            $category = $row['post_category'];
+    if (($csv = fopen($csv_path, 'r')) === false) {
+        return;
+    }
 
-            // Trouver l'article par titre (suppose titre unique)
-            $post = get_page_by_title($title, OBJECT, 'post');
-            if ($post) {
-                // Ajouter les meta personnalisées
-                update_post_meta($post->ID, 'reference', $reference);
-                update_post_meta($post->ID, 'annee', $annee);
-                update_post_meta($post->ID, 'format', $format);
-                update_post_meta($post->ID, 'type', $type);
+    $header = fgetcsv($csv);
+    if (!$header) {
+        fclose($csv);
+        return;
+    }
 
-                // Assigner l'image à la une si l'ID est valide
-                if ($thumbnail_id > 0) {
-                    set_post_thumbnail($post->ID, $thumbnail_id);
-                }
+    while (($row = fgetcsv($csv)) !== false) {
+        $data = array_combine($header, $row);
 
-                // Facultatif : assigner la catégorie si besoin (mais normalement OK)
-                wp_set_post_terms($post->ID, [$category], 'category', true);
-            }
+        // Vérifier si un post avec ce titre existe déjà dans 'photos'
+        if (get_page_by_title($data['title'], OBJECT, 'photos')) {
+            continue; // On saute pour éviter doublon
         }
-        fclose($handle);
+
+        $post_id = wp_insert_post([
+            'post_title' => sanitize_text_field($data['title']),
+            'post_type' => 'photos',
+            'post_status' => 'publish',
+        ]);
+
+        if (!$post_id) continue;
+
+        // Champs personnalisés
+        update_post_meta($post_id, 'reference', sanitize_text_field($data['reference']));
+        update_post_meta($post_id, 'annee', sanitize_text_field($data['annee']));
+        update_post_meta($post_id, 'type', sanitize_text_field($data['type']));
+
+        // Taxonomies
+        wp_set_object_terms($post_id, sanitize_text_field($data['categorie']), 'photo_categorie');
+        wp_set_object_terms($post_id, sanitize_text_field($data['format']), 'photo_format');
+
+        // Image à la une, par titre de fichier (sans extension)
+        $filename = pathinfo($data['file'], PATHINFO_FILENAME);
+        $attachment = get_page_by_title($filename, OBJECT, 'attachment');
+        if ($attachment) {
+            set_post_thumbnail($post_id, $attachment->ID);
+        }
     }
+    fclose($csv);
 }
-// Exécuter la fonction une fois après import
-add_action('admin_init', 'rsc_import_custom_meta_and_thumbnail');
+
+// Pour lancer l'import UNE seule fois, décommente la ligne suivante,
+// puis recharge une page admin, puis remets la ligne en commentaire.
+// add_action('admin_init', 'import_photos_from_csv');
