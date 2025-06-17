@@ -29,11 +29,26 @@ header.single {
 }
 
 .menu {
-  display: flex;
-  gap: 30px;
-  height: auto;
   padding: 25px 0;
 }
+
+.menu-list {
+  display: flex;
+  gap: 30px;
+  list-style: none;      /* supprime les puces */
+  margin: 0;
+  padding: 0;
+}
+
+.menu-list li {
+  /* facultatif si tu veux appliquer des styles aux <li> */
+}
+
+.element-menu {
+  text-decoration: none;
+  color: inherit; /* ou une couleur spécifique */
+}
+
 
 .logo {
   width: 250px;
@@ -48,13 +63,30 @@ header.single {
 }
 
 .image-header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  overflow: hidden;
+  max-width: 1440px;
+  margin-bottom: 80px;
 }
 
-.image-header img {
+.image-header-img {
   width: 100%;
   height: auto;
   display: block;
-  margin-bottom: 80px;
 }
+
+.image-text {
+  position: absolute;
+  font-size: 5vw;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: transparent;
+  text-align: center;
+  font-style: italic;
+  -webkit-text-stroke: 1px white;
+}
+
+
