@@ -293,7 +293,7 @@ header.single {
   align-items: flex-start;
   flex-wrap: wrap;
   gap: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 0;
   margin-left: 0;
   margin-right: 0;
 }
