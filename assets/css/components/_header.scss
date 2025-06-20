@@ -35,18 +35,18 @@ header.single {
 .menu-list {
   display: flex;
   gap: 30px;
-  list-style: none;      /* supprime les puces */
+  list-style: none;    
   margin: 0;
   padding: 0;
 }
 
 .menu-list li {
-  /* facultatif si tu veux appliquer des styles aux <li> */
+  /* facultatif, si on veut appliquer des styles aux <li> */
 }
 
 .element-menu {
   text-decoration: none;
-  color: inherit; /* ou une couleur spécifique */
+  color: inherit;
 }
 
 
@@ -71,10 +71,18 @@ header.single {
   margin-bottom: 80px;
 }
 
-.image-header-img {
+/* .image-header-img {
   width: 100%;
   height: auto;
   display: block;
+} */
+
+.image-header-img.wp-post-image {
+  max-height: 100vh;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
 }
 
 .image-text {

@@ -1,4 +1,24 @@
 <?php
+
+
+// Ajouter les thumbnails dans les posts 
+
+
+add_theme_support('post-thumbnails');
+
+
+// enregistrer les menus 
+
+function montheme_supports()
+{
+    register_nav_menu('header', 'En tête du menu');
+    register_nav_menu('footer', 'Pied de page');
+}
+
+add_action('after_setup_theme', 'montheme_supports');
+
+
+
 // 1. Déclaration du Custom Post Type "photos"
 function create_photo_post_type() {
     register_post_type('photos', [
