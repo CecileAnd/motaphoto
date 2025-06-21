@@ -38,21 +38,13 @@ header.single {
   list-style: none;    
   margin: 0;
   padding: 0;
-}
-
-.menu-list li {
-  /* facultatif, si on veut appliquer des styles aux <li> */
-}
-
-.element-menu {
   text-decoration: none;
-  color: inherit;
+  color: #000000;
 }
 
-
-.logo {
-  width: 250px;
-  height: auto;
+.menu-list li a{
+  text-decoration: none;
+  color: #000000;
 }
 
 .element-menu {
@@ -60,6 +52,12 @@ header.single {
   color: #000000;
   text-transform: uppercase;
   font-family: 'Space Mono';
+}
+
+
+.logo {
+  width: 250px;
+  height: auto;
 }
 
 .image-header {
