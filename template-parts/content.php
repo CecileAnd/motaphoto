@@ -1,143 +1,113 @@
-<main>
+<?php
+/**
+ * Template Name: Galerie Photos AJAX
+ */
 
+get_header(); 
 
-
-
-<div class="image-header">
-  <!-- Post aléatoire => photos, recuperer une image  -->
-   <?php 
-    $args = array(
-        'post_type' => 'photos',
-        'orderby' => 'rand',
-        'posts_per_page' => '1',
-        'order' => 'DESC',
-    );
-    $my_query = new WP_Query( $args );
-    if( $my_query->have_posts() ) : while( $my_query->have_posts() ) : $my_query->the_post();
-    ?>
-    <?php the_post_thumbnail('full', ['class' => 'image-header-img']); ?>
-    <?php
-    endwhile;
-    endif;
-    wp_reset_postdata();
-    ?>
-  <span class="image-text">Photographe&nbsp;Event</span>
-</div>
-    <section class="galerie" id="galerie">
-      <div class="zone-filtres">
-  <div class="filtres-gauche">
-    <div class="filtres" data-filtre="categorie">
-      <button class="filtre-bouton">
-        <span class="texte-filtre">Catégories</span> <span class="chevron">&#9013;</span>
-      </button>
-      <ul class="filtre-options">
-  <?php
-      $terms = get_terms( array(
-    'taxonomy'   => 'photo_categorie',
-    'hide_empty' => false,
-) ); 
-var_dump($terms );
-
-
- foreach ( $terms as $term) {
+// Récupère les taxonomies pour les filtres
+$categories = get_terms(['taxonomy' => 'photo_categorie', 'hide_empty' => false]);
+$formats = get_terms(['taxonomy' => 'photo_format', 'hide_empty' => false]);
 ?>
-        <li data-value="<?php echo $term->slug; ?>"><?php echo $term->name; ?></li>
-       <?php 
- }
 
+<div class="zone-filtres">
+    <div class="filtres-gauche">
+        <?php if (!empty($categories) && !is_wp_error($categories)) : ?>
+            <div class="filtres">
+                <label for="filter-categorie">Catégorie</label>
+                <select id="filter-categorie" name="categorie">
+                    <option value="">Toutes catégories</option>
+                    <?php foreach ($categories as $cat) : ?>
+                        <option value="<?php echo esc_attr($cat->slug); ?>"><?php echo esc_html($cat->name); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        <?php endif; ?>
 
-?>      
-        <li data-value="">&nbsp;</li>
-      </ul>
+        <?php if (!empty($formats) && !is_wp_error($formats)) : ?>
+            <div class="filtres">
+                <label for="filter-format">Format</label>
+                <select id="filter-format" name="format">
+                    <option value="">Tous formats</option>
+                    <?php foreach ($formats as $format) : ?>
+                        <option value="<?php echo esc_attr($format->slug); ?>"><?php echo esc_html($format->name); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        <?php endif; ?>
     </div>
-    <div class="filtres" data-filtre="format">
-      <button class="filtre-bouton">
-        <span class="texte-filtre">Formats</span> <span class="chevron">&#9013;</span>
-      </button>
-      <ul class="filtre-options">
-        <li data-value="">&nbsp;</li>
-        <li data-value="paysage">Paysage</li>
-        <li data-value="portrait">Portrait</li>
-      </ul>
-    </div>
-  </div>
-  <div class="filtres-droite">
-    <div class="filtres" data-filtre="tri">
-      <button class="filtre-bouton">
-        <span class="texte-filtre">Trier&nbsp;par</span> <span class="chevron">&#9013;</span>
-      </button>
-      <ul class="filtre-options">
-        <li data-value="recente">Plus récentes</li>
-        <li data-value="ancienne">Plus anciennes</li>
-      </ul>
-    </div>
-  </div>
 </div>
-  <div class="colonnes-images">
-  <article class="carte" data-categorie="reception" data-format="paysage" data-date="2019-01-01" data-reference="bf2385" data-type="Argentique">
-    <a href="<?php echo get_template_directory_uri();?>/assets/images/nathalie-0.jpeg" data-lightbox="galerie" data-title="Santé !">
-      <img class="image-carte" src="<?php echo get_template_directory_uri();?>/assets/images/nathalie-0.jpeg" alt="Santé !" />
-      <div class="overlay">
-        <div class="icone-full"><img src="<?php echo get_template_directory_uri();?>/assets/images/icons/Icon_fullscreen.png" alt="icone fullscreen"></div>
-        <div class="icone-oeil"><img src="<?php echo get_template_directory_uri();?>/assets/images/icons/Icon_eye.png" alt="icone oeil"></div>
-        <div class="infos-bas"><span class="gauche">SANTÉ !</span><span class="droite">RECEPTION</span></div>
-      </div>
-    </a>
-  </article>
-  <article class="carte" data-categorie="reception" data-format="paysage" data-date="2020-01-01" data-reference="bf2386" data-type="Argentique">
-    <a href="<?php echo get_template_directory_uri();?>/assets/images/nathalie-1.jpeg" data-lightbox="galerie" data-title="Et bon anniversaire !">
-      <img class="image-carte" src="<?php echo get_template_directory_uri();?>/assets/images/nathalie-1.jpeg" alt="Et bon anniversaire !" />
-      <div class="overlay">
-        <div class="icone-full"><img src="<?php echo get_template_directory_uri();?>/assets/images/icons/Icon_fullscreen.png" alt="icone fullscreen"></div>
-        <div class="icone-oeil"><img src="<?php echo get_template_directory_uri();?>/assets/images/icons/Icon_eye.png" alt="icone oeil"></div>
-        <div class="infos-bas"><span class="gauche">SANTÉ !</span><span  class="droite">RECEPTION</span></div>
-      </div>
-    </a>
-  </article>
-  <article class="carte" data-categorie="concert" data-format="paysage" data-date="2021-01-01" data-reference="bf2387" data-type="Numérique">
-    <a href="<?php echo get_template_directory_uri();?>/assets/images/nathalie-2.jpeg" data-lightbox="galerie" data-title="Let's party!">
-      <img class="image-carte" src="<?php echo get_template_directory_uri();?>/assets/images/nathalie-2.jpeg" alt="Let's party!" />
-      <div class="overlay">
-        <div class="icone-full"><img src="<?php echo get_template_directory_uri();?>/assets/images/icons/Icon_fullscreen.png" alt="icone fullscreen"></div>
-        <div class="icone-oeil"><img src="<?php echo get_template_directory_uri();?>/assets/images/icons/Icon_eye.png" alt="icone oeil"></div>
-        <div class="infos-bas"><span class="gauche">SANTÉ !</span><span  class="droite">RECEPTION</span></div>
-      </div>
-    </a>
-  </article>
-  <article class="carte" data-categorie="mariage" data-format="portrait" data-date="2019-01-01" data-reference="bf2388" data-type="Argentique">
-    <a href="<?php echo get_template_directory_uri();?>/assets/images/nathalie-3.jpeg" data-lightbox="galerie" data-title="Tout est installé">
-      <img class="image-carte" src="<?php echo get_template_directory_uri();?>/assets/images/nathalie-3.jpeg" alt="Tout est installé" />
-     <div class="overlay">
-        <div class="icone-full"><img src="<?php echo get_template_directory_uri();?>/assets/images/icons/Icon_fullscreen.png" alt="icone fullscreen"></div>
-        <div class="icone-oeil"><img src="<?php echo get_template_directory_uri();?>/assets/images/icons/Icon_eye.png" alt="icone oeil"></div>
-        <div class="infos-bas"><span class="gauche">SANTÉ !</span><span  class="droite">RECEPTION</span></div>
-      </div>
-    </a>
-  </article>
-  <article class="carte" data-categorie="mariage" data-format="portrait" data-date="2020-01-01" data-reference="bf2389" data-type="Numérique">
-    <a href="<?php echo get_template_directory_uri();?>/assets/images/nathalie-4.jpeg" data-lightbox="galerie" data-title="Vers l'éternité">
-      <img class="image-carte" src="<?php echo get_template_directory_uri();?>/assets/images/nathalie-4.jpeg" alt="Vers l'éternité" />
-      <div class="overlay">
-        <div class="icone-full"><img src="<?php echo get_template_directory_uri();?>/assets/images/icons/Icon_fullscreen.png" alt="icone fullscreen"></div>
-        <div class="icone-oeil"><img src="<?php echo get_template_directory_uri();?>/assets/images/icons/Icon_eye.png" alt="icone oeil"></div>
-        <div class="infos-bas"><span class="gauche">SANTÉ !</span><span  class="droite">RECEPTION</span></div>
-      </div>
-    </a>
-  </article>
-  <article class="carte" data-categorie="mariage" data-format="portrait" data-date="2021-01-01" data-reference="bf2390" data-type="Numérique">
-    <a href="<?php echo get_template_directory_uri();?>/assets/images/nathalie-5.jpeg" data-lightbox="galerie" data-title="Embrassez la mariée">
-      <img class="image-carte" src="<?php echo get_template_directory_uri();?>/assets/images/nathalie-5.jpeg" alt="Embrassez la mariée" />
-      <div class="overlay">
-        <div class="icone-full"><img src="<?php echo get_template_directory_uri();?>/assets/images/icons/Icon_fullscreen.png" alt="icone fullscreen"></div>
-        <div class="icone-oeil"><img src="<?php echo get_template_directory_uri();?>/assets/images/icons/Icon_eye.png" alt="icone oeil"></div>
-        <div class="infos-bas"><span class="gauche">SANTÉ !</span><span  class="droite">RECEPTION</span></div>
-      </div>
-    </a>
-  </article>
-</div>
-<div class="zone-bouton">
-  <div id="btn-charger-plus" class="charger-plus">Charger plus</div>
-</div>
-</section>
-</main>
 
+<div id="photos-container" class="colonnes-images">
+    <!-- Les photos chargées via AJAX apparaîtront ici -->
+</div>
+
+<button id="load-more" style="display:none;">Charger plus</button>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let paged = 1;
+    const btnLoadMore = document.getElementById('load-more');
+    const container = document.getElementById('photos-container');
+    const filterCategorie = document.getElementById('filter-categorie');
+    const filterFormat = document.getElementById('filter-format');
+
+    function loadPhotos(reset = false) {
+        if (reset) {
+            paged = 1;
+            container.innerHTML = '';
+        }
+
+        const data = new FormData();
+        data.append('action', 'mota_load_photos');
+        data.append('nonce', '<?php echo wp_create_nonce("mota_ajax_nonce"); ?>');
+        data.append('paged', paged);
+        data.append('categorie', filterCategorie.value);
+        data.append('format', filterFormat.value);
+
+        fetch('<?php echo admin_url("admin-ajax.php"); ?>', {
+            method: 'POST',
+            credentials: 'same-origin',
+            body: data
+        })
+        .then(response => response.text())
+        .then(html => {
+            if (html.trim().length > 0) {
+                container.insertAdjacentHTML('beforeend', html);
+                btnLoadMore.style.display = 'block';
+                paged++;
+            } else {
+                btnLoadMore.style.display = 'none';
+            }
+        });
+    }
+
+    filterCategorie.addEventListener('change', () => loadPhotos(true));
+    filterFormat.addEventListener('change', () => loadPhotos(true));
+    btnLoadMore.addEventListener('click', () => loadPhotos());
+
+    // Chargement initial
+    loadPhotos();
+});
+</script>
+
+<style>
+.colonnes-images {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.carte {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.carte img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+</style>
+
+<?php get_footer(); ?>

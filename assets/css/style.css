@@ -153,13 +153,6 @@ header.single {
   font-family: "Space Mono";
 }
 
-.element-menu {
-  text-decoration: none;
-  color: #000000;
-  text-transform: uppercase;
-  font-family: "Space Mono";
-}
-
 .logo {
   width: 250px;
   height: auto;
@@ -257,6 +250,18 @@ header.single {
   color: #333;
 }
 
+.deux-colonnes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.carte .image-carte {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 .galerie {
   margin-left: 9vw;
   margin-right: 9vw;
@@ -267,7 +272,7 @@ header.single {
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
-  padding: 40px 0px;
+  padding: 40px 0;
 }
 
 .carte {
@@ -275,6 +280,13 @@ header.single {
   aspect-ratio: 1/1;
   position: relative;
   overflow: hidden;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+.carte:hover {
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 .carte a {
   display: block;
@@ -287,11 +299,35 @@ header.single {
   -o-object-fit: cover;
      object-fit: cover;
   display: block;
+  transition: transform 0.3s ease;
+}
+.carte img.image-carte:hover {
+  transform: scale(1.05);
+}
+.carte .entry-header {
+  padding: 10px 5px 0 5px;
+}
+.carte .entry-header h2 {
+  font-size: 1.1rem;
+  margin: 0;
+}
+.carte .entry-header h2 a {
+  color: #333;
+  text-decoration: none;
+}
+.carte .entry-header h2 a:hover {
+  text-decoration: underline;
+}
+.carte .entry-content {
+  padding: 0 5px 10px 5px;
+  font-size: 0.9rem;
+  color: #666;
 }
 
 @media (max-width: 768px) {
   .carte {
     flex: 1 1 100%;
+    aspect-ratio: auto;
   }
 }
 .zone-filtres {
@@ -300,9 +336,7 @@ header.single {
   align-items: flex-start;
   flex-wrap: wrap;
   gap: 1rem;
-  margin-bottom: 0;
-  margin-left: 0;
-  margin-right: 0;
+  margin: 0 9vw 2rem;
 }
 
 .filtres {
@@ -310,15 +344,24 @@ header.single {
   border-radius: 5px;
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: flex-start;
   font-family: "Poppins", sans-serif;
   position: relative;
   cursor: pointer;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+.filtres:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .titre-filtres {
   margin-bottom: 0.3rem;
   font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #222;
 }
 
 .filtres select {
@@ -329,12 +372,11 @@ header.single {
   font-family: "Poppins", sans-serif;
   background-color: #fff;
   cursor: pointer;
-  transition: border-color 0.3s;
+  transition: border-color 0.3s ease;
 }
-
-.filtres select:hover,
-.filtres select:focus {
+.filtres select:hover, .filtres select:focus {
   border-color: #000;
+  outline: none;
 }
 
 .filtres-gauche,
@@ -353,20 +395,29 @@ button.filtre-bouton {
   border: 1.3px solid #ccc;
   border-radius: 8px;
   font-family: "Poppins", sans-serif;
-  letter-spacing: 10%;
+  letter-spacing: 0.1em;
   cursor: pointer;
   background: none;
   text-transform: uppercase;
-  width: 20vw;
+  padding: 0.6rem 1rem;
   display: inline-flex;
   justify-content: space-between;
-  gap: 80px;
+  align-items: center;
+  gap: 0.5rem;
+  width: auto;
+  min-width: 150px;
+  transition: border-color 0.3s ease;
+}
+.filtre-bouton:hover {
+  border-color: #E00000;
+  color: #E00000;
 }
 
 .chevron {
-  transition: transform 0.3s;
+  transition: transform 0.3s ease;
   font-size: 1rem;
   line-height: 1;
+  display: inline-block;
 }
 
 .filtres.open .chevron {
@@ -387,6 +438,9 @@ button.filtre-bouton {
   padding: 0;
   margin: 0;
   width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .filtres.open .filtre-options {
@@ -396,14 +450,30 @@ button.filtre-bouton {
 .filtre-options li {
   margin: 0;
   padding: 10px 15px;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  cursor: pointer;
 }
-
 .filtre-options li:hover {
   background-color: #E00000;
   color: white;
 }
 
+@media (max-width: 768px) {
+  .zone-filtres {
+    flex-direction: column;
+    gap: 1.5rem;
+    margin: 0 5vw 2rem;
+  }
+  .filtres-gauche,
+  .filtres-droite {
+    justify-content: center;
+  }
+  .filtre-bouton {
+    min-width: 100%;
+    justify-content: center;
+    gap: 0.3rem;
+  }
+}
 .carte {
   flex: 1 1 calc(50% - 20px);
   aspect-ratio: 1/1;

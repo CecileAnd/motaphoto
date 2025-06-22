@@ -1,3 +1,18 @@
+.deux-colonnes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.carte .image-carte {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+
+
+
 .galerie {
   margin-left: 9vw;
   margin-right: 9vw;
@@ -8,7 +23,7 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
-  padding: 40px 0px;
+  padding: 40px 0;
 }
 
 .carte {
@@ -16,6 +31,14 @@
   aspect-ratio: 1 / 1;
   position: relative;
   overflow: hidden;
+  background: #f9f9f9; // optionnel : fond léger pour délimiter la carte
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+  }
 
   a {
     display: block;
@@ -28,11 +51,39 @@
     height: 100%;
     object-fit: cover;
     display: block;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  .entry-header {
+    padding: 10px 5px 0 5px;
+    h2 {
+      font-size: 1.1rem;
+      margin: 0;
+      a {
+        color: #333;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .entry-content {
+    padding: 0 5px 10px 5px;
+    font-size: 0.9rem;
+    color: #666;
   }
 }
 
 @media (max-width: 768px) {
   .carte {
     flex: 1 1 100%;
+    aspect-ratio: auto; // pour laisser la hauteur s’adapter au contenu
   }
 }

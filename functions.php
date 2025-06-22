@@ -1,112 +1,210 @@
 <?php
-
-
-// Ajouter les thumbnails dans les posts 
-
-
+// Ajouter image mise en avant
 add_theme_support('post-thumbnails');
 
+// Enregistre le CPT 'photos' 
+function mota_register_photos_cpt() {
+    $labels = [
+        'name' => 'Photos',
+        'singular_name' => 'Photo',
+        'menu_name' => 'Photos',
+        'add_new' => 'Ajouter',
+        'add_new_item' => 'Ajouter une photo',
+        'edit_item' => 'Modifier la photo',
+        'new_item' => 'Nouvelle photo',
+        'view_item' => 'Voir la photo',
+        'search_items' => 'Chercher des photos',
+        'not_found' => 'Aucune photo trouvée',
+        'not_found_in_trash' => 'Aucune photo dans la corbeille',
+        'all_items' => 'Toutes les photos',
+    ];
 
-// enregistrer les menus 
-
-function montheme_supports()
-{
-    register_nav_menu('header', 'En tête du menu');
-    register_nav_menu('footer', 'Pied de page');
-}
-
-add_action('after_setup_theme', 'montheme_supports');
-
-
-
-// 1. Déclaration du Custom Post Type "photos"
-function create_photo_post_type() {
-    register_post_type('photos', [
-        'labels' => [
-            'name' => __('Photos'),
-            'singular_name' => __('Photo'),
-        ],
+    $args = [
+        'labels' => $labels,
         'public' => true,
         'has_archive' => true,
+        'show_in_rest' => true,
+        'supports' => ['title', 'editor', 'thumbnail', 'excerpt'],
+        'taxonomies' => ['photo_categorie', 'photo_format'],
         'menu_icon' => 'dashicons-format-image',
-        'supports' => ['title', 'thumbnail', 'editor'],
-        'show_in_rest' => true,
         'rewrite' => ['slug' => 'photos'],
-    ]);
-}
-add_action('init', 'create_photo_post_type');
+    ];
 
-// 2. Déclaration des taxonomies personnalisées
-function create_photo_taxonomies() {
-    register_taxonomy('photo_categorie', 'photos', [
-        'label' => __('Catégories'),
+    register_post_type('photos', $args);
+}
+add_action('init', 'mota_register_photos_cpt');
+
+// Enregistre la taxonomie 'photo_categorie'
+function mota_register_photo_categorie_taxonomy() {
+    $labels = [
+        'name' => 'Catégories',
+        'singular_name' => 'Catégorie',
+        'search_items' => 'Chercher des catégories',
+        'all_items' => 'Toutes les catégories',
+        'edit_item' => 'Modifier la catégorie',
+        'update_item' => 'Mettre à jour la catégorie',
+        'add_new_item' => 'Ajouter une catégorie',
+        'new_item_name' => 'Nouvelle catégorie',
+        'menu_name' => 'Catégories',
+    ];
+
+    register_taxonomy('photo_categorie', ['photos'], [
+        'labels' => $labels,
         'hierarchical' => true,
+        'show_ui' => true,
         'show_in_rest' => true,
-        'rewrite' => ['slug' => 'categorie-photo'],
+        'rewrite' => ['slug' => 'photo-categorie'],
     ]);
-    register_taxonomy('photo_format', 'photos', [
-        'label' => __('Formats'),
+}
+add_action('init', 'mota_register_photo_categorie_taxonomy');
+
+// Enregistre la taxonomie 'photo_format'
+function mota_register_photo_format_taxonomy() {
+    $labels = [
+        'name' => 'Formats',
+        'singular_name' => 'Format',
+        'search_items' => 'Chercher des formats',
+        'all_items' => 'Tous les formats',
+        'edit_item' => 'Modifier le format',
+        'update_item' => 'Mettre à jour le format',
+        'add_new_item' => 'Ajouter un format',
+        'new_item_name' => 'Nouveau format',
+        'menu_name' => 'Formats',
+    ];
+
+    register_taxonomy('photo_format', ['photos'], [
+        'labels' => $labels,
         'hierarchical' => true,
+        'show_ui' => true,
         'show_in_rest' => true,
-        'rewrite' => ['slug' => 'format-photo'],
+        'rewrite' => ['slug' => 'photo-format'],
     ]);
 }
-add_action('init', 'create_photo_taxonomies');
+add_action('init', 'mota_register_photo_format_taxonomy');
 
-// 3. Fonction d’import depuis CSV, sans doublons
-function import_photos_from_csv() {
-    $csv_path = WP_CONTENT_DIR . '/uploads/photos.csv';
+// AJAX pour filtrer les photos
+function mota_filter_photos() {
+    $args = [
+        'post_type'      => 'photos',
+        'posts_per_page' => 8,
+        'orderby'        => 'date',
+        'order'          => 'DESC',
+    ];
 
-    if (!file_exists($csv_path)) {
-        // Fichier absent, on ne fait rien (pas d'erreur affichée)
-        return;
+    if (!empty($_POST['categorie'])) {
+        $args['tax_query'][] = [
+            'taxonomy' => 'photo_categorie',
+            'field'    => 'slug',
+            'terms'    => sanitize_text_field($_POST['categorie']),
+        ];
     }
 
-    if (($csv = fopen($csv_path, 'r')) === false) {
-        return;
+    if (!empty($_POST['format'])) {
+        $args['tax_query'][] = [
+            'taxonomy' => 'photo_format',
+            'field'    => 'slug',
+            'terms'    => sanitize_text_field($_POST['format']),
+        ];
     }
 
-    $header = fgetcsv($csv);
-    if (!$header) {
-        fclose($csv);
-        return;
-    }
-
-    while (($row = fgetcsv($csv)) !== false) {
-        $data = array_combine($header, $row);
-
-        // Vérifier si un post avec ce titre existe déjà dans 'photos'
-        if (get_page_by_title($data['title'], OBJECT, 'photos')) {
-            continue; // On saute pour éviter doublon
-        }
-
-        $post_id = wp_insert_post([
-            'post_title' => sanitize_text_field($data['title']),
-            'post_type' => 'photos',
-            'post_status' => 'publish',
-        ]);
-
-        if (!$post_id) continue;
-
-        // Champs personnalisés
-        update_post_meta($post_id, 'reference', sanitize_text_field($data['reference']));
-        update_post_meta($post_id, 'annee', sanitize_text_field($data['annee']));
-        update_post_meta($post_id, 'type', sanitize_text_field($data['type']));
-
-        // Taxonomies
-        wp_set_object_terms($post_id, sanitize_text_field($data['categorie']), 'photo_categorie');
-        wp_set_object_terms($post_id, sanitize_text_field($data['format']), 'photo_format');
-
-        // Image à la une, par titre de fichier (sans extension)
-        $filename = pathinfo($data['file'], PATHINFO_FILENAME);
-        $attachment = get_page_by_title($filename, OBJECT, 'attachment');
-        if ($attachment) {
-            set_post_thumbnail($post_id, $attachment->ID);
+    if (!empty($_POST['tri'])) {
+        switch ($_POST['tri']) {
+            case 'date_asc':
+                $args['orderby'] = 'date';
+                $args['order'] = 'ASC';
+                break;
+            case 'title_asc':
+                $args['orderby'] = 'title';
+                $args['order'] = 'ASC';
+                break;
+            case 'title_desc':
+                $args['orderby'] = 'title';
+                $args['order'] = 'DESC';
+                break;
+            default:
+                $args['orderby'] = 'date';
+                $args['order'] = 'DESC';
+                break;
         }
     }
-    fclose($csv);
+
+    $query = new WP_Query($args);
+
+    if ($query->have_posts()) :
+        while ($query->have_posts()) : $query->the_post(); ?>
+            <article id="post-<?php the_ID(); ?>" <?php post_class('carte'); ?>>
+                <?php if (has_post_thumbnail()) : ?>
+                    <a href="<?php the_permalink(); ?>">
+                        <?php the_post_thumbnail('medium', ['class' => 'image-carte']); ?>
+                    </a>
+                <?php else : ?>
+                    <img src="<?php echo get_template_directory_uri(); ?>/images/default.jpg" alt="Image par défaut" class="image-carte">
+                <?php endif; ?>
+
+                <header class="entry-header">
+                    <h2 class="entry-title">
+                        <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                    </h2>
+                </header>
+
+                <div class="entry-content">
+                    <?php the_excerpt(); ?>
+                </div>
+            </article>
+        <?php endwhile;
+        wp_reset_postdata();
+    else :
+        echo '<p>Aucune photo trouvée.</p>';
+    endif;
+
+    wp_die();
 }
+add_action('wp_ajax_filter_photos', 'mota_filter_photos');
+add_action('wp_ajax_nopriv_filter_photos', 'mota_filter_photos');
 
-// Pour lancer l'import UNE seule fois, décommente la ligne suivante,
-// puis recharge une page admin, puis remets la ligne en commentaire.
-// add_action('admin_init', 'import_photos_from_csv');
+// AJAX pour le bouton "Charger plus"
+function mota_load_more_photos() {
+    $paged = isset($_POST['paged']) ? intval($_POST['paged']) : 1;
+
+    $args = [
+        'post_type'      => 'photos',
+        'posts_per_page' => 8,
+        'paged'         => $paged,
+        'orderby'        => 'date',
+        'order'          => 'DESC',
+    ];
+
+    $query = new WP_Query($args);
+
+    if ($query->have_posts()) :
+        while ($query->have_posts()) : $query->the_post(); ?>
+            <article id="post-<?php the_ID(); ?>" <?php post_class('carte'); ?>>
+                <?php if (has_post_thumbnail()) : ?>
+                    <a href="<?php the_permalink(); ?>">
+                        <?php the_post_thumbnail('medium', ['class' => 'image-carte']); ?>
+                    </a>
+                <?php else : ?>
+                    <img src="<?php echo get_template_directory_uri(); ?>/images/default.jpg" alt="Image par défaut" class="image-carte">
+                <?php endif; ?>
+
+                <header class="entry-header">
+                    <h2 class="entry-title">
+                        <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                    </h2>
+                </header>
+
+                <div class="entry-content">
+                    <?php the_excerpt(); ?>
+                </div>
+            </article>
+        <?php endwhile;
+        wp_reset_postdata();
+    else :
+        echo '<p>Aucune photo trouvée.</p>';
+    endif;
+
+    wp_die();
+}
+add_action('wp_ajax_load_more_photos', 'mota_load_more_photos');
+add_action('wp_ajax_nopriv_load_more_photos', 'mota_load_more_photos');
+?>
