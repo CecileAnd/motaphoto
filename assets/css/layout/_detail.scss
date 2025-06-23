@@ -125,7 +125,7 @@ $breakpoint-mobile: 768px;
       text-align: center;
     }
 
-    .bouton-contact {
+    .bouton-contact, input.wpcf7-form-control.wpcf7-submit.has-spinner {
   display: flex;
   align-items: center; 
   justify-content: center; 

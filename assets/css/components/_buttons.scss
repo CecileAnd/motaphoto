@@ -22,12 +22,14 @@ button.filtre-bouton,
   justify-content: center;
 }
 
-.charger-plus, #load-more {
+.charger-plus, #load-more, .contact-form-wrapper input[type="submit"] {
   width: 30%;
   padding: 15px 8px;
   cursor: pointer;
+  color: black;
   background-color: #C4C4C4;
   text-align: center;
   font-family: 'Space Mono';
   border: none;
+  border-radius: 0%;
 }
