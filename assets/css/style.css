@@ -132,12 +132,14 @@ header.single {
   color: #000000;
   cursor: pointer;
   z-index: 100;
-  margin-right: -2%;
-  width: 8vw;
+  width: 40px;
+  height: 40px;
+  margin-right: 20px;
 }
 
 .menu {
   padding: 25px 0;
+  transition: all 0.3s ease-in-out;
 }
 
 .menu-list {
@@ -158,7 +160,7 @@ header.single {
 }
 
 .logo {
-  width: 250px;
+  width: 200px;
   height: auto;
 }
 
@@ -171,11 +173,6 @@ header.single {
   margin-bottom: 80px;
 }
 
-/* .image-header-img {
-  width: 100%;
-  height: auto;
-  display: block;
-} */
 .image-header-img.wp-post-image {
   max-height: 100vh;
   width: 100%;
@@ -197,6 +194,73 @@ header.single {
   -webkit-text-stroke: 1px white;
 }
 
+.hero-header {
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.hero-overlay-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: transparent; /* texte transparent */
+  font-size: 6rem;
+  font-weight: bold;
+  font-style: italic; /* italique */
+  text-transform: uppercase;
+  text-align: center;
+  -webkit-text-stroke: 1.5px white; /* contour blanc */
+  text-stroke: 1.5px white; /* pour compatibilité future */
+}
+
+@media (max-width: 768px) {
+  .burger-menu {
+    display: inline-block;
+    color: #000000;
+    margin-top: 50px;
+  }
+  .menu {
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background: white;
+    width: 100%;
+    padding: 2rem 0;
+    flex-direction: column;
+    align-items: center;
+    z-index: 99;
+  }
+  .menu.active {
+    display: flex;
+  }
+  .menu-list {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .conteneur-principal {
+    margin: 0 5vw;
+  }
+  .logo {
+    width: 200px;
+  }
+  .image-text, div.hero-overlay-text {
+    position: absolute;
+    font-size: 9vw;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: transparent;
+    text-align: center;
+    font-style: italic;
+    -webkit-text-stroke: 1px white;
+  }
+}
 .contact-header {
   margin: 0 -10rem;
   padding-bottom: 2vh;
@@ -301,30 +365,6 @@ header.single {
 .ul-pied-de-page li a {
   text-decoration: none;
   color: #333;
-}
-
-.hero-header {
-  width: 100%;
-  height: 100vh;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  position: relative;
-}
-
-.hero-overlay-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: transparent; /* texte transparent */
-  font-size: 6rem;
-  font-weight: bold;
-  font-style: italic; /* italique */
-  text-transform: uppercase;
-  text-align: center;
-  -webkit-text-stroke: 1.5px white; /* contour blanc */
-  text-stroke: 1.5px white; /* pour compatibilité future */
 }
 
 .deux-colonnes {

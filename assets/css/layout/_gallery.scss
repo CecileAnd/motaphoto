@@ -1,29 +1,3 @@
-.hero-header {
-    width: 100%;
-    height: 100vh;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: relative;
-}
-
-.hero-overlay-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: transparent; /* texte transparent */
-    font-size: 6rem;
-    font-weight: bold;
-    font-style: italic; /* italique */
-    text-transform: uppercase;
-    text-align: center;
-    -webkit-text-stroke: 1.5px white; /* contour blanc */
-    text-stroke: 1.5px white; /* pour compatibilité future */
-}
-
-
-
 .deux-colonnes {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

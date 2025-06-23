@@ -1,26 +1,38 @@
 jQuery(document).ready(function($) {
-  // Ouvrir la modale au clic sur le lien Contact (avec classe open-contact-modal)
+  // --- MODALE ---
   $('.open-contact-modal').on('click', function(e) {
     e.preventDefault();
     $('#modal').fadeIn();
   });
 
-  // Fermer la modale au clic sur le bouton fermer (la croix)
   $('.close-modal').on('click', function() {
     $('#modal').fadeOut();
   });
 
-  // Fermer la modale si clic en dehors du contenu (sur le fond)
   $(document).on('click', function(e) {
     if ($(e.target).is('#modal')) {
       $('#modal').fadeOut();
     }
   });
 
-  // Optional : fermer la modale avec la touche Échap
   $(document).on('keydown', function(e) {
     if (e.key === "Escape") {
       $('#modal').fadeOut();
     }
+  });
+
+  // --- MENU BURGER ---
+  $('.burger-menu').on('click', function () {
+    $(this).toggleClass('open');
+    $('.menu').toggleClass('active');
+
+    const expanded = $(this).attr('aria-expanded') === 'true';
+    $(this).attr('aria-expanded', !expanded);
+  });
+
+  $('.menu a').on('click', function () {
+    $('.burger-menu').removeClass('open');
+    $('.menu').removeClass('active');
+    $('.burger-menu').attr('aria-expanded', 'false');
   });
 });
