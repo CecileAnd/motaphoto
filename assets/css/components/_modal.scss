@@ -49,6 +49,7 @@
   position: relative;
   box-shadow: 0 5px 15px rgba(0,0,0,0.3); // petite ombre pour l'effet pop-up
   animation: fadeIn 0.3s ease; // petite animation d'apparition
+  overflow: hidden;
 }
 
 .close-modal {
