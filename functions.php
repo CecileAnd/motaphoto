@@ -2,6 +2,18 @@
 // Ajouter image mise en avant
 add_theme_support('post-thumbnails');
 
+// Ajouter menu
+function mon_theme_register_menus() {
+    register_nav_menus(
+        array(
+            'menu-principal' => __( 'Menu Principal' ),
+            'menu-secondaire' => __( 'Menu Secondaire' )
+        )
+    );
+}
+add_action( 'after_setup_theme', 'mon_theme_register_menus' );
+
+
 // Enregistre le CPT 'photos' 
 function mota_register_photos_cpt() {
     $labels = [

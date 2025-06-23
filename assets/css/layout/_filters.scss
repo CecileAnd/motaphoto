@@ -1,14 +1,20 @@
+#categorie, #format, #tri {
+  text-transform: uppercase;
+  font-family: 'Poppins', sans-serif;
+}
+
 .zone-filtres {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap;
   gap: 1rem;
-  margin: 0 9vw 2rem; // garde la même marge horizontale que la galerie + un margin-bottom
+  margin-top: 9vh;
+  // margin: 0 9vw 2rem; // garde la même marge horizontale que la galerie + un margin-bottom
 }
 
 .filtres {
-  padding: 10px 15px;
+  //padding: 10px 15px;
   border-radius: 5px;
   display: flex;
   flex-direction: column;

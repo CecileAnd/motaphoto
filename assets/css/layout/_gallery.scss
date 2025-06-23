@@ -1,3 +1,29 @@
+.hero-header {
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.hero-overlay-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: transparent; /* texte transparent */
+    font-size: 6rem;
+    font-weight: bold;
+    font-style: italic; /* italique */
+    text-transform: uppercase;
+    text-align: center;
+    -webkit-text-stroke: 1.5px white; /* contour blanc */
+    text-stroke: 1.5px white; /* pour compatibilité future */
+}
+
+
+
 .deux-colonnes {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -32,7 +58,7 @@
   position: relative;
   overflow: hidden;
   background: #f9f9f9; // optionnel : fond léger pour délimiter la carte
-  border-radius: 8px;
+  //border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   transition: box-shadow 0.3s ease;
 
