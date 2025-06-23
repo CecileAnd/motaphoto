@@ -9,10 +9,10 @@
   background-color: rgba(0,0,0,0.7);
   justify-content: center;
   align-items: center;
-}
 
-.modal.active {
-  display: flex;
+  &.active {
+    display: flex;
+  }
 }
 
 .modal-content {
@@ -22,6 +22,8 @@
   max-width: 600px;
   width: 90%;
   position: relative;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3); // petite ombre pour l'effet pop-up
+  animation: fadeIn 0.3s ease; // petite animation d'apparition
 }
 
 .close-modal {
@@ -32,4 +34,15 @@
   border: none;
   font-size: 2rem;
   cursor: pointer;
+  color: #333;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #000;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }

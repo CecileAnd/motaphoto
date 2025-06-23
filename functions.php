@@ -1,20 +1,52 @@
 <?php
-// Ajouter image mise en avant
-add_theme_support('post-thumbnails');
+// Chargement des scripts et styles
+function theme_enqueue_scripts() {
+    // jQuery natif WordPress
+    wp_enqueue_script('jquery');
 
-// Ajouter menu
-function mon_theme_register_menus() {
-    register_nav_menus(
-        array(
-            'menu-principal' => __( 'Menu Principal' ),
-            'menu-secondaire' => __( 'Menu Secondaire' )
-        )
+    // Script principal du thème, dépend de jQuery
+    wp_enqueue_script(
+        'theme-script',
+        get_template_directory_uri() . '/assets/js/script.js',
+        ['jquery'],
+        null,
+        true
+    );
+
+    // Lightbox2 JS, dépend de jQuery
+    wp_enqueue_script(
+        'lightbox2',
+        'https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js',
+        ['jquery'],
+        null,
+        true
+    );
+
+    // Lightbox2 CSS
+    wp_enqueue_style(
+        'lightbox2-css',
+        'https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css',
+        [],
+        null
     );
 }
-add_action( 'after_setup_theme', 'mon_theme_register_menus' );
+add_action('wp_enqueue_scripts', 'theme_enqueue_scripts');
+
+// Support images à la une
+add_theme_support('post-thumbnails');
+
+// Enregistrement des menus
+function mon_theme_register_menus() {
+    register_nav_menus([
+        'menu-principal' => __('Menu Principal'),
+        'menu-secondaire' => __('Menu Secondaire'),
+        'footer' => __('Menu Pied de page')
+    ]);
+}
+add_action('after_setup_theme', 'mon_theme_register_menus');
 
 
-// Enregistre le CPT 'photos' 
+// Enregistrement du Custom Post Type 'photos'
 function mota_register_photos_cpt() {
     $labels = [
         'name' => 'Photos',
@@ -46,7 +78,8 @@ function mota_register_photos_cpt() {
 }
 add_action('init', 'mota_register_photos_cpt');
 
-// Enregistre la taxonomie 'photo_categorie'
+
+// Enregistrement taxonomie 'photo_categorie'
 function mota_register_photo_categorie_taxonomy() {
     $labels = [
         'name' => 'Catégories',
@@ -70,7 +103,8 @@ function mota_register_photo_categorie_taxonomy() {
 }
 add_action('init', 'mota_register_photo_categorie_taxonomy');
 
-// Enregistre la taxonomie 'photo_format'
+
+// Enregistrement taxonomie 'photo_format'
 function mota_register_photo_format_taxonomy() {
     $labels = [
         'name' => 'Formats',
@@ -94,129 +128,12 @@ function mota_register_photo_format_taxonomy() {
 }
 add_action('init', 'mota_register_photo_format_taxonomy');
 
-// AJAX pour filtrer les photos
-function mota_filter_photos() {
-    $args = [
-        'post_type'      => 'photos',
-        'posts_per_page' => 8,
-        'orderby'        => 'date',
-        'order'          => 'DESC',
-    ];
 
-    if (!empty($_POST['categorie'])) {
-        $args['tax_query'][] = [
-            'taxonomy' => 'photo_categorie',
-            'field'    => 'slug',
-            'terms'    => sanitize_text_field($_POST['categorie']),
-        ];
+// Ajout classe CSS "open-contact-modal" sur le lien "Contact" dans les menus
+add_filter('nav_menu_link_attributes', 'ajouter_classe_contact', 10, 3);
+function ajouter_classe_contact($atts, $item, $args) {
+    if ($item->title === 'Contact') {
+        $atts['class'] = (isset($atts['class']) ? $atts['class'] . ' ' : '') . 'open-contact-modal';
     }
-
-    if (!empty($_POST['format'])) {
-        $args['tax_query'][] = [
-            'taxonomy' => 'photo_format',
-            'field'    => 'slug',
-            'terms'    => sanitize_text_field($_POST['format']),
-        ];
-    }
-
-    if (!empty($_POST['tri'])) {
-        switch ($_POST['tri']) {
-            case 'date_asc':
-                $args['orderby'] = 'date';
-                $args['order'] = 'ASC';
-                break;
-            case 'title_asc':
-                $args['orderby'] = 'title';
-                $args['order'] = 'ASC';
-                break;
-            case 'title_desc':
-                $args['orderby'] = 'title';
-                $args['order'] = 'DESC';
-                break;
-            default:
-                $args['orderby'] = 'date';
-                $args['order'] = 'DESC';
-                break;
-        }
-    }
-
-    $query = new WP_Query($args);
-
-    if ($query->have_posts()) :
-        while ($query->have_posts()) : $query->the_post(); ?>
-            <article id="post-<?php the_ID(); ?>" <?php post_class('carte'); ?>>
-                <?php if (has_post_thumbnail()) : ?>
-                    <a href="<?php the_permalink(); ?>">
-                        <?php the_post_thumbnail('medium', ['class' => 'image-carte']); ?>
-                    </a>
-                <?php else : ?>
-                    <img src="<?php echo get_template_directory_uri(); ?>/images/default.jpg" alt="Image par défaut" class="image-carte">
-                <?php endif; ?>
-
-                <header class="entry-header">
-                    <h2 class="entry-title">
-                        <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-                    </h2>
-                </header>
-
-                <div class="entry-content">
-                    <?php the_excerpt(); ?>
-                </div>
-            </article>
-        <?php endwhile;
-        wp_reset_postdata();
-    else :
-        echo '<p>Aucune photo trouvée.</p>';
-    endif;
-
-    wp_die();
+    return $atts;
 }
-add_action('wp_ajax_filter_photos', 'mota_filter_photos');
-add_action('wp_ajax_nopriv_filter_photos', 'mota_filter_photos');
-
-// AJAX pour le bouton "Charger plus"
-function mota_load_more_photos() {
-    $paged = isset($_POST['paged']) ? intval($_POST['paged']) : 1;
-
-    $args = [
-        'post_type'      => 'photos',
-        'posts_per_page' => 8,
-        'paged'         => $paged,
-        'orderby'        => 'date',
-        'order'          => 'DESC',
-    ];
-
-    $query = new WP_Query($args);
-
-    if ($query->have_posts()) :
-        while ($query->have_posts()) : $query->the_post(); ?>
-            <article id="post-<?php the_ID(); ?>" <?php post_class('carte'); ?>>
-                <?php if (has_post_thumbnail()) : ?>
-                    <a href="<?php the_permalink(); ?>">
-                        <?php the_post_thumbnail('medium', ['class' => 'image-carte']); ?>
-                    </a>
-                <?php else : ?>
-                    <img src="<?php echo get_template_directory_uri(); ?>/images/default.jpg" alt="Image par défaut" class="image-carte">
-                <?php endif; ?>
-
-                <header class="entry-header">
-                    <h2 class="entry-title">
-                        <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-                    </h2>
-                </header>
-
-                <div class="entry-content">
-                    <?php the_excerpt(); ?>
-                </div>
-            </article>
-        <?php endwhile;
-        wp_reset_postdata();
-    else :
-        echo '<p>Aucune photo trouvée.</p>';
-    endif;
-
-    wp_die();
-}
-add_action('wp_ajax_load_more_photos', 'mota_load_more_photos');
-add_action('wp_ajax_nopriv_load_more_photos', 'mota_load_more_photos');
-?>

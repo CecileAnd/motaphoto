@@ -207,7 +207,6 @@ header.single {
   justify-content: center;
   align-items: center;
 }
-
 .modal.active {
   display: flex;
 }
@@ -219,6 +218,8 @@ header.single {
   max-width: 600px;
   width: 90%;
   position: relative;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.3s ease;
 }
 
 .close-modal {
@@ -229,8 +230,23 @@ header.single {
   border: none;
   font-size: 2rem;
   cursor: pointer;
+  color: #333;
+  transition: color 0.2s ease;
+}
+.close-modal:hover {
+  color: #000;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 .pied-de-page {
   margin-top: 40px;
   padding: 10px;
@@ -394,8 +410,7 @@ header.single {
 }
 
 .filtres select {
-  width: 18vw;
-  padding: 0.4rem 2.5rem 0.4rem 0.6rem;
+  padding: 0.4rem 0.6rem;
   border-radius: 6px;
   border: 1px solid #ccc;
   font-size: 1rem;
@@ -403,13 +418,7 @@ header.single {
   background-color: #fff;
   cursor: pointer;
   transition: border-color 0.3s ease;
-  appearance: none;
-  background-image: url('data:image/svg+xml;utf8,<svg fill="none" stroke="%23666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polyline points="6 9 12 15 18 9"/></svg>');
-  background-repeat: no-repeat;
-  background-position: right 0.75rem center;
-  background-size: 16px 16px;
 }
-
 .filtres select:hover, .filtres select:focus {
   border-color: #000;
   outline: none;
@@ -471,7 +480,7 @@ button.filtre-bouton {
   font-family: "Poppins", sans-serif;
   z-index: 100;
   list-style: none;
-  padding: 10px;
+  padding: 0;
   margin: 0;
   width: 100%;
   max-height: 200px;
