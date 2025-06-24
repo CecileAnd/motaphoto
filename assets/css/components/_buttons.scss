@@ -17,13 +17,13 @@ button.filtre-bouton,
   margin-right: -13px;
 }
 
-.zone-bouton, .load-more-wrap {
+.zone-bouton, .load-more-wrap, p.input {
   display: flex;
   justify-content: center;
 }
 
-.charger-plus, #load-more, .contact-form-wrapper input[type="submit"] {
-  width: 30%;
+.charger-plus, #load-more, .contact-form-wrapper input[type="submit"], input.wpcf7-form-control.wpcf7-submit.has-spinner {
+  width: 50%;
   padding: 15px 8px;
   cursor: pointer;
   color: black;

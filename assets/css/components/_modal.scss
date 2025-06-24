@@ -56,11 +56,21 @@
 }
 
 /* En-tête image (optionnelle) */
-.contact-header img {
+.contact-header {
   display: block;
-  max-width: 100%;
   height: auto;
   margin-bottom: 1.5rem;
+  margin-left: -2rem;         
+  margin-right: -2rem;        
+  overflow: hidden; 
+}
+
+.contact-header img {
+  display: block;
+  width: 120%; 
+  margin-left: -2rem;         
+  margin-right: -2rem;       
+  object-fit: cover; 
 }
 
 /* Formulaire Contact Form 7 */
@@ -84,16 +94,36 @@
     }
   }
 
-  input[type="submit"] {
-    background-color: #333;
-    color: #fff;
+  /*input[type="submit"] {
+    display: block;
+    margin: 0 auto;
+    background-color: #0073e6;
     border: none;
+    padding: 0.9rem 2rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: white;
     cursor: pointer;
-    transition: background-color 0.3s;
-    border-radius: 6px;
+    transition: background-color 0.3s ease;
+    user-select: none;
+    text-align: center;
 
-    &:hover {
-      background-color: #000;
+    &:hover,
+    &:focus {
+      background-color: #005bb5;
+      outline: none;
     }
+  }*/
+
+  p:not(:last-of-type) {
+    width: 30vw;
+    display: block;
+    margin: 0 auto;
+  }
+
+  input.wpcf7-form-control {
+    display: block;
+    margin: 0 auto;
   }
 }
