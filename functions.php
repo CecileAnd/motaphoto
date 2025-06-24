@@ -1,6 +1,45 @@
 <?php
 // functions.php
 
+// Enqueue scripts et styles
+function motaphoto_enqueue_scripts() {
+    // Style principal
+    wp_enqueue_style('motaphoto-style', get_stylesheet_uri());
+
+    // Script principal (modale, menu burger, etc.)
+    wp_enqueue_script(
+        'mota-script',
+        get_template_directory_uri() . '/assets/js/script.js',
+        ['jquery'], // Dépend de jQuery
+        null,
+        true // Chargement en pied de page
+    );
+
+    // Script Ajax gallery
+    wp_enqueue_script(
+        'ajax-gallery',
+        get_template_directory_uri() . '/assets/js/ajax-gallery.js',
+        ['jquery'],
+        '1.0',
+        true
+    );
+
+    // Localisation pour AJAX
+    wp_localize_script('ajax-gallery', 'ajaxGallery', [
+        'ajaxurl' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('ajax-gallery-nonce'),
+    ]);
+}
+add_action('wp_enqueue_scripts', 'motaphoto_enqueue_scripts');
+
+
+// Enregistrement des menus
+register_nav_menus([
+    'header' => 'Menu principal',
+    'footer' => 'Pied de page',
+]);
+
+
 // Enregistrement du CPT 'photos'
 function motaphoto_register_cpt_photos() {
     $labels = [
@@ -54,29 +93,6 @@ function motaphoto_register_taxonomies() {
     ]);
 }
 add_action('init', 'motaphoto_register_taxonomies');
-
-
-// Enqueue scripts et styles
-function motaphoto_enqueue_scripts() {
-    // Style principal
-    wp_enqueue_style('motaphoto-style', get_stylesheet_uri());
-
-    // Script Ajax gallery
-    wp_enqueue_script(
-        'ajax-gallery',
-        get_template_directory_uri() . '/assets/js/ajax-gallery.js',
-        ['jquery'],
-        '1.0',
-        true
-    );
-
-    // Localisation pour AJAX
-    wp_localize_script('ajax-gallery', 'ajaxGallery', [
-        'ajaxurl' => admin_url('admin-ajax.php'),
-        'nonce' => wp_create_nonce('ajax-gallery-nonce'),
-    ]);
-}
-add_action('wp_enqueue_scripts', 'motaphoto_enqueue_scripts');
 
 
 // Callback Ajax pour charger les photos filtrées + pagination
@@ -150,7 +166,6 @@ function motaphoto_load_photos_ajax() {
             $query->the_post();
 
             // Inclure un template part, ou code HTML ici :
-            // Par exemple, tu peux créer un fichier template-parts/photo-item.php
             get_template_part('template-parts/photo', 'item');
         }
     }
@@ -159,7 +174,6 @@ function motaphoto_load_photos_ajax() {
 
     $html = ob_get_clean();
 
-    // Savoir s'il y a encore plus de pages
     $has_more = ($paged < $query->max_num_pages);
 
     wp_send_json_success([

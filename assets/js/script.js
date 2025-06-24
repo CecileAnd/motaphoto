@@ -1,23 +1,26 @@
+console.log("script.js chargé");
+
 jQuery(document).ready(function($) {
-  // --- MODALE ---
-  $('.open-contact-modal').on('click', function(e) {
+  // --- MODALE DE CONTACT ---
+  $(document).on('click', 'li.open-contact-modal > a', function(e) {
     e.preventDefault();
-    $('#modal').fadeIn();
+    console.log('Ouverture modale demandée');
+    $('#modal').fadeIn();  // Affiche la modale avec un effet fondu
   });
 
   $('.close-modal').on('click', function() {
-    $('#modal').fadeOut();
+    $('#modal').fadeOut(); // Ferme la modale avec un effet fondu
   });
 
   $(document).on('click', function(e) {
     if ($(e.target).is('#modal')) {
-      $('#modal').fadeOut();
+      $('#modal').fadeOut(); // Ferme la modale si clic en dehors du contenu
     }
   });
 
   $(document).on('keydown', function(e) {
     if (e.key === "Escape") {
-      $('#modal').fadeOut();
+      $('#modal').fadeOut(); // Ferme la modale avec la touche Échap
     }
   });
 
