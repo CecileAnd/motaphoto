@@ -96,7 +96,7 @@ button.filtre-bouton,
 }
 
 .charger-plus, #load-more, .contact-form-wrapper input[type=submit], input.wpcf7-form-control.wpcf7-submit.has-spinner {
-  width: 50%;
+  width: 30vw;
   padding: 15px 8px;
   cursor: pointer;
   color: black;
