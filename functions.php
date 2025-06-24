@@ -1,139 +1,171 @@
 <?php
-// Chargement des scripts et styles
-function theme_enqueue_scripts() {
-    // jQuery natif WordPress
-    wp_enqueue_script('jquery');
+// functions.php
 
-    // Script principal du thème, dépend de jQuery
-    wp_enqueue_script(
-        'theme-script',
-        get_template_directory_uri() . '/assets/js/script.js',
-        ['jquery'],
-        null,
-        true
-    );
-
-    // Lightbox2 JS, dépend de jQuery
-    wp_enqueue_script(
-        'lightbox2',
-        'https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js',
-        ['jquery'],
-        null,
-        true
-    );
-
-    // Lightbox2 CSS
-    wp_enqueue_style(
-        'lightbox2-css',
-        'https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css',
-        [],
-        null
-    );
-}
-add_action('wp_enqueue_scripts', 'theme_enqueue_scripts');
-
-// Support images à la une
-add_theme_support('post-thumbnails');
-
-// Enregistrement des menus
-function mon_theme_register_menus() {
-    register_nav_menus([
-        'menu-principal' => __('Menu Principal'),
-        'menu-secondaire' => __('Menu Secondaire'),
-        'footer' => __('Menu Pied de page')
-    ]);
-}
-add_action('after_setup_theme', 'mon_theme_register_menus');
-
-
-// Enregistrement du Custom Post Type 'photos'
-function mota_register_photos_cpt() {
+// Enregistrement du CPT 'photos'
+function motaphoto_register_cpt_photos() {
     $labels = [
         'name' => 'Photos',
         'singular_name' => 'Photo',
         'menu_name' => 'Photos',
-        'add_new' => 'Ajouter',
+        'all_items' => 'Toutes les photos',
         'add_new_item' => 'Ajouter une photo',
         'edit_item' => 'Modifier la photo',
         'new_item' => 'Nouvelle photo',
         'view_item' => 'Voir la photo',
-        'search_items' => 'Chercher des photos',
+        'search_items' => 'Rechercher des photos',
         'not_found' => 'Aucune photo trouvée',
-        'not_found_in_trash' => 'Aucune photo dans la corbeille',
-        'all_items' => 'Toutes les photos',
+        'not_found_in_trash' => 'Aucune photo trouvée dans la corbeille',
     ];
 
     $args = [
         'labels' => $labels,
         'public' => true,
         'has_archive' => true,
-        'show_in_rest' => true,
-        'supports' => ['title', 'editor', 'thumbnail', 'excerpt'],
-        'taxonomies' => ['photo_categorie', 'photo_format'],
-        'menu_icon' => 'dashicons-format-image',
         'rewrite' => ['slug' => 'photos'],
+        'supports' => ['title', 'editor', 'thumbnail', 'excerpt'],
+        'show_in_rest' => true,
     ];
 
     register_post_type('photos', $args);
 }
-add_action('init', 'mota_register_photos_cpt');
+add_action('init', 'motaphoto_register_cpt_photos');
 
 
-// Enregistrement taxonomie 'photo_categorie'
-function mota_register_photo_categorie_taxonomy() {
-    $labels = [
-        'name' => 'Catégories',
-        'singular_name' => 'Catégorie',
-        'search_items' => 'Chercher des catégories',
-        'all_items' => 'Toutes les catégories',
-        'edit_item' => 'Modifier la catégorie',
-        'update_item' => 'Mettre à jour la catégorie',
-        'add_new_item' => 'Ajouter une catégorie',
-        'new_item_name' => 'Nouvelle catégorie',
-        'menu_name' => 'Catégories',
-    ];
-
-    register_taxonomy('photo_categorie', ['photos'], [
-        'labels' => $labels,
+// Enregistrement des taxonomies personnalisées
+function motaphoto_register_taxonomies() {
+    // Catégorie photo
+    register_taxonomy('photo_categorie', 'photos', [
+        'label' => 'Catégories photo',
         'hierarchical' => true,
+        'public' => true,
         'show_ui' => true,
-        'show_in_rest' => true,
         'rewrite' => ['slug' => 'photo-categorie'],
+        'show_in_rest' => true,
+    ]);
+
+    // Format photo
+    register_taxonomy('photo_format', 'photos', [
+        'label' => 'Formats photo',
+        'hierarchical' => true,
+        'public' => true,
+        'show_ui' => true,
+        'rewrite' => ['slug' => 'photo-format'],
+        'show_in_rest' => true,
     ]);
 }
-add_action('init', 'mota_register_photo_categorie_taxonomy');
+add_action('init', 'motaphoto_register_taxonomies');
 
 
-// Enregistrement taxonomie 'photo_format'
-function mota_register_photo_format_taxonomy() {
-    $labels = [
-        'name' => 'Formats',
-        'singular_name' => 'Format',
-        'search_items' => 'Chercher des formats',
-        'all_items' => 'Tous les formats',
-        'edit_item' => 'Modifier le format',
-        'update_item' => 'Mettre à jour le format',
-        'add_new_item' => 'Ajouter un format',
-        'new_item_name' => 'Nouveau format',
-        'menu_name' => 'Formats',
+// Enqueue scripts et styles
+function motaphoto_enqueue_scripts() {
+    // Style principal
+    wp_enqueue_style('motaphoto-style', get_stylesheet_uri());
+
+    // Script Ajax gallery
+    wp_enqueue_script(
+        'ajax-gallery',
+        get_template_directory_uri() . '/assets/js/ajax-gallery.js',
+        ['jquery'],
+        '1.0',
+        true
+    );
+
+    // Localisation pour AJAX
+    wp_localize_script('ajax-gallery', 'ajaxGallery', [
+        'ajaxurl' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('ajax-gallery-nonce'),
+    ]);
+}
+add_action('wp_enqueue_scripts', 'motaphoto_enqueue_scripts');
+
+
+// Callback Ajax pour charger les photos filtrées + pagination
+function motaphoto_load_photos_ajax() {
+    check_ajax_referer('ajax-gallery-nonce', 'nonce');
+
+    $paged = isset($_POST['page']) ? intval($_POST['page']) : 1;
+    $categorie = isset($_POST['categorie']) ? sanitize_text_field($_POST['categorie']) : '';
+    $format = isset($_POST['format']) ? sanitize_text_field($_POST['format']) : '';
+    $tri = isset($_POST['tri']) ? sanitize_text_field($_POST['tri']) : 'date_desc';
+
+    $args = [
+        'post_type' => 'photos',
+        'posts_per_page' => 8,
+        'paged' => $paged,
     ];
 
-    register_taxonomy('photo_format', ['photos'], [
-        'labels' => $labels,
-        'hierarchical' => true,
-        'show_ui' => true,
-        'show_in_rest' => true,
-        'rewrite' => ['slug' => 'photo-format'],
+    // Taxonomy query
+    $tax_query = [];
+
+    if ($categorie) {
+        $tax_query[] = [
+            'taxonomy' => 'photo_categorie',
+            'field' => 'slug',
+            'terms' => $categorie,
+        ];
+    }
+
+    if ($format) {
+        $tax_query[] = [
+            'taxonomy' => 'photo_format',
+            'field' => 'slug',
+            'terms' => $format,
+        ];
+    }
+
+    if (!empty($tax_query)) {
+        if (count($tax_query) > 1) {
+            $tax_query['relation'] = 'AND';
+        }
+        $args['tax_query'] = $tax_query;
+    }
+
+    // Tri
+    switch ($tri) {
+        case 'date_asc':
+            $args['orderby'] = 'date';
+            $args['order'] = 'ASC';
+            break;
+        case 'title_asc':
+            $args['orderby'] = 'title';
+            $args['order'] = 'ASC';
+            break;
+        case 'title_desc':
+            $args['orderby'] = 'title';
+            $args['order'] = 'DESC';
+            break;
+        case 'date_desc':
+        default:
+            $args['orderby'] = 'date';
+            $args['order'] = 'DESC';
+            break;
+    }
+
+    $query = new WP_Query($args);
+
+    ob_start();
+
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+
+            // Inclure un template part, ou code HTML ici :
+            // Par exemple, tu peux créer un fichier template-parts/photo-item.php
+            get_template_part('template-parts/photo', 'item');
+        }
+    }
+
+    wp_reset_postdata();
+
+    $html = ob_get_clean();
+
+    // Savoir s'il y a encore plus de pages
+    $has_more = ($paged < $query->max_num_pages);
+
+    wp_send_json_success([
+        'html' => $html,
+        'has_more' => $has_more,
     ]);
 }
-add_action('init', 'mota_register_photo_format_taxonomy');
-
-
-// Ajout classe CSS "open-contact-modal" sur le lien "Contact" dans les menus
-add_filter('nav_menu_link_attributes', 'ajouter_classe_contact', 10, 3);
-function ajouter_classe_contact($atts, $item, $args) {
-    if ($item->title === 'Contact') {
-        $atts['class'] = (isset($atts['class']) ? $atts['class'] . ' ' : '') . 'open-contact-modal';
-    }
-    return $atts;
-}
+add_action('wp_ajax_load_photos', 'motaphoto_load_photos_ajax');
+add_action('wp_ajax_nopriv_load_photos', 'motaphoto_load_photos_ajax');

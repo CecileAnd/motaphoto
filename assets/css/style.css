@@ -214,8 +214,8 @@ header.single {
   font-style: italic; /* italique */
   text-transform: uppercase;
   text-align: center;
-  -webkit-text-stroke: 1.5px white; /* contour blanc */
-  text-stroke: 1.5px white; /* pour compatibilité future */
+  -webkit-text-stroke: 0.3px white; /* contour blanc plus fin */
+  text-stroke: 0.3px white; /* compatibilité future */
 }
 
 @media (max-width: 768px) {
@@ -258,7 +258,7 @@ header.single {
     color: transparent;
     text-align: center;
     font-style: italic;
-    -webkit-text-stroke: 1px white;
+    -webkit-text-stroke: 0.6px white; /* contour réduit sur mobile */
   }
 }
 .contact-header {
