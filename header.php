@@ -21,9 +21,14 @@
       <div class="logo">
         <img class="logo" src="<?php echo get_template_directory_uri(); ?>/assets/images/logo/logo-mota.png" alt="logo Nathalie Mota" />
       </div>
+
+      <!-- Burger menu CSS -->
       <button class="burger-menu" aria-label="Ouvrir le menu" aria-expanded="false">
-        <img class="burger-menu" src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/hamburger.png" alt="icon menu burger" />
+        <span class="burger-bar"></span>
+        <span class="burger-bar"></span>
+        <span class="burger-bar"></span>
       </button>
+
       <nav class="menu" aria-label="Menu principal" id="main-menu">
         <?php 
         wp_nav_menu([

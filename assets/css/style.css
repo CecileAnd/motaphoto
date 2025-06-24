@@ -108,7 +108,7 @@ button.filtre-bouton,
 }
 
 header.single {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: none; /* Pas d'ombrage comme demandé */
 }
 
 .conteneur-principal {
@@ -117,29 +117,56 @@ header.single {
   align-items: center;
   padding: 0;
   height: 60px;
-  position: relative;
+  position: sticky;
+  top: 0;
   background-color: white;
-  z-index: 10;
+  z-index: 1002;
   margin-right: 9vw;
   margin-left: 9vw;
 }
 
+/* MENU BURGER CORRIGÉ */
 .burger-menu {
-  display: none;
-  background: none;
-  border: none;
-  font-size: 2.5rem;
-  color: #000000;
-  cursor: pointer;
-  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 40px;
   height: 40px;
-  margin-right: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.burger-bar {
+  display: block !important;
+  width: 30px !important;
+  height: 3px !important;
+  background-color: black !important;
+  margin-bottom: 6px !important;
+  transition: all 0.3s ease-in-out;
+}
+
+.burger-bar:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* Animation quand burger ouvert */
+.burger-menu.open .burger-bar:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.burger-menu.open .burger-bar:nth-child(2) {
+  opacity: 0;
+}
+
+.burger-menu.open .burger-bar:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
 }
 
 .menu {
   padding: 25px 0;
-  transition: all 0.3s ease-in-out;
 }
 
 .menu-list {
@@ -148,8 +175,6 @@ header.single {
   list-style: none;
   margin: 0;
   padding: 0;
-  text-decoration: none;
-  color: #000000;
 }
 
 .menu-list li a {
@@ -208,57 +233,92 @@ header.single {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: transparent; /* texte transparent */
+  color: transparent;
   font-size: 6rem;
   font-weight: bold;
-  font-style: italic; /* italique */
+  font-style: italic;
   text-transform: uppercase;
   text-align: center;
-  -webkit-text-stroke: 0.3px white; /* contour blanc plus fin */
-  text-stroke: 0.3px white; /* compatibilité future */
+  -webkit-text-stroke: 0.3px white;
+  text-stroke: 0.3px white;
 }
 
+/* --- MOBILE --- */
 @media (max-width: 768px) {
+  .conteneur-principal {
+    margin: 0 5vw;
+    position: relative;
+    z-index: 1002;
+    justify-content: space-between;
+  }
   .burger-menu {
-    display: inline-block;
-    color: #000000;
+    display: flex;
     margin-top: 50px;
   }
   .menu {
     display: none;
-    position: absolute;
-    top: 60px;
+    position: fixed;
+    top: 0;
     left: 0;
-    right: 0;
-    background: white;
-    width: 100%;
-    padding: 2rem 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #a80000;
+    color: white;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    z-index: 99;
+    z-index: 1000;
+    padding: 0;
   }
   .menu.active {
     display: flex;
   }
   .menu-list {
     flex-direction: column;
-    gap: 20px;
+    gap: 30px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
-  .conteneur-principal {
-    margin: 0 5vw;
+  .menu-list li a {
+    color: white;
+    font-size: 1.8rem;
+    font-family: "Space Mono", monospace;
+    text-transform: uppercase;
+    text-decoration: none;
   }
   .logo {
     width: 200px;
   }
-  .image-text, div.hero-overlay-text {
-    position: absolute;
+  .image-text,
+  div.hero-overlay-text {
     font-size: 9vw;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: transparent;
-    text-align: center;
-    font-style: italic;
-    -webkit-text-stroke: 0.6px white; /* contour réduit sur mobile */
+    -webkit-text-stroke: 0.6px white;
+  }
+}
+/* --- DESKTOP --- */
+@media (min-width: 769px) {
+  .menu {
+    display: flex !important;
+    position: static;
+    background-color: transparent;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    height: auto;
+    width: auto;
+    padding: 25px 0;
+  }
+  .menu-list {
+    flex-direction: row;
+    gap: 30px;
+  }
+  .menu-list li a {
+    color: #000000;
+    font-size: 1rem;
+  }
+  .burger-menu {
+    display: none;
   }
 }
 /* Base modale */

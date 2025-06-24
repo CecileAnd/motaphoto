@@ -4,23 +4,22 @@ jQuery(document).ready(function($) {
   // --- MODALE DE CONTACT ---
   $(document).on('click', 'li.open-contact-modal > a', function(e) {
     e.preventDefault();
-    console.log('Ouverture modale demandée');
-    $('#modal').fadeIn();  // Affiche la modale avec un effet fondu
+    $('#modal').fadeIn();
   });
 
   $('.close-modal').on('click', function() {
-    $('#modal').fadeOut(); // Ferme la modale avec un effet fondu
+    $('#modal').fadeOut();
   });
 
   $(document).on('click', function(e) {
     if ($(e.target).is('#modal')) {
-      $('#modal').fadeOut(); // Ferme la modale si clic en dehors du contenu
+      $('#modal').fadeOut();
     }
   });
 
   $(document).on('keydown', function(e) {
     if (e.key === "Escape") {
-      $('#modal').fadeOut(); // Ferme la modale avec la touche Échap
+      $('#modal').fadeOut();
     }
   });
 
@@ -33,9 +32,9 @@ jQuery(document).ready(function($) {
     $(this).attr('aria-expanded', !expanded);
   });
 
+  // Fermer le menu quand on clique sur un lien du menu (utile sur mobile)
   $('.menu a').on('click', function () {
-    $('.burger-menu').removeClass('open');
+    $('.burger-menu').removeClass('open').attr('aria-expanded', 'false');
     $('.menu').removeClass('active');
-    $('.burger-menu').attr('aria-expanded', 'false');
   });
 });
