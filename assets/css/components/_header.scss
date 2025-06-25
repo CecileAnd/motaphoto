@@ -56,6 +56,12 @@ header.single {
   transform: rotate(-45deg) translate(6px, -6px);
 }
 
+.burger-menu.open {
+  position: relative;
+  top: -3px; 
+}
+
+
 .menu {
   padding: 25px 0;
 }

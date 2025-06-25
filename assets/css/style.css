@@ -165,6 +165,11 @@ header.single {
   transform: rotate(-45deg) translate(6px, -6px);
 }
 
+.burger-menu.open {
+  position: relative;
+  top: -3px;
+}
+
 .menu {
   padding: 25px 0;
 }
@@ -493,7 +498,9 @@ header.single {
 }
 
 .carte {
-  flex: 1 1 calc(50% - 20px);
+  width: calc(50% - 20px);
+  max-width: calc(50% - 20px);
+  flex: 0 0 calc(50% - 20px);
   aspect-ratio: 1/1;
   position: relative;
   overflow: hidden;
@@ -542,7 +549,9 @@ header.single {
 
 @media (max-width: 768px) {
   .carte {
-    flex: 1 1 100%;
+    width: 100%;
+    max-width: 100%;
+    flex: 0 0 100%;
     aspect-ratio: auto;
   }
 }
