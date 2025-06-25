@@ -92,7 +92,6 @@ $breakpoint-mobile: 768px;
 
   // Bloc contact
   .interet-contact {
-    border-top: 1px solid #000;
     padding-top: 30px;
     margin-top: 0;
     width: 50%;
@@ -245,6 +244,14 @@ $breakpoint-mobile: 768px;
     }
   }
 }
+.ligne-horizontale-longue-haut {
+  width: 50%;
+  margin: 10px auto; // marge haut et bas + centrage horizontal
+  margin-left: 0;
+  border: none;
+  border-top: 1px solid black;
+  display: block;
+}
 .ligne-horizontale-longue {
   width: 100%;
   margin: 30px auto; // marge haut et bas + centrage horizontal
@@ -254,3 +261,37 @@ $breakpoint-mobile: 768px;
   display: block;
 }
 
+@media (max-width: 768px) {
+  div.miniature-navigation{
+    display: none!important;
+  }
+  .interet-contact {
+      display: flex!important;
+      flex-direction:column!important;
+      width: 100%!important;
+  }
+  .photo-interessante, .bouton-contact {
+      width:100%!important;
+  }
+  .ligne-horizontale-longue {
+    width: 200%!important;
+    margin-left: -20vw!important;
+  }
+  .ligne-horizontale-longue-haut {
+    width: 200%!important;
+    margin-left: -20vw!important;
+}
+  .titre-suggestions {
+    text-align: center!important;
+  }
+  .suggestions {
+    margin-top: 1rem!important;
+  }
+  
+  .ul-pied-de-page {
+    display: flex!important;
+    flex-direction: column!important;
+    gap: 10px!important;
+    text-align: center;
+  }
+}

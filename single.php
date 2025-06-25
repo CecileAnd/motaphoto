@@ -43,7 +43,9 @@ if (have_posts()) :
             </div>
         </div>
     </div>
-
+    <div class="bloc-separateur">
+        <hr class="ligne-horizontale-longue-haut"/>
+    </div>
     <section class="interet-photo">
         <div class="interet-contact">
             <p class="photo-interessante">Cette photo vous intéresse&nbsp;?</p>
