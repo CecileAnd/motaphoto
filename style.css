@@ -3,3 +3,24 @@
    Description: Thème pour une photographe
    Text Domain: motaphoto
 */
+
+/* Toutes les options (même sans hover) */
+#select2-categorie-container, #select2-format-container, #select2-tri-container {
+   text-transform: uppercase;
+}
+
+.select2-container--default .select2-results__option {
+  padding: 8px 12px;
+  font-size: 1rem;
+}
+
+select {
+   width: 19vw;
+}
+
+/* Option survolée */
+.select2-container--default .select2-results__option--highlighted {
+  background-color: #E00000 !important;
+  color: #fff;
+}
+

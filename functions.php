@@ -1,6 +1,36 @@
 <?php
 // functions.php
 
+function mon_theme_enqueue_select2() {
+    // CSS de Select2
+    wp_enqueue_style(
+        'select2-css',
+        'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css'
+    );
+
+    // JS de Select2
+    wp_enqueue_script(
+        'select2-js',
+        'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js',
+        ['jquery'], // dépendance à jQuery
+        null,
+        true
+    );
+}
+add_action('wp_enqueue_scripts', 'mon_theme_enqueue_select2');
+
+function mon_theme_enqueue_custom_scripts() {
+    wp_enqueue_script(
+        'select2-init',
+        get_template_directory_uri() . '/assets/js/select2-init.js',
+        ['jquery', 'select2-js'],
+        null,
+        true
+    );
+}
+add_action('wp_enqueue_scripts', 'mon_theme_enqueue_custom_scripts');
+
+
 // Enqueue scripts et styles
 function motaphoto_enqueue_scripts() {
     // Style principal

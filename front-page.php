@@ -36,7 +36,7 @@ endif;
             if (!empty($categories) && !is_wp_error($categories)) : ?>
                 <div class="filtres">
                     <select name="categorie" id="categorie">
-                        <option value="">Toutes les catégories</option>
+                        <option value="">Catégories</option>
                         <?php foreach ($categories as $cat) : ?>
                             <option value="<?php echo esc_attr($cat->slug); ?>"><?php echo esc_html($cat->name); ?></option>
                         <?php endforeach; ?>
@@ -49,7 +49,7 @@ endif;
             if (!empty($formats) && !is_wp_error($formats)) : ?>
                 <div class="filtres">
                     <select name="format" id="format">
-                        <option value="">Tous les formats</option>
+                        <option value="">Formats</option>
                         <?php foreach ($formats as $format) : ?>
                             <option value="<?php echo esc_attr($format->slug); ?>"><?php echo esc_html($format->name); ?></option>
                         <?php endforeach; ?>
@@ -61,6 +61,7 @@ endif;
         <div class="filtres-droite">
             <div class="filtres">
                 <select name="tri" id="tri">
+                    <option value="">Trier par</option>
                     <option value="date_desc">Date décroissante</option>
                     <option value="date_asc">Date croissante</option>
                     <option value="title_asc">Titre A-Z</option>
