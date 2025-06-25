@@ -19,8 +19,10 @@
   <header class="index">
     <div class="conteneur-principal">
       <div class="logo">
-        <img class="logo" src="<?php echo get_template_directory_uri(); ?>/assets/images/logo/logo-mota.png" alt="logo Nathalie Mota" />
-      </div>
+  <a href="<?php echo home_url(); ?>">
+    <img class="logo" src="<?php echo get_template_directory_uri(); ?>/assets/images/logo/logo-mota.png" alt="logo Nathalie Mota" />
+  </a>
+</div>
 
       <!-- Burger menu CSS -->
       <button class="burger-menu" aria-label="Ouvrir le menu" aria-expanded="false">
