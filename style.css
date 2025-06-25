@@ -5,6 +5,7 @@
 */
 
 /* Toutes les options (même sans hover) */
+
 #select2-categorie-container, #select2-format-container, #select2-tri-container {
    text-transform: uppercase;
 }
