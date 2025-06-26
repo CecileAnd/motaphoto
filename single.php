@@ -11,23 +11,22 @@ if (have_posts()) :
 
         // Champs personnalisés ACF
         $reference  = get_field('reference');
-        $categorie = get_field('categorie');
-        $format    = get_field('format');
+        /* $categorie = get_field('categorie');
+        $format    = get_field('format'); */
         $type      = get_field('type');
         $annee     = get_field('annee');
 
         // Taxonomies (si jamais utilisées à la place des ACF)
-        // $categories = get_the_terms(get_the_ID(), 'photo_categorie');
-        // $formats = get_the_terms(get_the_ID(), 'photo_format');
-
+        $categorie = get_the_terms(get_the_ID(), 'photo_categorie');
+        $categorie = $categorie[0]->name;
+        $format = get_the_terms(get_the_ID(), 'photo_format');
+        $format = $format[0]->name;
 ?>
 <main class="page-detail">
     <div class="container-detail">
         <div class="image-detail">
             <?php if ($image_url) : ?>
                 <img class="principale" src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($titre_photo); ?>" />
-            <?php else : ?>
-                <img class="principale" src="<?php echo get_template_directory_uri(); ?>/images/default.jpg" alt="Image non disponible" />
             <?php endif; ?>
         </div>
         <div class="infos">
@@ -54,7 +53,7 @@ if (have_posts()) :
         <div class="miniature-navigation">
             <div class="miniature-photo">
                 <?php
-                // Affiche une miniature aléatoire différente de celle courante (exemple simplifié)
+                // Affiche une miniature aléatoire différente de celle courante
                 $args = array(
                     'post_type'      => 'photos',
                     'posts_per_page' => 1,
@@ -122,15 +121,6 @@ if (have_posts()) :
         </div>
     </section>
 </main>
-
-<!-- Inclusion du formulaire Contact Form 7 dans une modale si existant -->
-<div class="modal" id="modal">
-    <div class="modal-content">
-        <button class="close-modal" aria-label="Fermer la modale">&times;</button>
-        <h2>Contactez-nous</h2>
-        <?php echo do_shortcode('[contact-form-7 id="3c6e00f" title="Contact"]'); ?>
-    </div>
-</div>
 
 <?php
     endwhile;

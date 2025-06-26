@@ -64,8 +64,6 @@ endif;
                     <option value="">Trier par</option>
                     <option value="date_desc">Date décroissante</option>
                     <option value="date_asc">Date croissante</option>
-                    <option value="title_asc">Titre A-Z</option>
-                    <option value="title_desc">Titre Z-A</option>
                 </select>
             </div>
         </div>

@@ -3,15 +3,7 @@
         <?php 
         if (has_post_thumbnail()) {
             the_post_thumbnail('large', ['class' => 'image-carte']);
-        } else {
-            $attachments = get_attached_media('image', get_the_ID());
-            if (!empty($attachments)) {
-                $first_attachment = reset($attachments);
-                echo wp_get_attachment_image($first_attachment->ID, 'large', false, ['class' => 'image-carte']);
-            } else {
-                echo '<img src="' . get_template_directory_uri() . '/images/default-photo.jpg" alt="Image par défaut" class="image-carte" />';
-            }
-        }
+        } 
         ?>
     </a>
 

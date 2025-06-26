@@ -1,6 +1,8 @@
 <?php
 // functions.php
 
+add_theme_support( 'post-thumbnails' );
+
 function mon_theme_enqueue_select2() {
     // CSS de Select2
     wp_enqueue_style(
