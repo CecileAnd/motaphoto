@@ -105,6 +105,40 @@ button.filtre-bouton,
   font-family: "Space Mono";
   border: none;
   border-radius: 0%;
+  text-decoration: none;
+}
+
+.interet-contact .contact-button {
+  width: 25vw;
+  padding: 15px 8px;
+  cursor: pointer;
+  color: black;
+  background-color: #C4C4C4;
+  text-align: center;
+  font-family: "Space Mono";
+  border: none;
+  border-radius: 0%;
+  text-decoration: none;
+}
+
+.contact-button:not(#main-menu .contact-button),
+.charger-plus,
+#load-more,
+.contact-form-wrapper input[type=submit],
+input.wpcf7-form-control.wpcf7-submit.has-spinner {
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.contact-button:not(#main-menu .contact-button):hover, .contact-button:not(#main-menu .contact-button):focus,
+.charger-plus:hover,
+.charger-plus:focus,
+#load-more:hover,
+#load-more:focus,
+.contact-form-wrapper input[type=submit]:hover,
+.contact-form-wrapper input[type=submit]:focus,
+input.wpcf7-form-control.wpcf7-submit.has-spinner:hover,
+input.wpcf7-form-control.wpcf7-submit.has-spinner:focus {
+  background-color: #ababab;
+  transform: translateY(-2px);
 }
 
 header.single {
@@ -336,7 +370,7 @@ header.single {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-#modal {
+#contact-modal {
   display: flex;
   justify-content: center;
   align-items: center;

@@ -27,7 +27,7 @@ jQuery(document).ready(function ($) {
     const filters = getFilters();
 
     $.ajax({
-      url: ajaxGallery.ajaxurl,  // attention à ajaxGallery, pas mota_ajax
+      url: ajaxGallery.ajaxurl, 
       type: 'POST',
       data: {
         action: 'load_photos',       // doit correspondre à la fonction PHP

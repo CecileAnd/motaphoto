@@ -2,7 +2,7 @@ console.log("script.js chargé");
 
 jQuery(document).ready(function($) {
   // --- MODALE DE CONTACT ---
-  $(document).on('click', 'li.open-contact-modal > a', function(e) {
+  $(document).on('click', 'li.contact-button > a', function(e) {
     e.preventDefault();
     $('#modal').fadeIn();
   });
@@ -38,3 +38,39 @@ jQuery(document).ready(function($) {
     $('.menu').removeClass('active');
   });
 });
+
+/* //Prérenseignement champ référence
+document.addEventListener('DOMContentLoaded', function() {
+  const modal = document.getElementById('modal');
+
+  // Cibler uniquement le bouton "Contact" dans .interet-contact
+  const interetContactButton = document.querySelector('.interet-contact .bouton-contact');
+
+  if (interetContactButton) {
+    interetContactButton.addEventListener('click', function(event) {
+      event.preventDefault();
+      const reference = interetContactButton.getAttribute('data-reference');
+
+      // Ouvre la modale
+      modal.classList.add('show');
+
+      // Remplit le champ référence
+      const referenceField = document.getElementById('contact-reference');
+      if (referenceField && reference) {
+        referenceField.value = reference;
+      }
+    });
+  }
+
+  // Fermer la modale et vider le champ référence
+  const closeModal = document.querySelector('.close-modal');
+  if (closeModal) {
+    closeModal.addEventListener('click', function() {
+      modal.classList.remove('show');
+      const referenceField = document.getElementById('contact-reference');
+      if (referenceField) referenceField.value = '';
+    });
+  }
+});
+}); */
+

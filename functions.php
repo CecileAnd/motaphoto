@@ -1,50 +1,27 @@
 <?php
 // functions.php
 
-add_theme_support( 'post-thumbnails' );
-
-function mon_theme_enqueue_select2() {
-    // CSS de Select2
-    wp_enqueue_style(
-        'select2-css',
-        'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css'
-    );
-
-    // JS de Select2
-    wp_enqueue_script(
-        'select2-js',
-        'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js',
-        ['jquery'], // dépendance à jQuery
-        null,
-        true
-    );
-}
-add_action('wp_enqueue_scripts', 'mon_theme_enqueue_select2');
-
-function mon_theme_enqueue_custom_scripts() {
-    wp_enqueue_script(
-        'select2-init',
-        get_template_directory_uri() . '/assets/js/select2-init.js',
-        ['jquery', 'select2-js'],
-        null,
-        true
-    );
-}
-add_action('wp_enqueue_scripts', 'mon_theme_enqueue_custom_scripts');
+add_theme_support('post-thumbnails');
 
 
-// Enqueue scripts et styles
+// --------------------------------------
+// Enqueue styles & scripts
+// --------------------------------------
+
 function motaphoto_enqueue_scripts() {
     // Style principal
     wp_enqueue_style('motaphoto-style', get_stylesheet_uri());
 
-    // Script principal (modale, menu burger, etc.)
+    // Style custom du thème
+    wp_enqueue_style('motaphoto-theme-style', get_template_directory_uri() . '/assets/css/style.css');
+
+    // Script principal (burger, modale, etc.)
     wp_enqueue_script(
         'mota-script',
         get_template_directory_uri() . '/assets/js/script.js',
-        ['jquery'], // Dépend de jQuery
+        ['jquery'],
         null,
-        true // Chargement en pied de page
+        true
     );
 
     // Script Ajax gallery
@@ -61,18 +38,69 @@ function motaphoto_enqueue_scripts() {
         'ajaxurl' => admin_url('admin-ajax.php'),
         'nonce' => wp_create_nonce('ajax-gallery-nonce'),
     ]);
+
+    // Script modale de contact
+    wp_enqueue_script(
+        'mon-theme-modal-contact',
+        get_template_directory_uri() . '/assets/js/modal-contact.js',
+        ['jquery'],
+        filemtime(get_template_directory() . '/assets/js/modal-contact.js'),
+        true
+    );
 }
 add_action('wp_enqueue_scripts', 'motaphoto_enqueue_scripts');
 
 
-// Enregistrement des menus
+// Enqueue Select2 (CSS + JS) et initialisation
+function mon_theme_enqueue_select2() {
+    wp_enqueue_style(
+        'select2-css',
+        'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css'
+    );
+
+    wp_enqueue_script(
+        'select2-js',
+        'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js',
+        ['jquery'],
+        null,
+        true
+    );
+
+    wp_enqueue_script(
+        'select2-init',
+        get_template_directory_uri() . '/assets/js/select2-init.js',
+        ['jquery', 'select2-js'],
+        null,
+        true
+    );
+}
+add_action('wp_enqueue_scripts', 'mon_theme_enqueue_select2');
+
+
+// --------------------------------------
+// Menus
+// --------------------------------------
+
 register_nav_menus([
     'header' => 'Menu principal',
     'footer' => 'Pied de page',
 ]);
 
 
-// Enregistrement du CPT 'photos'
+// Ajouter la classe .bouton-contact sur le menu "Contact"
+add_filter('nav_menu_link_attributes', function ($atts, $item, $args) {
+    if ($args->theme_location === 'header' && strtolower(trim($item->title)) === 'contact') {
+        $atts['class'] = isset($atts['class']) ? $atts['class'] . ' bouton-contact' : 'bouton-contact';
+        $atts['href'] = '#'; // évite une redirection vers une page "Contact"
+    }
+    return $atts;
+}, 10, 3);
+
+
+// --------------------------------------
+// CPT Photos
+// --------------------------------------
+
 function motaphoto_register_cpt_photos() {
     $labels = [
         'name' => 'Photos',
@@ -102,9 +130,11 @@ function motaphoto_register_cpt_photos() {
 add_action('init', 'motaphoto_register_cpt_photos');
 
 
-// Enregistrement des taxonomies personnalisées
+// --------------------------------------
+// Taxonomies personnalisées
+// --------------------------------------
+
 function motaphoto_register_taxonomies() {
-    // Catégorie photo
     register_taxonomy('photo_categorie', 'photos', [
         'label' => 'Catégories photo',
         'hierarchical' => true,
@@ -114,7 +144,6 @@ function motaphoto_register_taxonomies() {
         'show_in_rest' => true,
     ]);
 
-    // Format photo
     register_taxonomy('photo_format', 'photos', [
         'label' => 'Formats photo',
         'hierarchical' => true,
@@ -127,7 +156,10 @@ function motaphoto_register_taxonomies() {
 add_action('init', 'motaphoto_register_taxonomies');
 
 
-// Callback Ajax pour charger les photos filtrées + pagination
+// --------------------------------------
+// AJAX chargement des photos filtrées + pagination
+// --------------------------------------
+
 function motaphoto_load_photos_ajax() {
     check_ajax_referer('ajax-gallery-nonce', 'nonce');
 
@@ -144,7 +176,6 @@ function motaphoto_load_photos_ajax() {
 
     // Taxonomy query
     $tax_query = [];
-
     if ($categorie) {
         $tax_query[] = [
             'taxonomy' => 'photo_categorie',
@@ -152,7 +183,6 @@ function motaphoto_load_photos_ajax() {
             'terms' => $categorie,
         ];
     }
-
     if ($format) {
         $tax_query[] = [
             'taxonomy' => 'photo_format',
@@ -160,12 +190,8 @@ function motaphoto_load_photos_ajax() {
             'terms' => $format,
         ];
     }
-
     if (!empty($tax_query)) {
-        if (count($tax_query) > 1) {
-            $tax_query['relation'] = 'AND';
-        }
-        $args['tax_query'] = $tax_query;
+        $args['tax_query'] = count($tax_query) > 1 ? array_merge(['relation' => 'AND'], $tax_query) : $tax_query;
     }
 
     // Tri
@@ -192,20 +218,15 @@ function motaphoto_load_photos_ajax() {
     $query = new WP_Query($args);
 
     ob_start();
-
     if ($query->have_posts()) {
         while ($query->have_posts()) {
             $query->the_post();
-
-            // Inclure un template part, ou code HTML ici :
             get_template_part('template-parts/photo', 'item');
         }
     }
-
     wp_reset_postdata();
 
     $html = ob_get_clean();
-
     $has_more = ($paged < $query->max_num_pages);
 
     wp_send_json_success([

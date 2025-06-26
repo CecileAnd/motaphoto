@@ -1,26 +1,20 @@
 <?php
 get_header();
 
-// Début de la boucle WordPress
 if (have_posts()) :
     while (have_posts()) : the_post();
 
-        // Variables dynamiques
-        $image_url = get_the_post_thumbnail_url(get_the_ID(), 'large'); // image à la une
+        $image_url = get_the_post_thumbnail_url(get_the_ID(), 'large');
         $titre_photo = get_the_title();
 
-        // Champs personnalisés ACF
         $reference  = get_field('reference');
-        /* $categorie = get_field('categorie');
-        $format    = get_field('format'); */
-        $type      = get_field('type');
-        $annee     = get_field('annee');
+        $type       = get_field('type');
+        $annee      = get_field('annee');
 
-        // Taxonomies (si jamais utilisées à la place des ACF)
         $categorie = get_the_terms(get_the_ID(), 'photo_categorie');
-        $categorie = $categorie[0]->name;
+        $categorie = $categorie ? $categorie[0]->name : null;
         $format = get_the_terms(get_the_ID(), 'photo_format');
-        $format = $format[0]->name;
+        $format = $format ? $format[0]->name : null;
 ?>
 <main class="page-detail">
     <div class="container-detail">
@@ -47,18 +41,17 @@ if (have_posts()) :
     </div>
     <section class="interet-photo">
         <div class="interet-contact">
-            <p class="photo-interessante">Cette photo vous intéresse&nbsp;?</p>
-            <a href="#contact" class="bouton-contact">Contact</a>
+        <p class="photo-interessante">Cette photo vous intéresse&nbsp;?</p>
+        <a href="javascript:void(0);" class="contact-button" data-reference="<?php echo esc_attr($reference); ?>">Contact</a>
         </div>
         <div class="miniature-navigation">
             <div class="miniature-photo">
                 <?php
-                // Affiche une miniature aléatoire différente de celle courante
                 $args = array(
                     'post_type'      => 'photos',
                     'posts_per_page' => 1,
                     'orderby'        => 'rand',
-                    'post__not_in'   => array(get_the_ID()), // exclut la photo actuelle
+                    'post__not_in'   => array(get_the_ID()),
                 );
                 $random_photo = new WP_Query($args);
                 if ($random_photo->have_posts()) :
@@ -95,7 +88,6 @@ if (have_posts()) :
         <h3 class="titre-suggestions">Vous aimerez aussi</h3>
         <div class="suggestions-grid">
             <?php
-            // Affiche 2 suggestions aléatoires
             $suggestions = new WP_Query(array(
                 'post_type'      => 'photos',
                 'posts_per_page' => 2,
