@@ -498,6 +498,10 @@ header.single {
   padding: 40px 0;
 }
 
+main#primary.site-main.galerie {
+  margin-top: -5vh !important;
+}
+
 .carte {
   width: calc(50% - 20px);
   max-width: calc(50% - 20px);
@@ -554,6 +558,9 @@ header.single {
     max-width: 100%;
     flex: 0 0 100%;
     aspect-ratio: auto;
+  }
+  main#primary.site-main.galerie {
+    margin-top: 1vh !important;
   }
 }
 #categorie, #format, #tri {
