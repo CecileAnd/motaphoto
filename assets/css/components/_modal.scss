@@ -5,13 +5,17 @@
   z-index: 9999;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.4); // fond assombri
+}
+
+#modal {
+  display: flex;
   justify-content: center;
   align-items: center;
-  padding: 2rem;
 }
 
 .modal.show {
   display: flex;
+  max-height: 90%;
 }
 
 /* Contenu de la modale */
@@ -21,6 +25,7 @@
   padding: 2rem;
   max-width: 600px;
   width: 100%;
+  max-height: 100%;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
   position: relative;
   animation: fadeInUp 0.3s ease;
