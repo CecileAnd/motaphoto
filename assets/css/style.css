@@ -717,41 +717,36 @@ button.filtre-bouton {
   position: relative;
   overflow: hidden;
 }
-.carte a {
-  display: block;
-  width: 100%;
-  height: 100%;
-  color: #fff;
-  position: relative;
-}
 .carte img.image-carte {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
   display: block;
-  color: #fff;
   transition: transform 0.3s ease;
 }
 .carte:hover img.image-carte {
   transform: scale(1.05);
-  color: #fff;
 }
 .carte .overlay {
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  position: absolute;
-  display: none;
+  display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.7);
   padding: 15px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
 }
-.carte:hover > a .overlay {
-  display: flex;
+.carte:hover .overlay {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .overlay .icone-full {
@@ -766,6 +761,7 @@ button.filtre-bouton {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  color: white;
 }
 .overlay .icone-full img {
   width: 5%;
