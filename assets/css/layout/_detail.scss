@@ -295,3 +295,18 @@ $breakpoint-mobile: 768px;
     text-align: center;
   }
 }
+
+.suggestions-grid.une-suggestion {
+      display: flex;
+      justify-content: center;
+      max-width: 400px; // limite la largeur pour éviter un étirement trop grand
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .aucune-suggestion {
+      text-align: center;
+      font-style: italic;
+      color: #666;
+      margin-top: 20px;
+    }

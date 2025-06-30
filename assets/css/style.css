@@ -95,20 +95,7 @@ button.filtre-bouton,
   justify-content: center;
 }
 
-.charger-plus, #load-more, .contact-form-wrapper input[type=submit], input.wpcf7-form-control.wpcf7-submit.has-spinner {
-  width: 25vw;
-  padding: 15px 8px;
-  cursor: pointer;
-  color: black;
-  background-color: #C4C4C4;
-  text-align: center;
-  font-family: "Space Mono";
-  border: none;
-  border-radius: 0%;
-  text-decoration: none;
-}
-
-.interet-contact .contact-button {
+.interet-contact .contact-button, .charger-plus, #load-more, .contact-form-wrapper input[type=submit], input.wpcf7-form-control.wpcf7-submit.has-spinner {
   width: 25vw;
   padding: 15px 8px;
   cursor: pointer;
@@ -141,6 +128,10 @@ input.wpcf7-form-control.wpcf7-submit.has-spinner:focus {
   transform: translateY(-2px);
 }
 
+.modal-content {
+  max-height: 100vh !important;
+}
+
 header.single {
   box-shadow: none;
 }
@@ -149,17 +140,24 @@ header.single {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0;
+  padding-left: 5vw;
+  padding-right: 5vw;
   height: 60px;
-  position: sticky;
-  top: 0;
+  position: fixed;
+  top: 0px;
   background-color: white;
   z-index: 1002;
-  margin-right: 9vw;
-  margin-left: 9vw;
+  margin-right: 0;
+  margin-left: 0;
+  width: 100%;
 }
 
-/* MENU BURGER CORRIGÉ */
+header.index {
+  position: fixed;
+  z-index: 9003;
+}
+
+/* MENU BURGER */
 .burger-menu {
   display: flex;
   flex-direction: column;
@@ -170,7 +168,8 @@ header.single {
   background: none;
   border: none;
   cursor: pointer;
-  z-index: 1001;
+  z-index: 91001;
+  top: -10px !important;
 }
 
 .burger-bar {
@@ -201,7 +200,7 @@ header.single {
 
 .burger-menu.open {
   position: relative;
-  top: -3px;
+  top: -10px;
 }
 
 .menu {
@@ -214,6 +213,7 @@ header.single {
   list-style: none;
   margin: 0;
   padding: 0;
+  text-align: center;
 }
 
 .menu-list li a {
@@ -286,14 +286,15 @@ header.single {
 /* --- MOBILE --- */
 @media (max-width: 768px) {
   .conteneur-principal {
-    margin: 0 5vw;
-    position: relative;
+    margin: 0;
+    position: fixed;
     z-index: 1002;
     justify-content: space-between;
+    width: 100%;
   }
   .burger-menu {
     display: flex;
-    margin-top: 50px;
+    margin-top: 20px;
   }
   .menu {
     display: none;
@@ -360,6 +361,10 @@ header.single {
   .burger-menu {
     display: none;
   }
+  header.index {
+    position: fixed;
+    z-index: 9999999;
+  }
 }
 /* Base modale */
 .modal {
@@ -368,30 +373,43 @@ header.single {
   z-index: 9999;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.4);
+  padding: 2rem;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.modal::-webkit-scrollbar {
+  display: none;
 }
 
 #contact-modal {
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 100%;
 }
 
 .modal.show {
   display: flex;
-  max-height: 90%;
 }
 
 /* Contenu de la modale */
 .modal-content {
   background-color: #fff;
-  border-radius: 12px;
-  padding: 2rem;
-  max-width: 600px;
   width: 100%;
-  max-height: 100%;
+  max-width: 600px;
+  max-height: 75vh;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
   position: relative;
   animation: fadeInUp 0.3s ease;
+  padding: 2rem;
+  border: solid 5px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.modal-content::-webkit-scrollbar {
+  display: none;
 }
 
 /* Animation d’apparition */
@@ -445,27 +463,6 @@ header.single {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  /*input[type="submit"] {
-    display: block;
-    margin: 0 auto;
-    background-color: #0073e6;
-    border: none;
-    padding: 0.9rem 2rem;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    user-select: none;
-    text-align: center;
-
-    &:hover,
-    &:focus {
-      background-color: #005bb5;
-      outline: none;
-    }
-  }*/
 }
 .wpcf7 form input,
 .wpcf7 form textarea {
@@ -611,7 +608,7 @@ header.single {
   justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 5vh;
   margin-top: 9vh;
 }
 
@@ -737,12 +734,20 @@ button.filtre-bouton {
 @media (max-width: 768px) {
   .zone-filtres {
     flex-direction: column;
-    gap: 1.5rem;
-    margin: 0 5vw 2rem;
+    gap: 5vh;
   }
   .filtres-gauche,
   .filtres-droite {
     justify-content: center;
+  }
+  .filtres-gauche {
+    gap: 5vh;
+  }
+  .filtres-droite {
+    margin: 0;
+  }
+  .select2, .select2-container, .select2-container--default {
+    width: 200px;
   }
   .filtre-bouton {
     min-width: 100%;
@@ -1073,9 +1078,25 @@ button.filtre-bouton {
     text-align: center;
   }
 }
+.suggestions-grid.une-suggestion {
+  display: flex;
+  justify-content: center;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.aucune-suggestion {
+  text-align: center;
+  font-style: italic;
+  color: #666;
+  margin-top: 20px;
+}
+
 @media (max-width: 768px) {
   .logo {
     padding-left: 15px;
+    z-index: 999999;
   }
   .burger-menu {
     display: block;
@@ -1102,6 +1123,7 @@ button.filtre-bouton {
   }
   .menu.actif {
     display: flex;
+    position: fixed;
   }
   .menu a {
     color: #fff;
@@ -1117,6 +1139,7 @@ button.filtre-bouton {
     align-items: center;
     justify-content: center;
     width: 100%;
+    margin-top: 1vh;
   }
   .filtres {
     display: flex;
@@ -1160,6 +1183,7 @@ button.filtre-bouton {
   }
   .carte .conteneur-principal {
     padding: 0 20px;
+    position: fixed;
   }
   .carte .charger-plus {
     width: 100%;

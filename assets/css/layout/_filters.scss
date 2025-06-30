@@ -8,7 +8,7 @@
   justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 5vh;
   margin-top: 9vh;
   // margin: 0 9vw 2rem; // garde la même marge horizontale que la galerie + un margin-bottom
 }
@@ -140,13 +140,25 @@ button.filtre-bouton {
 @media (max-width: 768px) {
   .zone-filtres {
     flex-direction: column;
-    gap: 1.5rem;
-    margin: 0 5vw 2rem;
+    gap: 5vh;
+    //margin: 0 5vw 2rem;
   }
 
   .filtres-gauche,
   .filtres-droite {
     justify-content: center;
+  }
+
+  .filtres-gauche {
+    gap: 5vh;
+  }
+
+  .filtres-droite {
+    margin: 0;
+  }
+
+  .select2, .select2-container, .select2-container--default {
+    width: 200px;
   }
 
   .filtre-bouton {

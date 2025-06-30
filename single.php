@@ -15,6 +15,44 @@ if (have_posts()) :
         $categorie = $categorie ? $categorie[0]->name : null;
         $format = get_the_terms(get_the_ID(), 'photo_format');
         $format = $format ? $format[0]->name : null;
+
+        // Récupération des posts précédent et suivant normalement
+        $prev_post = get_previous_post();
+        $next_post = get_next_post();
+
+        $post_type = 'photos';
+
+        // Si pas de post précédent, on récupère le dernier post publié (ordre date DESC)
+        if (empty($prev_post)) {
+            $args = array(
+                'post_type'      => $post_type,
+                'posts_per_page' => 1,
+                'orderby'        => 'date',
+                'order'          => 'DESC',
+            );
+            $last_post_query = new WP_Query($args);
+            if ($last_post_query->have_posts()) {
+                $last_post_query->the_post();
+                $prev_post = get_post();
+                wp_reset_postdata();
+            }
+        }
+
+        // Si pas de post suivant, on récupère le premier post publié (ordre date ASC)
+        if (empty($next_post)) {
+            $args = array(
+                'post_type'      => $post_type,
+                'posts_per_page' => 1,
+                'orderby'        => 'date',
+                'order'          => 'ASC',
+            );
+            $first_post_query = new WP_Query($args);
+            if ($first_post_query->have_posts()) {
+                $first_post_query->the_post();
+                $next_post = get_post();
+                wp_reset_postdata();
+            }
+        }
 ?>
 <main class="page-detail">
     <div class="container-detail">
@@ -41,35 +79,25 @@ if (have_posts()) :
     </div>
     <section class="interet-photo">
         <div class="interet-contact">
-        <p class="photo-interessante">Cette photo vous intéresse&nbsp;?</p>
-        <a href="javascript:void(0);" class="contact-button" data-reference="<?php echo esc_attr($reference); ?>">Contact</a>
+            <p class="photo-interessante">Cette photo vous intéresse&nbsp;?</p>
+            <a href="javascript:void(0);" class="contact-button" data-reference="<?php echo esc_attr($reference); ?>">Contact</a>
         </div>
         <div class="miniature-navigation">
             <div class="miniature-photo">
                 <?php
-                $args = array(
-                    'post_type'      => 'photos',
-                    'posts_per_page' => 1,
-                    'orderby'        => 'rand',
-                    'post__not_in'   => array(get_the_ID()),
-                );
-                $random_photo = new WP_Query($args);
-                if ($random_photo->have_posts()) :
-                    while ($random_photo->have_posts()) : $random_photo->the_post();
-                        $thumb_url = get_the_post_thumbnail_url(get_the_ID(), 'thumbnail');
-                        if ($thumb_url) : ?>
-                            <img class="miniature" src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title_attribute(); ?>" />
-                        <?php endif;
-                    endwhile;
-                    wp_reset_postdata();
+                if (!empty($next_post)) :
+                    $next_thumb = get_the_post_thumbnail_url($next_post->ID, 'thumbnail');
+                    if ($next_thumb) :
+                ?>
+                    <a href="<?php echo get_permalink($next_post->ID); ?>">
+                        <img class="miniature" src="<?php echo esc_url($next_thumb); ?>" alt="<?php echo esc_attr(get_the_title($next_post->ID)); ?>" />
+                    </a>
+                <?php
+                    endif;
                 endif;
                 ?>
             </div>
             <div class="navigation-fleches">
-                <?php
-                $prev_post = get_previous_post();
-                $next_post = get_next_post();
-                ?>
                 <?php if (!empty($prev_post)) : ?>
                     <a href="<?php echo get_permalink($prev_post->ID); ?>" class="fleche gauche" aria-label="Photo précédente">&#8592;</a>
                 <?php endif; ?>
@@ -84,34 +112,53 @@ if (have_posts()) :
         <hr class="ligne-horizontale-longue"/>
     </div>
 
-    <section class="suggestions">
-        <h3 class="titre-suggestions">Vous aimerez aussi</h3>
-        <div class="suggestions-grid">
-            <?php
-            $suggestions = new WP_Query(array(
-                'post_type'      => 'photos',
-                'posts_per_page' => 2,
-                'orderby'        => 'rand',
-                'post__not_in'   => array(get_the_ID()),
-            ));
-            if ($suggestions->have_posts()) :
-                while ($suggestions->have_posts()) : $suggestions->the_post();
-                    $suggestion_thumb = get_the_post_thumbnail_url(get_the_ID(), 'large');
-                    if ($suggestion_thumb) :
-            ?>
-                <div class="suggestion-item">
-                    <a href="<?php the_permalink(); ?>">
-                        <img class="image-suggestion" src="<?php echo esc_url($suggestion_thumb); ?>" alt="<?php the_title_attribute(); ?>" />
-                    </a>
-                </div>
-            <?php
-                    endif;
-                endwhile;
-                wp_reset_postdata();
-            endif;
-            ?>
-        </div>
-    </section>
+   <section class="suggestions">
+    <h3 class="titre-suggestions">Vous aimerez aussi</h3>
+    <?php
+    if ($categorie) {
+        $suggestions = new WP_Query(array(
+            'post_type'      => 'photos',
+            'posts_per_page' => 2,
+            'orderby'        => 'rand',
+            'post__not_in'   => array(get_the_ID()),
+            'tax_query'      => array(
+                array(
+                    'taxonomy' => 'photo_categorie',
+                    'field'    => 'name',
+                    'terms'    => $categorie,
+                ),
+            ),
+        ));
+
+        $found_posts = $suggestions->found_posts;
+        if ($found_posts > 0) :
+    ?>
+    <div class="suggestions-grid <?php echo $found_posts === 1 ? 'une-suggestion' : ''; ?>">
+        <?php
+            while ($suggestions->have_posts()) : $suggestions->the_post();
+                $suggestion_thumb = get_the_post_thumbnail_url(get_the_ID(), 'large');
+                if ($suggestion_thumb) :
+        ?>
+            <div class="suggestion-item">
+                <a href="<?php the_permalink(); ?>">
+                    <img class="image-suggestion" src="<?php echo esc_url($suggestion_thumb); ?>" alt="<?php the_title_attribute(); ?>" />
+                </a>
+            </div>
+        <?php
+                endif;
+            endwhile;
+            wp_reset_postdata();
+        ?>
+    </div>
+    <?php
+        else :
+            echo '<p class="aucune-suggestion">Aucune suggestion disponible dans la même catégorie.</p>';
+        endif;
+    }
+    ?>
+</section>
+
+
 </main>
 
 <?php

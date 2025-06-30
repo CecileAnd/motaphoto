@@ -1,6 +1,7 @@
 @media (max-width: 768px) {
   .logo {
     padding-left: 15px;
+    z-index: 999999;
   }
   
   .burger-menu {
@@ -30,6 +31,7 @@
 
   .menu.actif {
     display: flex;
+    position: fixed;
   }
 
   .menu a {
@@ -48,6 +50,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
+    margin-top: 1vh;
   }
 
   .filtres {
@@ -100,6 +103,7 @@
 
   .conteneur-principal {
     padding: 0 20px;
+    position: fixed;
   }
 
   .charger-plus {

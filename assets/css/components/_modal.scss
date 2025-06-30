@@ -5,30 +5,49 @@
   z-index: 9999;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.4); // fond assombri
+  padding: 2rem;
+
+  // Scroll invisible mais actif
+  overflow-y: scroll;
+  scrollbar-width: none;           // Firefox
+  -ms-overflow-style: none;        // IE 10+
+
+  &::-webkit-scrollbar {
+    display: none;                 // Chrome, Safari
+  }
 }
 
 #contact-modal {
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 100%;
 }
 
 .modal.show {
   display: flex;
-  max-height: 90%;
 }
 
 /* Contenu de la modale */
 .modal-content {
   background-color: #fff;
-  border-radius: 12px;
-  padding: 2rem;
-  max-width: 600px;
   width: 100%;
-  max-height: 100%;
+  max-width: 600px;
+  max-height: 75vh;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
   position: relative;
   animation: fadeInUp 0.3s ease;
+  padding: 2rem;
+  border: solid 5px;
+
+  // Scroll interne si contenu trop grand, sans barre visible
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 /* Animation d’apparition */
@@ -65,17 +84,17 @@
   display: block;
   height: auto;
   margin-bottom: 1.5rem;
-  margin-left: -2rem;         
-  margin-right: -2rem;        
-  overflow: hidden; 
+  margin-left: -2rem;
+  margin-right: -2rem;
+  overflow: hidden;
 }
 
 .contact-header img {
   display: block;
-  width: 120%; 
-  margin-left: -2rem;         
-  margin-right: -2rem;       
-  object-fit: cover; 
+  width: 120%;
+  margin-left: -2rem;
+  margin-right: -2rem;
+  object-fit: cover;
 }
 
 /* Formulaire Contact Form 7 */
@@ -98,28 +117,6 @@
       border-color: #aaa;
     }
   }
-
-  /*input[type="submit"] {
-    display: block;
-    margin: 0 auto;
-    background-color: #0073e6;
-    border: none;
-    padding: 0.9rem 2rem;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    user-select: none;
-    text-align: center;
-
-    &:hover,
-    &:focus {
-      background-color: #005bb5;
-      outline: none;
-    }
-  }*/
 
   p:not(:last-of-type) {
     width: 25vw;

@@ -22,20 +22,7 @@ button.filtre-bouton,
   justify-content: center;
 }
 
-.charger-plus, #load-more, .contact-form-wrapper input[type="submit"], input.wpcf7-form-control.wpcf7-submit.has-spinner {
-  width: 25vw;
-  padding: 15px 8px;
-  cursor: pointer;
-  color: black;
-  background-color: #C4C4C4;
-  text-align: center;
-  font-family: 'Space Mono';
-  border: none;
-  border-radius: 0%;
-  text-decoration: none;
-}
-
-.interet-contact .contact-button {
+.interet-contact .contact-button, .charger-plus, #load-more, .contact-form-wrapper input[type="submit"], input.wpcf7-form-control.wpcf7-submit.has-spinner {
   width: 25vw;
   padding: 15px 8px;
   cursor: pointer;
@@ -60,5 +47,9 @@ input.wpcf7-form-control.wpcf7-submit.has-spinner {
     background-color: darken(#C4C4C4, 10%);
     transform: translateY(-2px);
   }
+}
+
+.modal-content {
+  max-height: 100vh!important;
 }
 
