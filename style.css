@@ -23,11 +23,12 @@ select {
 .select2-container--default .select2-results__option--highlighted {
   background-color: #E00000 !important;
   color: #fff;
+
 }
 
 .select2-container--default {
   .select2-selection--single {
-    border: 1px solid #ccc;
+    border: 2px solid blue;
     border-radius: 20px;
     height: 40px;
     padding: 0 12px;
@@ -44,7 +45,7 @@ select {
       width: 20px;
 
       b {
-        border-color: #333 transparent transparent transparent;
+        border-color: blue;
         border-width: 5px 4px 0 4px;
       }
     }
@@ -61,9 +62,8 @@ select {
   }
 
   .select2-results__option[aria-disabled="true"] {
-    font-weight: bold;
-    color: #666;
-    background-color: #f5f5f5;
+    color: black;
+    /*background-color: #f5f5f5;*/
     cursor: default;
   }
 
@@ -71,10 +71,11 @@ select {
     padding-top: 5px;
 
     .select2-results__option:first-child {
-      border-bottom: 1px solid #ddd;
+      border-bottom: 1px solid blue;
       padding-top: 10px;
       padding-bottom: 10px;
-      background-color: #f5f5f5;
+      /*background-color: #f5f5f5;*/
+      text-transform: uppercase;
     }
   }
 }
@@ -95,4 +96,32 @@ select {
   transform: translateY(-50%);
   pointer-events: none;
   white-space: nowrap;
+  text-transform: uppercase;
+}
+
+
+
+.select2-results__option[aria-disabled="true"] + .select2-results__option:empty {
+  padding-top: 1.5em;
+  padding-bottom: 1.5em;
+}
+
+/* Cache la scrollbar verticale dans les résultats Select2 */
+#select2-categorie-results {
+  max-height: none !important; /* enlève limite hauteur qui cause scroll */
+  overflow-y: hidden !important; /* empêche scroll vertical et cache la scrollbar */
+}
+
+/* Alternative : si tu veux garder scroll mais cacher la scrollbar */
+#select2-categorie-results::-webkit-scrollbar {
+  display: none;
+}
+#select2-categorie-results {
+  -ms-overflow-style: none;  /* IE et Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+#select2-categorie-results, #select2-format-results, #select2-tri-results, span.select2-dropdown.select2-custom-dropdown.select2-dropdown--below {
+   border: none;
+   border-radius: 10px;
 }
