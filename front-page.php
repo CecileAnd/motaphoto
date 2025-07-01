@@ -35,8 +35,9 @@ endif;
             $categories = get_terms(['taxonomy' => 'photo_categorie', 'hide_empty' => false]);
             if (!empty($categories) && !is_wp_error($categories)) : ?>
                 <div class="filtres">
-                    <select name="categorie" id="categorie">
-                        <option value="">Catégories</option>
+                    <select name="categorie" id="categorie" class="select2-no-search">
+                        <option value="" disabled selected>Catégories</option>
+                        <option value=""></option>
                         <?php foreach ($categories as $cat) : ?>
                             <option value="<?php echo esc_attr($cat->slug); ?>"><?php echo esc_html($cat->name); ?></option>
                         <?php endforeach; ?>
@@ -48,8 +49,8 @@ endif;
             $formats = get_terms(['taxonomy' => 'photo_format', 'hide_empty' => false]);
             if (!empty($formats) && !is_wp_error($formats)) : ?>
                 <div class="filtres">
-                    <select name="format" id="format">
-                        <option value="">Formats</option>
+                    <select name="format" id="format" class="select2-no-search">
+                        <option value="" disabled selected>Formats</option>
                         <?php foreach ($formats as $format) : ?>
                             <option value="<?php echo esc_attr($format->slug); ?>"><?php echo esc_html($format->name); ?></option>
                         <?php endforeach; ?>
@@ -60,8 +61,8 @@ endif;
 
         <div class="filtres-droite">
             <div class="filtres">
-                <select name="tri" id="tri">
-                    <option value="">Trier par</option>
+                <select name="tri" id="tri" class="select2-no-search">
+                    <option value="" disabled selected>Trier par</option>
                     <option value="date_desc">Date décroissante</option>
                     <option value="date_asc">Date croissante</option>
                 </select>
