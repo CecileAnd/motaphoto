@@ -14,12 +14,18 @@ $breakpoint-mobile: 768px;
     align-items: flex-end;
     justify-content: space-between;
 
-    .image-detail {
+    /* .image-detail {
       max-width: 50%;
       padding-bottom: 0;
       padding-left: 1vw;
       margin-bottom: -1vh;
-      flex: 1;
+      flex: 1; */
+
+      .image-detail {
+        flex-basis: 50%;
+        flex-grow: 1;
+        max-width: 100%;
+      }
 
       @media (max-width: $breakpoint-mobile) {
         max-width: 100%;
@@ -27,7 +33,7 @@ $breakpoint-mobile: 768px;
 
       img.principale {
         width: 100%;
-        min-width: 40vw;
+        //min-width: 40vw;
         height: auto;
         padding-bottom: 0;
         padding-right: 0;
@@ -126,8 +132,8 @@ $breakpoint-mobile: 768px;
 
     .bouton-contact, input.wpcf7-form-control.wpcf7-submit.has-spinner {
   display: flex;
-  align-items: center; 
-  justify-content: center; 
+  align-items: center!important; 
+  justify-content: center!important; 
   background-color: #ccc;
   color: #000;
   padding: 0.8rem 2rem;
@@ -243,7 +249,7 @@ $breakpoint-mobile: 768px;
       }
     }
   }
-}
+
 .ligne-horizontale-longue-haut {
   width: 50%;
   margin: 10px auto; // marge haut et bas + centrage horizontal

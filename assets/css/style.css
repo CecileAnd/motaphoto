@@ -101,7 +101,7 @@ button.filtre-bouton,
   cursor: pointer;
   color: black;
   background-color: #C4C4C4;
-  text-align: center;
+  text-align: center !important;
   font-family: "Space Mono";
   border: none;
   border-radius: 0%;
@@ -396,14 +396,15 @@ header.index {
 /* Contenu de la modale */
 .modal-content {
   background-color: #fff;
-  width: 100%;
+  /*   width: 100%; */
   max-width: 600px;
-  max-height: 75vh;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
   position: relative;
   animation: fadeInUp 0.3s ease;
   padding: 2rem;
+  margin-top: 22vh;
   border: solid 5px;
+  z-index: 999999999999;
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -426,8 +427,8 @@ header.index {
 /* Bouton de fermeture */
 .close-modal {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 0.5rem;
+  right: 0.5rem;
   background: transparent;
   border: none;
   font-size: 1.5rem;
@@ -483,11 +484,18 @@ header.index {
   display: block;
   margin: 0 auto;
 }
-.wpcf7 form input.wpcf7-form-control {
-  display: block;
-  margin: 0 auto;
+
+p:last-of-type {
+  align-items: center;
 }
 
+@media (max-width: 768px) {
+  p:not(:last-of-type) {
+    width: 50vw !important;
+    display: block;
+    margin: 0 auto;
+  }
+}
 .pied-de-page {
   margin-top: 40px;
   padding: 10px;
@@ -825,22 +833,25 @@ button.filtre-bouton {
   flex-direction: row-reverse;
   align-items: flex-end;
   justify-content: space-between;
+  /* .image-detail {
+    max-width: 50%;
+    padding-bottom: 0;
+    padding-left: 1vw;
+    margin-bottom: -1vh;
+    flex: 1; */
 }
 .page-detail .container-detail .image-detail {
-  max-width: 50%;
-  padding-bottom: 0;
-  padding-left: 1vw;
-  margin-bottom: -1vh;
-  flex: 1;
+  flex-basis: 50%;
+  flex-grow: 1;
+  max-width: 100%;
 }
 @media (max-width: 768px) {
-  .page-detail .container-detail .image-detail {
+  .page-detail .container-detail {
     max-width: 100%;
   }
 }
-.page-detail .container-detail .image-detail img.principale {
+.page-detail .container-detail img.principale {
   width: 100%;
-  min-width: 40vw;
   height: auto;
   padding-bottom: 0;
   padding-right: 0;
@@ -848,54 +859,55 @@ button.filtre-bouton {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 2px;
 }
-.page-detail .container-detail .informations-detail {
+.page-detail .informations-detail {
   flex: 1;
   display: flex;
   flex-direction: column;
   text-align: left;
 }
 @media (max-width: 768px) {
-  .page-detail .container-detail .informations-detail {
+  .page-detail .informations-detail {
     padding-right: 0;
     margin-top: 2rem;
   }
 }
-.page-detail .container-detail .informations-detail .titre-photo {
+.page-detail .informations-detail .titre-photo {
   font-size: 2rem;
   font-weight: 400;
   margin-bottom: 0.5rem;
   color: #000;
   text-transform: uppercase;
 }
-.page-detail .container-detail .informations-detail .categorie-photo {
+.page-detail .informations-detail .categorie-photo {
   font-size: 1.1rem;
   font-style: italic;
   color: #666;
   margin-bottom: 1.5rem;
 }
-.page-detail .container-detail .informations-detail .meta-photo {
+.page-detail .informations-detail .meta-photo {
   list-style: none;
   padding: 0;
   margin-bottom: 2rem;
 }
-.page-detail .container-detail .informations-detail .meta-photo li {
+.page-detail .informations-detail .meta-photo li {
   margin-bottom: 0.5rem;
 }
-.page-detail .container-detail .informations-detail .meta-photo li strong {
+.page-detail .informations-detail .meta-photo li strong {
   font-weight: 600;
 }
-.page-detail .container-detail .informations-detail .infos {
+.page-detail .informations-detail .infos {
   display: flex;
   justify-content: space-around;
 }
 @media (max-width: 768px) {
-  .page-detail .container-detail {
+  .page-detail {
     flex-direction: column;
     align-items: center;
     gap: 2rem;
   }
 }
-.page-detail .interet-contact {
+
+.interet-contact {
   padding-top: 30px;
   margin-top: 0;
   width: 50%;
@@ -905,31 +917,31 @@ button.filtre-bouton {
   align-items: center;
 }
 @media (max-width: 768px) {
-  .page-detail .interet-contact {
+  .interet-contact {
     width: 65%;
     gap: 1rem;
   }
 }
-.page-detail .interet-contact a.bouton-contact {
+.interet-contact a.bouton-contact {
   width: 50%;
   height: 60px;
   border-radius: 2px;
   text-align: center;
 }
-.page-detail .interet-contact p.photo-interessante {
+.interet-contact p.photo-interessante {
   text-align: left;
   width: 50%;
 }
-.page-detail .interet-contact h2 {
+.interet-contact h2 {
   font-size: 1.8rem;
   font-weight: 600;
   margin-bottom: 1rem;
   text-align: center;
 }
-.page-detail .interet-contact .bouton-contact, .page-detail .interet-contact input.wpcf7-form-control.wpcf7-submit.has-spinner {
+.interet-contact .bouton-contact, .interet-contact input.wpcf7-form-control.wpcf7-submit.has-spinner {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: center !important;
+  justify-content: center !important;
   background-color: #ccc;
   color: #000;
   padding: 0.8rem 2rem;
@@ -941,17 +953,19 @@ button.filtre-bouton {
   height: 60px;
   border-radius: 2px;
 }
-.page-detail .interet-contact .bouton-contact:hover, .page-detail .interet-contact input.wpcf7-form-control.wpcf7-submit.has-spinner:hover {
+.interet-contact .bouton-contact:hover, .interet-contact input.wpcf7-form-control.wpcf7-submit.has-spinner:hover {
   background-color: #333;
   color: #fff;
 }
-.page-detail .interet-photo {
+
+.interet-photo {
   display: flex;
   flex-direction: row;
   margin-top: 0;
   padding-top: 0;
 }
-.page-detail .miniature-navigation {
+
+.miniature-navigation {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -960,7 +974,7 @@ button.filtre-bouton {
   margin-left: auto;
   max-width: 100px;
 }
-.page-detail .miniature-navigation .miniature-photo {
+.miniature-navigation .miniature-photo {
   width: 90px;
   height: 90px;
   overflow: hidden;
@@ -969,45 +983,46 @@ button.filtre-bouton {
   justify-content: center;
   margin-top: 10px;
 }
-.page-detail .miniature-navigation .miniature-photo img {
+.miniature-navigation .miniature-photo img {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
   display: block;
 }
-.page-detail .miniature-navigation .navigation-fleches {
+.miniature-navigation .navigation-fleches {
   display: flex;
   justify-content: space-between;
   gap: 2rem;
 }
-.page-detail .miniature-navigation .navigation-fleches .fleche {
+.miniature-navigation .navigation-fleches .fleche {
   font-size: 1.5rem;
   background: none;
   border: none;
   cursor: pointer;
 }
-.page-detail .miniature-navigation .navigation-fleches .fleche:hover {
+.miniature-navigation .navigation-fleches .fleche:hover {
   color: #666;
 }
-.page-detail .suggestions {
+
+.suggestions {
   margin-top: 6rem;
 }
-.page-detail .suggestions h3.titre-suggestions {
+.suggestions h3.titre-suggestions {
   margin-bottom: 2rem;
 }
-.page-detail .suggestions p.titre-suggestion {
+.suggestions p.titre-suggestion {
   display: none;
 }
-.page-detail .suggestions .suggestions-grid {
+.suggestions .suggestions-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
 }
-.page-detail .suggestions .suggestions-grid .suggestion-item {
+.suggestions .suggestions-grid .suggestion-item {
   text-align: center;
 }
-.page-detail .suggestions .suggestions-grid .suggestion-item img {
+.suggestions .suggestions-grid .suggestion-item img {
   width: 100%;
   height: auto;
   border-radius: 2px;
@@ -1017,10 +1032,10 @@ button.filtre-bouton {
   -o-object-fit: cover;
      object-fit: cover;
 }
-.page-detail .suggestions .suggestions-grid .suggestion-item img:hover {
+.suggestions .suggestions-grid .suggestion-item img:hover {
   transform: scale(1.03);
 }
-.page-detail .suggestions .suggestions-grid .suggestion-item .titre-suggestion {
+.suggestions .suggestions-grid .suggestion-item .titre-suggestion {
   margin-top: 0.75rem;
   font-size: 1rem;
   font-weight: 500;
