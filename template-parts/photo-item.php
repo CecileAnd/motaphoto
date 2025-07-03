@@ -4,6 +4,7 @@
 $full_image_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
 $thumbnail_url  = get_the_post_thumbnail_url(get_the_ID(), 'full');
 $titre          = get_the_title();
+$reference      = get_post_meta(get_the_ID(), 'reference', true);
 $categories     = get_the_terms(get_the_ID(), 'photo_categorie');
 $cat_name       = $categories && !is_wp_error($categories) ? $categories[0]->name : '';
 $fullscreen     = get_template_directory_uri() . '/assets/images/icons/Icon_fullscreen.png';
@@ -16,7 +17,7 @@ $eye            = get_template_directory_uri() . '/assets/images/icons/Icon_eye.
   <div class="overlay">
     <div class="icone-full">
       <!-- Lien uniquement sur l’icône fullscreen -->
-      <a href="<?php echo esc_url($full_image_url); ?>" data-lightbox="galerie" data-title="<?php echo esc_attr($titre); ?>">
+      <a href="<?php echo esc_url($full_image_url); ?>" data-lightbox="galerie" data-title="<?php echo esc_attr($reference); ?>">
         <img src="<?php echo esc_url($fullscreen); ?>" alt="icone fullscreen" />
       </a>
     </div>
@@ -29,7 +30,7 @@ $eye            = get_template_directory_uri() . '/assets/images/icons/Icon_eye.
     </div>
 
     <div class="infos-bas">
-      <span class="gauche"><?php echo esc_html($titre); ?></span>
+      <span class="gauche"><?php echo esc_html($reference); ?></span>
       <span class="droite"><?php echo esc_html($cat_name); ?></span>
     </div>
   </div>

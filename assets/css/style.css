@@ -396,7 +396,7 @@ header.index {
 /* Contenu de la modale */
 .modal-content {
   background-color: #fff;
-  /*   width: 100%; */
+  width: 100%;
   max-width: 600px;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
   position: relative;
@@ -834,16 +834,17 @@ button.filtre-bouton {
   align-items: flex-end;
   justify-content: space-between;
   /* .image-detail {
-    max-width: 50%;
-    padding-bottom: 0;
-    padding-left: 1vw;
-    margin-bottom: -1vh;
-    flex: 1; */
+    flex-basis: 50%;
+    flex-grow: 1;
+    max-width: 100%;
+  } */
 }
 .page-detail .container-detail .image-detail {
-  flex-basis: 50%;
-  flex-grow: 1;
-  max-width: 100%;
+  max-width: 50%;
+  padding-bottom: 0;
+  padding-left: 1vw;
+  margin-bottom: -1vh;
+  flex: 1;
 }
 @media (max-width: 768px) {
   .page-detail .container-detail {

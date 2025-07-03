@@ -14,18 +14,19 @@ $breakpoint-mobile: 768px;
     align-items: flex-end;
     justify-content: space-between;
 
-    /* .image-detail {
+    .image-detail {
       max-width: 50%;
       padding-bottom: 0;
       padding-left: 1vw;
       margin-bottom: -1vh;
-      flex: 1; */
+      flex: 1;
+    }
 
-      .image-detail {
+      /* .image-detail {
         flex-basis: 50%;
         flex-grow: 1;
         max-width: 100%;
-      }
+      } */
 
       @media (max-width: $breakpoint-mobile) {
         max-width: 100%;
