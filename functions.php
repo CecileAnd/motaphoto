@@ -25,19 +25,26 @@ function motaphoto_enqueue_scripts() {
     );
 
     // Script Ajax gallery
-    wp_enqueue_script(
+/*     wp_enqueue_script(
         'ajax-gallery',
         get_template_directory_uri() . '/assets/js/ajax-gallery.js',
         ['jquery'],
         '1.0',
         true
-    );
+    ); */
+        wp_enqueue_script('ajax-gallery', get_template_directory_uri() . '/assets/js/ajax-gallery.js', array(), null, true);
 
     // Localisation pour AJAX
-    wp_localize_script('ajax-gallery', 'ajaxGallery', [
+/*     wp_localize_script('ajax-gallery', 'ajaxGallery', [
         'ajaxurl' => admin_url('admin-ajax.php'),
         'nonce' => wp_create_nonce('ajax-gallery-nonce'),
-    ]);
+    ]); */
+
+    wp_localize_script('ajax-gallery', 'ajaxGallery', array(
+  'ajaxurl' => admin_url('admin-ajax.php'),
+  'nonce'   => wp_create_nonce('load_photos_nonce'),
+));
+
 
     // Script modale de contact
     wp_enqueue_script(
@@ -161,7 +168,8 @@ add_action('init', 'motaphoto_register_taxonomies');
 // --------------------------------------
 
 function motaphoto_load_photos_ajax() {
-    check_ajax_referer('ajax-gallery-nonce', 'nonce');
+    //check_ajax_referer('ajax-gallery-nonce', 'nonce');
+    check_ajax_referer('load_photos_nonce', 'nonce');
 
     $paged = isset($_POST['page']) ? intval($_POST['page']) : 1;
     $categorie = isset($_POST['categorie']) ? sanitize_text_field($_POST['categorie']) : '';
@@ -199,14 +207,6 @@ function motaphoto_load_photos_ajax() {
         case 'date_asc':
             $args['orderby'] = 'date';
             $args['order'] = 'ASC';
-            break;
-        case 'title_asc':
-            $args['orderby'] = 'title';
-            $args['order'] = 'ASC';
-            break;
-        case 'title_desc':
-            $args['orderby'] = 'title';
-            $args['order'] = 'DESC';
             break;
         case 'date_desc':
         default:

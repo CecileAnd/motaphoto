@@ -4,9 +4,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function getFilters() {
     return {
-      categorie: jQuery('#categorie').val() || '',
-      format: jQuery('#format').val() || '',
-      tri: jQuery('#tri').val() || 'date_desc',
+      categorie: document.getElementById('categorie')?.value || '',
+      format: document.getElementById('format')?.value || '',
+      tri: document.getElementById('tri')?.value || 'date_desc',
     };
   }
 
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (isNewFilter) {
       currentPage = 1;
       photoResults.innerHTML = '';
-      if (loadMoreBtn) loadMoreBtn.style.display = 'block';
+      loadMoreBtn.style.display = 'block';
     } else {
       currentPage++;
     }
@@ -46,14 +46,12 @@ document.addEventListener('DOMContentLoaded', function () {
       .then((response) => {
         if (response.success && response.data.html.trim() !== '') {
           photoResults.insertAdjacentHTML('beforeend', response.data.html);
-          if (loadMoreBtn) {
-            loadMoreBtn.style.display = response.data.has_more ? 'block' : 'none';
-          }
+          loadMoreBtn.style.display = response.data.has_more ? 'block' : 'none';
         } else {
           if (currentPage === 1) {
             photoResults.innerHTML = '<p>Aucune photo trouvée.</p>';
           }
-          if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+          loadMoreBtn.style.display = 'none';
         }
       })
       .catch(() => {
@@ -64,7 +62,6 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   }
 
-  // Gestion bouton "Charger plus"
   const loadMoreBtn = document.getElementById('load-more');
   if (loadMoreBtn) {
     loadMoreBtn.addEventListener('click', function () {
@@ -72,11 +69,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Gestion filtres Select2 avec jQuery
   ['categorie', 'format', 'tri'].forEach((id) => {
-    const element = jQuery('#' + id);
-    if (element.length) {
-      element.on('change', function () {
+    const element = document.getElementById(id);
+    if (element) {
+      element.addEventListener('change', function () {
         loadPhotos(true);
       });
     }
