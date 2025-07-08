@@ -46,6 +46,10 @@ document.addEventListener('DOMContentLoaded', function () {
       .then((response) => {
         if (response.success && response.data.html.trim() !== '') {
           photoResults.insertAdjacentHTML('beforeend', response.data.html);
+          // Réinitialiser Lightbox2
+          if (window.lightbox) {
+          lightbox.init(); // recharge les images avec data-lightbox
+          }
           if (loadMoreBtn) {
             loadMoreBtn.style.display = response.data.has_more ? 'block' : 'none';
           }

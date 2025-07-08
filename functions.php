@@ -236,3 +236,25 @@ function motaphoto_load_photos_ajax() {
 }
 add_action('wp_ajax_load_photos', 'motaphoto_load_photos_ajax');
 add_action('wp_ajax_nopriv_load_photos', 'motaphoto_load_photos_ajax');
+
+function motaphoto_enqueue_lightbox_assets() {
+  // Lightbox2 CSS
+  wp_enqueue_style(
+    'lightbox-css',
+    get_stylesheet_directory_uri() . '/assets/lightbox2/css/lightbox.min.css',
+    [],
+    '2.11.4'
+  );
+
+  // Lightbox2 JS
+  wp_enqueue_script(
+    'lightbox-js',
+    get_stylesheet_directory_uri() . '/assets/lightbox2/js/lightbox.min.js',
+    ['jquery'],
+    '2.11.4',
+    true
+  );
+}
+add_action('wp_enqueue_scripts', 'motaphoto_enqueue_lightbox_assets');
+
+

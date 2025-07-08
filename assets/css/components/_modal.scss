@@ -131,6 +131,10 @@ p:last-of-type {
   align-items: center;
 }
 
+#photo-reference {
+  text-transform: uppercase;
+}
+
 @media (max-width: 768px) {
 
   p:not(:last-of-type) {

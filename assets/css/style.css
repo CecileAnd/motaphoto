@@ -24,7 +24,7 @@ h1, h2, h3, .description-photo {
 h1 {
   font-style: italic;
   font-weight: 700;
-  font-size: 96px !important;
+  font-size: 96px;
   text-transform: uppercase;
 }
 
@@ -34,6 +34,11 @@ h2 {
   font-size: 66px !important;
   text-transform: uppercase;
   line-height: 58px;
+}
+@media (max-width: 768px) {
+  h2 {
+    font-size: 40px !important;
+  }
 }
 
 h3 {
@@ -489,6 +494,10 @@ p:last-of-type {
   align-items: center;
 }
 
+#photo-reference {
+  text-transform: uppercase;
+}
+
 @media (max-width: 768px) {
   p:not(:last-of-type) {
     width: 50vw !important;
@@ -814,6 +823,7 @@ button.filtre-bouton {
   display: flex;
   justify-content: space-between;
   color: white;
+  text-transform: uppercase;
 }
 .overlay .icone-full img {
   width: 5%;
@@ -822,89 +832,148 @@ button.filtre-bouton {
   width: 7%;
 }
 
+.miniature-navigation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 1vw;
+}
+
+.miniature-photo img {
+  max-width: 100%;
+  height: auto;
+  transition: opacity 0.3s;
+}
+
+.navigation-fleches {
+  margin-top: 10px;
+}
+
+.fleche {
+  margin: 0 10px;
+  font-size: 2rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 .page-detail {
   margin-left: 9vw;
   margin-right: 9vw;
-  padding: 4rem 0;
+  padding: 3rem 0;
   font-family: "Poppins", sans-serif;
+}
+@media (max-width: 768px) {
+  .page-detail {
+    width: 100%;
+    margin-left: 1vw;
+    margin-right: 1vw !important;
+  }
 }
 .page-detail .container-detail {
   display: flex;
   flex-direction: row-reverse;
   align-items: flex-end;
   justify-content: space-between;
-  /* .image-detail {
-    flex-basis: 50%;
-    flex-grow: 1;
-    max-width: 100%;
-  } */
 }
-.page-detail .container-detail .image-detail {
-  max-width: 50%;
+@media (max-width: 768px) {
+  .page-detail .container-detail {
+    display: flex;
+    flex-direction: column-reverse;
+    width: 100%;
+    align-items: center;
+  }
+}
+.page-detail .container-detail img.principale {
+  width: 50vw;
+  padding-bottom: 0;
+  padding-left: 12vw;
+  margin-bottom: -1vh;
+  flex: 1;
+}
+@media (max-width: 768px) {
+  .page-detail .container-detail img.principale {
+    width: 100%;
+    padding-left: 0;
+    margin-left: 0;
+  }
+}
+.page-detail .image-detail {
+  width: 100%;
+}
+@media (max-width: 768px) {
+  .page-detail .image-detail {
+    align-self: center;
+  }
+}
+.page-detail .titre-photo, .page-detail .meta-photo {
+  width: 100%;
   padding-bottom: 0;
   padding-left: 1vw;
   margin-bottom: -1vh;
   flex: 1;
 }
 @media (max-width: 768px) {
-  .page-detail .container-detail {
-    max-width: 100%;
+  .page-detail .titre-photo, .page-detail .meta-photo {
+    width: 100%;
+    margin-left: -20vw;
   }
 }
-.page-detail .container-detail img.principale {
+.page-detail .description-photo {
   width: 100%;
-  height: auto;
-  padding-bottom: 0;
-  padding-right: 0;
-  margin-right: 0;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  border-radius: 2px;
 }
-.page-detail .informations-detail {
+@media (max-width: 768px) {
+  .page-detail .description-photo {
+    width: 200%;
+  }
+}
+
+.informations-detail {
   flex: 1;
   display: flex;
   flex-direction: column;
   text-align: left;
+  width: 30vw;
 }
 @media (max-width: 768px) {
-  .page-detail .informations-detail {
-    padding-right: 0;
+  .informations-detail {
+    padding: 10%;
     margin-top: 2rem;
   }
 }
-.page-detail .informations-detail .titre-photo {
+.informations-detail .titre-photo {
   font-size: 2rem;
   font-weight: 400;
   margin-bottom: 0.5rem;
   color: #000;
   text-transform: uppercase;
 }
-.page-detail .informations-detail .categorie-photo {
+.informations-detail .categorie-photo {
   font-size: 1.1rem;
   font-style: italic;
   color: #666;
   margin-bottom: 1.5rem;
 }
-.page-detail .informations-detail .meta-photo {
+.informations-detail .meta-photo {
   list-style: none;
   padding: 0;
   margin-bottom: 2rem;
 }
-.page-detail .informations-detail .meta-photo li {
+.informations-detail .meta-photo li {
   margin-bottom: 0.5rem;
 }
-.page-detail .informations-detail .meta-photo li strong {
+.informations-detail .meta-photo li strong {
   font-weight: 600;
 }
-.page-detail .informations-detail .infos {
+.informations-detail .infos {
   display: flex;
   justify-content: space-around;
 }
 @media (max-width: 768px) {
-  .page-detail {
+  .informations-detail .infos {
     flex-direction: column;
     align-items: center;
     gap: 2rem;
+    padding-left: 25%;
   }
 }
 
@@ -919,7 +988,7 @@ button.filtre-bouton {
 }
 @media (max-width: 768px) {
   .interet-contact {
-    width: 65%;
+    width: 80%;
     gap: 1rem;
   }
 }
@@ -933,6 +1002,11 @@ button.filtre-bouton {
   text-align: left;
   width: 50%;
 }
+@media (max-width: 768px) {
+  .interet-contact p.photo-interessante {
+    width: 80%;
+  }
+}
 .interet-contact h2 {
   font-size: 1.8rem;
   font-weight: 600;
@@ -941,8 +1015,8 @@ button.filtre-bouton {
 }
 .interet-contact .bouton-contact, .interet-contact input.wpcf7-form-control.wpcf7-submit.has-spinner {
   display: flex;
-  align-items: center !important;
-  justify-content: center !important;
+  align-items: center;
+  justify-content: center;
   background-color: #ccc;
   color: #000;
   padding: 0.8rem 2rem;
@@ -1062,35 +1136,35 @@ button.filtre-bouton {
 }
 
 @media (max-width: 768px) {
-  div.miniature-navigation {
-    display: none !important;
-  }
+  /*   div.miniature-navigation{
+      display: none;
+    }  */
   .interet-contact {
-    display: flex !important;
-    flex-direction: column !important;
-    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
   }
   .photo-interessante, .bouton-contact {
-    width: 100% !important;
+    width: 100%;
   }
   .ligne-horizontale-longue {
-    width: 200% !important;
-    margin-left: -20vw !important;
+    width: 200%;
+    margin-left: -20vw;
   }
   .ligne-horizontale-longue-haut {
-    width: 200% !important;
-    margin-left: -20vw !important;
+    width: 200%;
+    margin-left: -20vw;
   }
   .titre-suggestions {
-    text-align: center !important;
+    text-align: center;
   }
   .suggestions {
-    margin-top: 1rem !important;
+    margin-top: 1rem;
   }
   .ul-pied-de-page {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 10px !important;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     text-align: center;
   }
 }

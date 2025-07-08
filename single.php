@@ -82,30 +82,50 @@ if (have_posts()) :
             <p class="photo-interessante">Cette photo vous intéresse&nbsp;?</p>
             <a href="javascript:void(0);" class="contact-button" data-reference="<?php echo esc_attr($reference); ?>">Contact</a>
         </div>
-        <div class="miniature-navigation">
-            <div class="miniature-photo">
-                <?php
-                if (!empty($next_post)) :
-                    $next_thumb = get_the_post_thumbnail_url($next_post->ID, 'thumbnail');
-                    if ($next_thumb) :
-                ?>
-                    <a href="<?php echo get_permalink($next_post->ID); ?>">
-                        <img class="miniature" src="<?php echo esc_url($next_thumb); ?>" alt="<?php echo esc_attr(get_the_title($next_post->ID)); ?>" />
-                    </a>
-                <?php
-                    endif;
-                endif;
-                ?>
-            </div>
-            <div class="navigation-fleches">
-                <?php if (!empty($prev_post)) : ?>
-                    <a href="<?php echo get_permalink($prev_post->ID); ?>" class="fleche gauche" aria-label="Photo précédente">&#8592;</a>
-                <?php endif; ?>
-                <?php if (!empty($next_post)) : ?>
-                    <a href="<?php echo get_permalink($next_post->ID); ?>" class="fleche droite" aria-label="Photo suivante">&#8594;</a>
-                <?php endif; ?>
-            </div>
+    <?php
+    $prev_post = get_previous_post();
+    $next_post = get_next_post();
+
+    $prev_thumb = $prev_post ? get_the_post_thumbnail_url($prev_post->ID, 'thumbnail') : '';
+    $next_thumb = $next_post ? get_the_post_thumbnail_url($next_post->ID, 'thumbnail') : '';
+
+    $default_thumb = $next_thumb ?: $prev_thumb;
+    $default_title = $next_post ? get_the_title($next_post->ID) : ($prev_post ? get_the_title($prev_post->ID) : '');
+    ?>
+
+    <div class="miniature-navigation">
+        <div class="miniature-photo">
+            <a id="miniature-link"
+            href="<?php echo esc_url($next_post ? get_permalink($next_post->ID) : ($prev_post ? get_permalink($prev_post->ID) : '#')); ?>">
+                <img id="miniature-image"
+                    class="miniature"
+                    src="<?php echo esc_url($default_thumb); ?>"
+                    alt="<?php echo esc_attr($default_title); ?>" />
+            </a>
         </div>
+
+        <div class="navigation-fleches">
+            <?php if ($prev_post && $prev_thumb) : ?>
+                <a href="<?php echo get_permalink($prev_post->ID); ?>"
+                class="fleche gauche"
+                aria-label="Photo précédente"
+                data-thumb="<?php echo esc_url($prev_thumb); ?>"
+                data-link="<?php echo esc_url(get_permalink($prev_post->ID)); ?>">
+                    &#8592;
+                </a>
+            <?php endif; ?>
+
+            <?php if ($next_post && $next_thumb) : ?>
+                <a href="<?php echo get_permalink($next_post->ID); ?>"
+                class="fleche droite"
+                aria-label="Photo suivante"
+                data-thumb="<?php echo esc_url($next_thumb); ?>"
+                data-link="<?php echo esc_url(get_permalink($next_post->ID)); ?>">
+                    &#8594;
+                </a>
+            <?php endif; ?>
+        </div>
+    </div>
     </section>
 
     <div class="bloc-separateur">

@@ -1,6 +1,36 @@
 console.log("script.js chargé");
 
+
+// gestion miniatures
+document.addEventListener("DOMContentLoaded", function () {
+    const miniatureImage = document.getElementById("miniature-image");
+    const miniatureLink = document.getElementById("miniature-link");
+
+    if (!miniatureImage || !miniatureLink) return;
+
+    const defaultSrc = miniatureImage.src;
+    const defaultHref = miniatureLink.href;
+
+    const fleches = document.querySelectorAll(".navigation-fleches .fleche");
+
+    fleches.forEach((fleche) => {
+        fleche.addEventListener("mouseenter", () => {
+            const newSrc = fleche.getAttribute("data-thumb");
+            const newHref = fleche.getAttribute("data-link");
+            if (newSrc) miniatureImage.src = newSrc;
+            if (newHref) miniatureLink.href = newHref;
+        });
+
+        fleche.addEventListener("mouseleave", () => {
+            miniatureImage.src = defaultSrc;
+            miniatureLink.href = defaultHref;
+        });
+    });
+});
+
 jQuery(document).ready(function($) {
+  
+
   // --- MODALE DE CONTACT ---
   $(document).on('click', 'li.contact-button > a', function(e) {
     e.preventDefault();

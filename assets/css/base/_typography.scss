@@ -1,3 +1,6 @@
+// Variables
+$breakpoint-mobile: 768px;
+
 body, p {
   font-family: 'Poppins';
   line-height: 1.5;
@@ -17,7 +20,7 @@ h1, h2, h3, .description-photo {
 h1 {
   font-style: italic;
   font-weight: 700;
-  font-size: 96px!important;
+  font-size: 96px;
   text-transform: uppercase;
 }
 
@@ -27,8 +30,10 @@ h2 {
   font-size: 66px!important;
   text-transform: uppercase;
   line-height: 58px;
-}
-
+      @media (max-width: $breakpoint-mobile) {
+        font-size: 40px!important;
+      }
+    }
 h3 {
   font-style: normal;
   font-weight: 400;
