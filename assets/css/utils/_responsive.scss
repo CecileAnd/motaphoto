@@ -119,6 +119,8 @@
 
     img.lazyloaded:not(.logo, .chevron, .hero-background) {
     height: 50vh;
+    aspect-ratio: 1/1;
+    object-fit: cover;
   }
 /*     .filtre-bouton,
   .filtre-options {

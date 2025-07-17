@@ -1310,6 +1310,9 @@ img.logo {
   }
   img.lazyloaded:not(.logo, .chevron, .hero-background) {
     height: 50vh;
+    aspect-ratio: 1/1;
+    -o-object-fit: cover;
+       object-fit: cover;
   }
   /*     .filtre-bouton,
     .filtre-options {
