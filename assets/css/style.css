@@ -686,10 +686,10 @@ p:last-of-type {
   gap: 0.5rem;
   cursor: pointer;
   transition: all 0.3s ease;
-}
-.filtre-bouton:hover {
-  border-color: #E00000;
-  color: #E00000;
+  /*   &:hover {
+      border-color: #E00000;
+      color: #E00000;
+    } */
 }
 .filtre-bouton:focus {
   outline: none;
@@ -945,7 +945,7 @@ img.logo {
 }
 @media (max-width: 768px) {
   .page-detail .description-photo {
-    width: 100%;
+    width: 200%;
   }
 }
 .page-detail #miniature-image {
@@ -1291,6 +1291,8 @@ img.logo {
   .carte img.lazyloaded, picture.principale img.lazyloaded {
     width: 100%;
     aspect-ratio: 1/1;
+    -o-object-fit: cover;
+       object-fit: cover;
   }
   .carte .image-carte, picture.principale .image-carte {
     width: 100%;

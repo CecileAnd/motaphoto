@@ -31,9 +31,9 @@ $breakpoint-mobile: 768px;
 }
 
 // Page détail
-img.lazyloaded {
+ img.lazyloaded {
   width: 40vw;
-}
+} 
 
 img.logo {
   width: 12vw;
@@ -121,7 +121,7 @@ img.logo {
     width: 100%;
 
     @media (max-width: $breakpoint-mobile) {
-      width: 100%;
+      width: 200%;
     }
   }
   #miniature-image {

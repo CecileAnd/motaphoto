@@ -3,3 +3,13 @@
    Description: Thème pour une photographe
    Text Domain: motaphoto
 */
+
+   button.filtre-bouton picture {
+    height: 20px!important;
+   }
+
+     .contact-header picture img {
+    height: 10vh!important;
+    width: 150%;
+    object-fit: cover;
+  }
