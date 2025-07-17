@@ -195,7 +195,7 @@ header.index {
     padding: 0;
   }
 
-  .menu.active {
+  .menu.open {
     display: flex;
   }
 
@@ -217,6 +217,7 @@ header.index {
 
   .logo {
     width: 200px;
+    margin-top: 2vh;
   }
 
   .image-text,

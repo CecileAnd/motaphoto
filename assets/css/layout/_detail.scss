@@ -37,7 +37,10 @@ img.lazyloaded {
 
 img.logo {
   width: 12vw;
-}
+
+  @media (max-width: $breakpoint-mobile) {
+    width: 100%;
+  }}
 
 .page-detail {
   margin-left: 9vw;
@@ -381,7 +384,7 @@ img.logo {
   }
 
   .ligne-horizontale-longue-haut {
-    width: 100%;
+    width: 100%!important;
     margin-left: -1vw;
   }
 
