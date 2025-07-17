@@ -16,7 +16,6 @@ if (have_posts()) :
         $format = get_the_terms(get_the_ID(), 'photo_format');
         $format = $format ? $format[0]->name : null;
 
-        // Récupération des posts précédent et suivant normalement
         $prev_post = get_previous_post();
         $next_post = get_next_post();
 
@@ -53,12 +52,45 @@ if (have_posts()) :
                 wp_reset_postdata();
             }
         }
+
+        function convert_to_webp($url) {
+    // Si l'URL termine par .jpg, .jpeg ou .png, on ajoute .webp à la fin sans enlever l'extension d'origine
+    if (preg_match('/\.(jpe?g|png)$/i', $url)) {
+        return $url . '.webp';
+    }
+    return $url;
+}
+
+        
+/*         // Générer les URLs WebP pour l'image principale et miniatures (remplacement extension)
+        function convert_to_webp($url) {
+            return preg_replace('/\.(jpe?g|png)$/i', '.webp', $url);
+        }
+        $image_url_webp = $image_url ? convert_to_webp($image_url) : ''; */
+
+        $prev_thumb = $prev_post ? get_the_post_thumbnail_url($prev_post->ID, 'thumbnail') : '';
+        $next_thumb = $next_post ? get_the_post_thumbnail_url($next_post->ID, 'thumbnail') : '';
+
+        $prev_thumb_webp = $prev_thumb ? convert_to_webp($prev_thumb) : '';
+        $next_thumb_webp = $next_thumb ? convert_to_webp($next_thumb) : '';
+
+        $default_thumb = $next_thumb ?: $prev_thumb;
+        $default_thumb_webp = $next_thumb_webp ?: $prev_thumb_webp;
+
+        $default_title = $next_post ? get_the_title($next_post->ID) : ($prev_post ? get_the_title($prev_post->ID) : '');
+
+        $default_link = $next_post ? get_permalink($next_post->ID) : ($prev_post ? get_permalink($prev_post->ID) : '#');
+
 ?>
+
 <main class="page-detail">
     <div class="container-detail">
         <div class="image-detail">
             <?php if ($image_url) : ?>
-                <img class="principale" src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($titre_photo); ?>" />
+                <picture class="principale">
+                    <source srcset="<?php echo esc_url($image_url_webp); ?>" type="image/webp" />
+                    <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($titre_photo); ?>" />
+                </picture>
             <?php endif; ?>
         </div>
         <div class="infos">
@@ -82,46 +114,37 @@ if (have_posts()) :
             <p class="photo-interessante">Cette photo vous intéresse&nbsp;?</p>
             <a href="javascript:void(0);" class="contact-button" data-reference="<?php echo esc_attr($reference); ?>">Contact</a>
         </div>
-    <?php
-    $prev_post = get_previous_post();
-    $next_post = get_next_post();
-
-    $prev_thumb = $prev_post ? get_the_post_thumbnail_url($prev_post->ID, 'thumbnail') : '';
-    $next_thumb = $next_post ? get_the_post_thumbnail_url($next_post->ID, 'thumbnail') : '';
-
-    $default_thumb = $next_thumb ?: $prev_thumb;
-    $default_title = $next_post ? get_the_title($next_post->ID) : ($prev_post ? get_the_title($prev_post->ID) : '');
-    ?>
 
     <div class="miniature-navigation">
         <div class="miniature-photo">
-            <a id="miniature-link"
-            href="<?php echo esc_url($next_post ? get_permalink($next_post->ID) : ($prev_post ? get_permalink($prev_post->ID) : '#')); ?>">
-                <img id="miniature-image"
-                    class="miniature"
-                    src="<?php echo esc_url($default_thumb); ?>"
-                    alt="<?php echo esc_attr($default_title); ?>" />
+            <a id="miniature-link" href="<?php echo esc_url($default_link); ?>">
+                <picture>
+                    <source srcset="<?php echo esc_url($default_thumb_webp); ?>" type="image/webp" />
+                    <img id="miniature-image" class="miniature" src="<?php echo esc_url($default_thumb); ?>" alt="<?php echo esc_attr($default_title); ?>" />
+                </picture>
             </a>
         </div>
 
         <div class="navigation-fleches">
             <?php if ($prev_post && $prev_thumb) : ?>
                 <a href="<?php echo get_permalink($prev_post->ID); ?>"
-                class="fleche gauche"
-                aria-label="Photo précédente"
-                data-thumb="<?php echo esc_url($prev_thumb); ?>"
-                data-link="<?php echo esc_url(get_permalink($prev_post->ID)); ?>">
-                    &#8592;
+                   class="fleche gauche"
+                   aria-label="Photo précédente"
+                   data-thumb="<?php echo esc_url($prev_thumb); ?>"
+                   data-thumb-webp="<?php echo esc_url($prev_thumb_webp); ?>"
+                   data-link="<?php echo esc_url(get_permalink($prev_post->ID)); ?>">
+                   &#8592;
                 </a>
             <?php endif; ?>
 
             <?php if ($next_post && $next_thumb) : ?>
                 <a href="<?php echo get_permalink($next_post->ID); ?>"
-                class="fleche droite"
-                aria-label="Photo suivante"
-                data-thumb="<?php echo esc_url($next_thumb); ?>"
-                data-link="<?php echo esc_url(get_permalink($next_post->ID)); ?>">
-                    &#8594;
+                   class="fleche droite"
+                   aria-label="Photo suivante"
+                   data-thumb="<?php echo esc_url($next_thumb); ?>"
+                   data-thumb-webp="<?php echo esc_url($next_thumb_webp); ?>"
+                   data-link="<?php echo esc_url(get_permalink($next_post->ID)); ?>">
+                   &#8594;
                 </a>
             <?php endif; ?>
         </div>
@@ -178,8 +201,68 @@ if (have_posts()) :
     ?>
 </section>
 
-
 </main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Sélection des éléments
+    const miniatureLink = document.getElementById('miniature-link');
+    const miniatureImage = document.getElementById('miniature-image');
+    const miniaturePicture = miniatureImage.closest('picture');
+
+    // Flèches
+    const prevArrow = document.querySelector('.navigation-fleches .fleche.gauche');
+    const nextArrow = document.querySelector('.navigation-fleches .fleche.droite');
+
+    function updateMiniature(thumb, thumbWebp, link, alt) {
+        // Met à jour la miniature et le lien
+        miniatureLink.href = link;
+
+        // Met à jour le fallback img
+        miniatureImage.src = thumb;
+        miniatureImage.alt = alt || '';
+
+        // Met à jour la source WebP (premier enfant source de picture)
+        if (miniaturePicture) {
+            const sourceWebp = miniaturePicture.querySelector('source[type="image/webp"]');
+            if (sourceWebp) {
+                sourceWebp.srcset = thumbWebp;
+            }
+        }
+    }
+
+    function onArrowHover(e) {
+        const target = e.currentTarget;
+        const thumb = target.getAttribute('data-thumb');
+        const thumbWebp = target.getAttribute('data-thumb-webp');
+        const link = target.getAttribute('data-link');
+        const alt = target.getAttribute('aria-label');
+        if (thumb && thumbWebp && link) {
+            updateMiniature(thumb, thumbWebp, link, alt);
+        }
+    }
+
+    function onArrowOut() {
+        // Remet à la miniature par défaut (celle au chargement)
+        // On pourrait stocker dans des variables la valeur initiale
+        updateMiniature(
+            '<?php echo esc_js($default_thumb); ?>',
+            '<?php echo esc_js($default_thumb_webp); ?>',
+            '<?php echo esc_js($default_link); ?>',
+            '<?php echo esc_js($default_title); ?>'
+        );
+    }
+
+    if (prevArrow) {
+        prevArrow.addEventListener('mouseenter', onArrowHover);
+        prevArrow.addEventListener('mouseleave', onArrowOut);
+    }
+    if (nextArrow) {
+        nextArrow.addEventListener('mouseenter', onArrowHover);
+        nextArrow.addEventListener('mouseleave', onArrowOut);
+    }
+});
+</script>
 
 <?php
     endwhile;

@@ -2,7 +2,6 @@
 /**
  * Template Name: Front Page - Galerie Photos
  */
-
 get_header();
 
 // Section Hero avec photo aléatoire
@@ -15,11 +14,18 @@ $random_photo = new WP_Query($args);
 if ($random_photo->have_posts()) :
     while ($random_photo->have_posts()) : $random_photo->the_post();
         if (has_post_thumbnail()) :
-            $image_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
-            ?>
-            <section class="hero-header" style="background-image: url('<?php echo esc_url($image_url); ?>');">
-                <div class="hero-overlay-text">Photographe&nbsp;Event</div>
-            </section>
+            $image_id = get_post_thumbnail_id(get_the_ID());
+?>
+<section class="hero-header">
+  <?php
+    echo wp_get_attachment_image($image_id, 'full', false, [
+        'class' => 'hero-background',
+        'alt'   => 'Photo d’en-tête aléatoire',
+    ]);
+  ?>
+  <div class="hero-overlay-text">Photographe&nbsp;Event</div>
+</section>
+
             <?php
         endif;
     endwhile;
@@ -31,40 +37,46 @@ endif;
 
     <div class="zone-filtres">
         <div class="filtres-gauche">
-            <?php
-            $categories = get_terms(['taxonomy' => 'photo_categorie', 'hide_empty' => false]);
-            if (!empty($categories) && !is_wp_error($categories)) : ?>
-                <div class="filtres">
-                    <select name="categorie" id="categorie" class="select2-no-search select2-results">
-                        <option value="">Catégories</option>
-                        <?php foreach ($categories as $cat) : ?>
-                            <option value="<?php echo esc_attr($cat->slug); ?>"><?php echo esc_html($cat->name); ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-            <?php endif; ?>
 
-            <?php
-            $formats = get_terms(['taxonomy' => 'photo_format', 'hide_empty' => false]);
-            if (!empty($formats) && !is_wp_error($formats)) : ?>
-                <div class="filtres">
-                    <select name="format" id="format" class="select2-no-search select2-results">
-                        <option value="">Formats</option>
-                        <?php foreach ($formats as $format) : ?>
-                            <option value="<?php echo esc_attr($format->slug); ?>"><?php echo esc_html($format->name); ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-            <?php endif; ?>
+            <?php $categories = get_terms(['taxonomy' => 'photo_categorie', 'hide_empty' => false]); ?>
+            <div class="filtres" data-filter="categorie">
+                <button class="filtre-bouton" type="button">
+                    <span class="filtre-titre">Catégories</span>
+                    <img class="chevron" src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/chevron-down.png" alt="Chevron bas">
+                </button>
+                <ul class="filtre-options">
+                    <li data-value=""> Catégories </li>
+                    <?php foreach ($categories as $cat): ?>
+                        <li data-value="<?php echo esc_attr($cat->slug); ?>"><?php echo esc_html($cat->name); ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+
+            <?php $formats = get_terms(['taxonomy' => 'photo_format', 'hide_empty' => false]); ?>
+            <div class="filtres" data-filter="format">
+                <button class="filtre-bouton" type="button">
+                    <span class="filtre-titre">Formats</span>
+                    <img class="chevron" src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/chevron-down.png" alt="Chevron bas">
+                </button>
+                <ul class="filtre-options">
+                    <li data-value=""> Formats </li>
+                    <?php foreach ($formats as $format): ?>
+                        <li data-value="<?php echo esc_attr($format->slug); ?>"><?php echo esc_html($format->name); ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
         </div>
 
         <div class="filtres-droite">
-            <div class="filtres">
-                <select name="tri" id="tri" class="select2-no-search select2-results">
-                    <option value="">Trier par</option>
-                    <option value="date_desc">Date décroissante</option>
-                    <option value="date_asc">Date croissante</option>
-                </select>
+            <div class="filtres" data-filter="tri">
+                <button class="filtre-bouton" type="button">
+                    <span class="filtre-titre">Trier par</span>
+                    <img class="chevron" src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/chevron-down.png" alt="Chevron bas">
+                </button>
+                <ul class="filtre-options">
+                    <li data-value="date_desc">Date décroissante</li>
+                    <li data-value="date_asc">Date croissante</li>
+                </ul>
             </div>
         </div>
     </div>

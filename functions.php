@@ -3,10 +3,7 @@
 
 add_theme_support('post-thumbnails');
 
-
-// --------------------------------------
 // Enqueue styles & scripts
-// --------------------------------------
 
 function motaphoto_enqueue_scripts() {
     // Style principal
@@ -24,29 +21,14 @@ function motaphoto_enqueue_scripts() {
         true
     );
 
-    // Script Ajax gallery
-/*     wp_enqueue_script(
-        'ajax-gallery',
-        get_template_directory_uri() . '/assets/js/ajax-gallery.js',
-        ['jquery'],
-        '1.0',
-        true
-    ); */
-        wp_enqueue_script('ajax-gallery', get_template_directory_uri() . '/assets/js/ajax-gallery.js', array(), null, true);
-
-    // Localisation pour AJAX
-/*     wp_localize_script('ajax-gallery', 'ajaxGallery', [
-        'ajaxurl' => admin_url('admin-ajax.php'),
-        'nonce' => wp_create_nonce('ajax-gallery-nonce'),
-    ]); */
+    wp_enqueue_script('ajax-gallery', get_template_directory_uri() . '/assets/js/ajax-gallery.js', array(), null, true);
 
     wp_localize_script('ajax-gallery', 'ajaxGallery', array(
-  'ajaxurl' => admin_url('admin-ajax.php'),
-  'nonce'   => wp_create_nonce('load_photos_nonce'),
-));
+        'ajaxurl' => admin_url('admin-ajax.php'),
+        'nonce'   => wp_create_nonce('load_photos_nonce'),
+    ));
 
-
-    // Script modale de contact
+    // script modale de contact
     wp_enqueue_script(
         'mon-theme-modal-contact',
         get_template_directory_uri() . '/assets/js/modal-contact.js',
@@ -54,39 +36,22 @@ function motaphoto_enqueue_scripts() {
         filemtime(get_template_directory() . '/assets/js/modal-contact.js'),
         true
     );
+
+    // **Nouveau** : script navigation single photos (uniquement sur single photos)
+    if (is_singular('photos')) {
+        wp_enqueue_script(
+            'single-photos-navigation',
+            get_stylesheet_directory_uri() . '/js/single-photos-navigation.js',
+            [], // pas de dépendances, ou ajouter ['jquery'] si besoin
+            '1.0',
+            true
+        );
+    }
 }
 add_action('wp_enqueue_scripts', 'motaphoto_enqueue_scripts');
 
 
-// Enqueue Select2 (CSS + JS) et initialisation
-function mon_theme_enqueue_select2() {
-    wp_enqueue_style(
-        'select2-css',
-        'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css'
-    );
-
-    wp_enqueue_script(
-        'select2-js',
-        'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js',
-        ['jquery'],
-        null,
-        true
-    );
-
-    wp_enqueue_script(
-        'select2-init',
-        get_template_directory_uri() . '/assets/js/select2-init.js',
-        ['jquery', 'select2-js'],
-        null,
-        true
-    );
-}
-add_action('wp_enqueue_scripts', 'mon_theme_enqueue_select2');
-
-
-// --------------------------------------
-// Menus
-// --------------------------------------
+// menus
 
 register_nav_menus([
     'header' => 'Menu principal',
@@ -94,7 +59,7 @@ register_nav_menus([
 ]);
 
 
-// Ajouter la classe .bouton-contact sur le menu "Contact"
+// ajouter la classe .bouton-contact sur le menu "Contact"
 add_filter('nav_menu_link_attributes', function ($atts, $item, $args) {
     if ($args->theme_location === 'header' && strtolower(trim($item->title)) === 'contact') {
         $atts['class'] = isset($atts['class']) ? $atts['class'] . ' bouton-contact' : 'bouton-contact';
@@ -104,9 +69,7 @@ add_filter('nav_menu_link_attributes', function ($atts, $item, $args) {
 }, 10, 3);
 
 
-// --------------------------------------
 // CPT Photos
-// --------------------------------------
 
 function motaphoto_register_cpt_photos() {
     $labels = [
@@ -137,9 +100,7 @@ function motaphoto_register_cpt_photos() {
 add_action('init', 'motaphoto_register_cpt_photos');
 
 
-// --------------------------------------
-// Taxonomies personnalisées
-// --------------------------------------
+// taxonomies personnalisées
 
 function motaphoto_register_taxonomies() {
     register_taxonomy('photo_categorie', 'photos', [
@@ -163,12 +124,9 @@ function motaphoto_register_taxonomies() {
 add_action('init', 'motaphoto_register_taxonomies');
 
 
-// --------------------------------------
-// AJAX chargement des photos filtrées + pagination
-// --------------------------------------
+// Ajax chargement des photos filtrées + pagination
 
 function motaphoto_load_photos_ajax() {
-    //check_ajax_referer('ajax-gallery-nonce', 'nonce');
     check_ajax_referer('load_photos_nonce', 'nonce');
 
     $paged = isset($_POST['page']) ? intval($_POST['page']) : 1;
@@ -202,7 +160,7 @@ function motaphoto_load_photos_ajax() {
         $args['tax_query'] = count($tax_query) > 1 ? array_merge(['relation' => 'AND'], $tax_query) : $tax_query;
     }
 
-    // Tri
+    // tri
     switch ($tri) {
         case 'date_asc':
             $args['orderby'] = 'date';
@@ -258,3 +216,15 @@ function motaphoto_enqueue_lightbox_assets() {
 add_action('wp_enqueue_scripts', 'motaphoto_enqueue_lightbox_assets');
 
 
+// Supprime les tailles par défaut inutiles
+function remove_default_image_sizes($sizes) {
+    unset($sizes['thumbnail']); // mini
+    unset($sizes['medium']);    // moyenne
+    //unset($sizes['large']);     // grande
+    unset($sizes['medium_large']);
+    return $sizes;
+}
+add_filter('intermediate_image_sizes_advanced', 'remove_default_image_sizes');
+
+// supprime la version scaled (WP 5.3 et +)
+add_filter('big_image_size_threshold', '__return_false');

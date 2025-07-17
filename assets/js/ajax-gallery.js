@@ -2,12 +2,14 @@ document.addEventListener('DOMContentLoaded', function () {
   let currentPage = 1;
   let loading = false;
 
+  const filterState = {
+    categorie: '',
+    format: '',
+    tri: 'date_desc'
+  };
+
   function getFilters() {
-    return {
-      categorie: jQuery('#categorie').val() || '',
-      format: jQuery('#format').val() || '',
-      tri: jQuery('#tri').val() || 'date_desc',
-    };
+    return { ...filterState };
   }
 
   function loadPhotos(isNewFilter = false) {
@@ -26,7 +28,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const filters = getFilters();
-
     const data = new URLSearchParams();
     data.append('action', 'load_photos');
     data.append('nonce', ajaxGallery.nonce);
@@ -37,19 +38,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
     fetch(ajaxGallery.ajaxurl, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: data.toString(),
     })
       .then((response) => response.json())
       .then((response) => {
         if (response.success && response.data.html.trim() !== '') {
           photoResults.insertAdjacentHTML('beforeend', response.data.html);
-          // Réinitialiser Lightbox2
-          if (window.lightbox) {
-          lightbox.init(); // recharge les images avec data-lightbox
+
+          if (typeof lightbox !== 'undefined') {
+            lightbox.init();
           }
+
+          // ✅ Mise à jour des miniatures par défaut après ajout au DOM
+          if (typeof mettreAJourMiniatureParDefaut === 'function') {
+            mettreAJourMiniatureParDefaut();
+          }
+
           if (loadMoreBtn) {
             loadMoreBtn.style.display = response.data.has_more ? 'block' : 'none';
           }
@@ -68,21 +73,42 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   }
 
-  // Gestion bouton "Charger plus"
+  // Bouton "Charger plus"
   const loadMoreBtn = document.getElementById('load-more');
   if (loadMoreBtn) {
-    loadMoreBtn.addEventListener('click', function () {
-      loadPhotos(false);
-    });
+    loadMoreBtn.addEventListener('click', () => loadPhotos(false));
   }
 
-  // Gestion filtres Select2 avec jQuery
-  ['categorie', 'format', 'tri'].forEach((id) => {
-    const element = jQuery('#' + id);
-    if (element.length) {
-      element.on('change', function () {
+  // Filtres personnalisés
+  document.querySelectorAll('.filtres').forEach((filterWrapper) => {
+    const button = filterWrapper.querySelector('.filtre-bouton');
+    const options = filterWrapper.querySelectorAll('.filtre-options li');
+    const filterType = filterWrapper.getAttribute('data-filter');
+
+    button.addEventListener('click', () => {
+      document.querySelectorAll('.filtres').forEach(f => {
+        if (f !== filterWrapper) f.classList.remove('open');
+      });
+      filterWrapper.classList.toggle('open');
+    });
+
+    options.forEach((option) => {
+      option.addEventListener('click', () => {
+        filterState[filterType] = option.getAttribute('data-value') || '';
+        button.querySelector('.filtre-titre').textContent = option.textContent;
+        filterWrapper.classList.remove('open');
         loadPhotos(true);
       });
+    });
+  });
+
+  // Fermer les menus au clic hors filtre
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.filtres')) {
+      document.querySelectorAll('.filtres').forEach(f => f.classList.remove('open'));
     }
   });
+
+  // Chargement initial
+  loadPhotos(true);
 });
