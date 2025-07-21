@@ -1,0 +1,50 @@
+// Variables
+$breakpoint-mobile: 768px;
+
+body, p {
+  font-family: 'Poppins';
+  line-height: 1.5;
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+}
+
+h1, h2, h3, .description-photo {
+  font-family: 'Space Mono';
+}
+
+h1 {
+  font-style: italic;
+  font-weight: 700;
+  font-size: 96px;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-style: italic;
+  font-weight: 400;
+  font-size: 66px!important;
+  text-transform: uppercase;
+  line-height: 58px;
+      @media (max-width: $breakpoint-mobile) {
+        font-size: 40px!important;
+      }
+    }
+h3 {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px!important;
+  text-transform: uppercase;
+}
+
+.description-photo {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px!important;
+  text-transform: uppercase;
+}
+

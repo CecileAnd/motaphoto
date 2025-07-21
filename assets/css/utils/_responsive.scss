@@ -1,0 +1,132 @@
+@media (max-width: 768px) {
+  .logo {
+    padding-left: 15px;
+    z-index: 999999;
+  }
+  
+  .burger-menu {
+    display: block;
+    position: fixed;
+    top: 5px;
+    right: 20px;
+    padding-right: 15px;
+    z-index: 101;
+    color: #000000;
+  }
+
+  .menu {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #b30000;
+    z-index: 100;
+    transition: opacity 0.3s ease;
+  }
+
+  .menu.actif {
+    display: flex;
+    position: fixed;
+  }
+
+  .menu a {
+    color: #fff;
+    font-size: 2rem;
+    margin: 1rem 0;
+    text-decoration: none;
+  }
+
+  .image-header img {
+    margin-bottom: 30px;
+  }
+
+  .zone-filtres {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 1vh;
+  }
+
+  .filtres {
+    display: flex;
+    justify-content: center;
+  }
+
+  .filtres-gauche,
+  .filtres-droite {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  button.filtre-bouton {
+    width: 60vw!important;
+    margin-left: -15vw;
+  }
+
+
+.galerie {
+  margin-left: 10vw;
+  margin-right: 10vw;
+}
+
+.colonnes-images {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px 20px;
+}
+
+  .carte img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+  }
+
+  .carte {
+    flex: 1 1 calc(100%);
+    aspect-ratio: 1 / 1;
+    position: relative;
+    overflow: hidden;
+
+  .image-carte {
+    width: 100%;
+  }
+
+  .conteneur-principal {
+    padding: 0 20px;
+    position: fixed;
+  }
+
+  .charger-plus {
+    width: 100%;
+  }
+
+  .ul-pied-de-page {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+    margin: 20px 20px;
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  .filtre-bouton {
+    width: 15vw;
+  }
+  .filtre-options {
+    width: 15vw;
+  }
+  .carte img {
+    height: 50vh;
+  }
+}
+}

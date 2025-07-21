@@ -1,0 +1,55 @@
+button.filtre-bouton,
+.filtre-bouton {
+  border: 1.3px solid #ccc;
+  padding: 11px 18px;
+  border-radius: 8px;
+  font-family: 'Poppins';
+  letter-spacing: 10%;
+  cursor: pointer;
+  background: none;
+  text-transform: uppercase;
+  width: 20vw;
+  display: inline-flex;
+  justify-content: space-between;
+  gap: 80px;
+  margin-bottom: -10px;
+  margin-left: -13px;
+  margin-right: -13px;
+}
+
+.zone-bouton, .load-more-wrap, p.input {
+  display: flex;
+  justify-content: center;
+}
+
+.interet-contact .contact-button, .charger-plus, #load-more, .contact-form-wrapper input[type="submit"], input.wpcf7-form-control.wpcf7-submit.has-spinner {
+  width: 25vw;
+  padding: 15px 8px;
+  cursor: pointer;
+  color: black;
+  background-color: #C4C4C4;
+  text-align: center!important;
+  font-family: 'Space Mono';
+  border: none;
+  border-radius: 0%;
+  text-decoration: none;
+}
+
+.contact-button:not(#main-menu .contact-button),
+.charger-plus,
+#load-more,
+.contact-form-wrapper input[type="submit"],
+input.wpcf7-form-control.wpcf7-submit.has-spinner {
+  transition: background-color 0.3s ease, transform 0.2s ease;
+
+  &:hover,
+  &:focus {
+    background-color: darken(#C4C4C4, 10%);
+    transform: translateY(-2px);
+  }
+}
+
+.modal-content {
+  max-height: 100vh!important;
+}
+

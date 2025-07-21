@@ -1,0 +1,165 @@
+<!-- <!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mota</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- CSS Lightbox2 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="./assets/css/style.css" />
+</head>
+<body>
+  <header class="index">
+    <div class="conteneur-principal">
+      <div class="logo">
+        <img class="logo" src="./assets/images/logo/logo-mota.png" alt="logo Nathalie Mota" />
+      </div>
+      <button class="burger-menu" aria-label="Ouvrir le menu"><img class="burger-menu" src="./assets/images/icons/hamburger.png" alt="icon menu burger" />
+    </button>
+      <nav class="menu" aria-label="Menu principal" id="main-menu">
+  <ul class="menu-list">
+    <li><a class="element-menu" href="#accueil">Accueil</a></li>
+    <li><a class="element-menu" href="#a-propos">À propos</a></li>
+    <li><a id="contact-link" class="element-menu" href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+    </div>
+  </header>
+  <main>
+<div class="image-header">
+  <img class="image-header-img" src="./assets/images/nathalie-11.jpeg" alt="image montrant des personnes de dos regardant d'autres personnes sous des lumières - inscription 'photographe event' sur l'image" />
+  <span class="image-text">Photographe&nbsp;Event</span>
+</div>
+    <section class="galerie" id="galerie">
+      <div class="zone-filtres">
+  <div class="filtres-gauche">
+    <div class="filtres" data-filtre="categorie">
+      <button class="filtre-bouton">
+        <span class="texte-filtre">Catégories</span> <span class="chevron">&#9013;</span>
+      </button>
+      <ul class="filtre-options">
+        <li data-value="">&nbsp;</li>
+        <li data-value="reception">Réception</li>
+        <li data-value="mariage">Mariage</li>
+        <li data-value="concert">Concert</li>
+        <li data-value="television">Télévision</li>
+      </ul>
+    </div>
+    <div class="filtres" data-filtre="format">
+      <button class="filtre-bouton">
+        <span class="texte-filtre">Formats</span> <span class="chevron">&#9013;</span>
+      </button>
+      <ul class="filtre-options">
+        <li data-value="">&nbsp;</li>
+        <li data-value="paysage">Paysage</li>
+        <li data-value="portrait">Portrait</li>
+      </ul>
+    </div>
+  </div>
+  <div class="filtres-droite">
+    <div class="filtres" data-filtre="tri">
+      <button class="filtre-bouton">
+        <span class="texte-filtre">Trier&nbsp;par</span> <span class="chevron">&#9013;</span>
+      </button>
+      <ul class="filtre-options">
+        <li data-value="recente">Plus récentes</li>
+        <li data-value="ancienne">Plus anciennes</li>
+      </ul>
+    </div>
+  </div>
+</div>
+  <div class="colonnes-images">
+  <article class="carte" data-categorie="reception" data-format="paysage" data-date="2019-01-01" data-reference="bf2385" data-type="Argentique">
+    <a href="./assets/images/nathalie-0.jpeg" data-lightbox="galerie" data-title="Santé !">
+      <img class="image-carte" src="./assets/images/nathalie-0.jpeg" alt="Santé !" />
+      <div class="overlay">
+        <div class="icone-full"><img src="./assets/images/icons/Icon_fullscreen.png" alt="icone fullscreen"></div>
+        <div class="icone-oeil"><img src="./assets/images/icons/Icon_eye.png" alt="icone oeil"></div>
+        <div class="infos-bas"><span class="gauche">SANTÉ !</span><span class="droite">RECEPTION</span></div>
+      </div>
+    </a>
+  </article>
+  <article class="carte" data-categorie="reception" data-format="paysage" data-date="2020-01-01" data-reference="bf2386" data-type="Argentique">
+    <a href="./assets/images/nathalie-1.jpeg" data-lightbox="galerie" data-title="Et bon anniversaire !">
+      <img class="image-carte" src="./assets/images/nathalie-1.jpeg" alt="Et bon anniversaire !" />
+      <div class="overlay">
+        <div class="icone-full"><img src="./assets/images/icons/Icon_fullscreen.png" alt="icone fullscreen"></div>
+        <div class="icone-oeil"><img src="./assets/images/icons/Icon_eye.png" alt="icone oeil"></div>
+        <div class="infos-bas"><span class="gauche">SANTÉ !</span><span  class="droite">RECEPTION</span></div>
+      </div>
+    </a>
+  </article>
+  <article class="carte" data-categorie="concert" data-format="paysage" data-date="2021-01-01" data-reference="bf2387" data-type="Numérique">
+    <a href="./assets/images/nathalie-2.jpeg" data-lightbox="galerie" data-title="Let's party!">
+      <img class="image-carte" src="./assets/images/nathalie-2.jpeg" alt="Let's party!" />
+      <div class="overlay">
+        <div class="icone-full"><img src="./assets/images/icons/Icon_fullscreen.png" alt="icone fullscreen"></div>
+        <div class="icone-oeil"><img src="./assets/images/icons/Icon_eye.png" alt="icone oeil"></div>
+        <div class="infos-bas"><span class="gauche">SANTÉ !</span><span  class="droite">RECEPTION</span></div>
+      </div>
+    </a>
+  </article>
+  <article class="carte" data-categorie="mariage" data-format="portrait" data-date="2019-01-01" data-reference="bf2388" data-type="Argentique">
+    <a href="./assets/images/nathalie-3.jpeg" data-lightbox="galerie" data-title="Tout est installé">
+      <img class="image-carte" src="./assets/images/nathalie-3.jpeg" alt="Tout est installé" />
+     <div class="overlay">
+        <div class="icone-full"><img src="./assets/images/icons/Icon_fullscreen.png" alt="icone fullscreen"></div>
+        <div class="icone-oeil"><img src="./assets/images/icons/Icon_eye.png" alt="icone oeil"></div>
+        <div class="infos-bas"><span class="gauche">SANTÉ !</span><span  class="droite">RECEPTION</span></div>
+      </div>
+    </a>
+  </article>
+  <article class="carte" data-categorie="mariage" data-format="portrait" data-date="2020-01-01" data-reference="bf2389" data-type="Numérique">
+    <a href="./assets/images/nathalie-4.jpeg" data-lightbox="galerie" data-title="Vers l'éternité">
+      <img class="image-carte" src="./assets/images/nathalie-4.jpeg" alt="Vers l'éternité" />
+      <div class="overlay">
+        <div class="icone-full"><img src="./assets/images/icons/Icon_fullscreen.png" alt="icone fullscreen"></div>
+        <div class="icone-oeil"><img src="./assets/images/icons/Icon_eye.png" alt="icone oeil"></div>
+        <div class="infos-bas"><span class="gauche">SANTÉ !</span><span  class="droite">RECEPTION</span></div>
+      </div>
+    </a>
+  </article>
+  <article class="carte" data-categorie="mariage" data-format="portrait" data-date="2021-01-01" data-reference="bf2390" data-type="Numérique">
+    <a href="./assets/images/nathalie-5.jpeg" data-lightbox="galerie" data-title="Embrassez la mariée">
+      <img class="image-carte" src="./assets/images/nathalie-5.jpeg" alt="Embrassez la mariée" />
+      <div class="overlay">
+        <div class="icone-full"><img src="./assets/images/icons/Icon_fullscreen.png" alt="icone fullscreen"></div>
+        <div class="icone-oeil"><img src="./assets/images/icons/Icon_eye.png" alt="icone oeil"></div>
+        <div class="infos-bas"><span class="gauche">SANTÉ !</span><span  class="droite">RECEPTION</span></div>
+      </div>
+    </a>
+  </article>
+</div>
+<div class="zone-bouton">
+  <div id="btn-charger-plus" class="charger-plus">Charger plus</div>
+</div>
+</section>
+</main>
+  <footer class="pied-de-page">
+    <ul class="ul-pied-de-page">
+      <li class="li-pied-de-page"><a href="#mentions-legales">Mentions légales</a></li>
+      <li class="li-pied-de-page"><a href="#vie-privee">Vie privée</a></li>
+      <li class="li-pied-de-page">Tous droits réservés</li>
+    </ul>
+  </footer>
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <button class="close-modal" aria-label="Fermer la modale">&times;</button>
+    <h2>Contactez-nous</h2>
+    <div id="contact-modal" class="modal">
+    <?php echo do_shortcode('[contact-form-7 id="3c6e00f" title="Contact"]'); ?>
+    </div>
+  </div>
+</div>
+
+  <script src="script.js"></script>
+  <!-- JS Lightbox2 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+
+</body>
+</html> -->

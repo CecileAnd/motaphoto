@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Détail Photo – Mota</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./assets/css/style.css" />
+</head>
+<body>
+  <header class="single">
+    <div class="conteneur-principal">
+      <div class="logo">
+        <a href="index.html"><img class="logo" src="./assets/images/logo/logo-mota.png" alt="logo Nathalie Mota" /></a>
+      </div>
+      <button class="burger-menu" aria-label="Ouvrir le menu"><img class="burger-menu" src="./assets/images/icons/hamburger.png" alt="icon menu burger" />
+    </button>
+      <nav class="menu" aria-label="Menu principal" id="main-menu">
+  <ul class="menu-list">
+    <li><a class="element-menu" href="#accueil">Accueil</a></li>
+    <li><a class="element-menu" href="#a-propos">À propos</a></li>
+    <li><a id="contact-link" class="element-menu" href="#contact">Contact</a></li>
+  </ul>
+</nav>
+    </div>
+  </header>
+
+  <main class="page-detail">
+    <div class="container-detail">
+      <div class="image-detail">
+        <img class="principale" src="./assets/images/nathalie-15.jpeg" alt="Photo en détail" />
+      </div>
+      <div class="infos">
+      <div class="informations-detail">
+        <h2 class="titre-photo">Team<br>mariée</h2>
+        <ul class="meta-photo">
+          <li class="description-photo">Référence : BF2400</li>
+          <li class="description-photo">Catégorie : Mariage</li>
+          <li class="description-photo">Format : Portrait</li>
+          <li class="description-photo">Type : Numérique</li>
+          <li class="description-photo">Année : 2022</li>
+          
+        </ul>
+      </div>
+      </div>
+    </div>
+    <section class="interet-photo">
+
+      <div class="interet-contact">
+        <p class="photo-interessante">Cette photo vous intéresse&nbsp;?</p>
+        <a href="#" class="bouton-contact">Contact</a>
+      </div>
+      <div class="miniature-navigation">
+        <div class="miniature-photo">
+          <img class="miniature" src="./assets/images/nathalie-0.jpeg" alt="Miniature de la photo 0" />
+        </div>
+        <div class="navigation-fleches">
+    <button class="fleche gauche" aria-label="Photo précédente">&#8592;</button>
+    <button class="fleche droite" aria-label="Photo suivante">&#8594;</button>
+  </div>    
+
+
+      </div>
+    
+    </section>
+      <div class="bloc-separateur">
+  <hr class="ligne-horizontale-longue"/>
+</div>
+
+    <section class="suggestions">
+  <h3 class="titre-suggestions">Vous aimerez aussi</h3>
+  <div class="suggestions-grid">
+    <div class="suggestion-item">
+      <img class="image-suggestion" src="./assets/images/nathalie-4.jpeg" alt="rotonde mariage jardin" />
+    </div>
+    <div class="suggestion-item">
+      <img class="image-suggestion" src="./assets/images/nathalie-5.jpeg" alt="mariés qui s'embrassent" />
+    </div>
+  </div>
+</section>
+  </main>
+
+  <footer class="pied-de-page">
+    <ul class="ul-pied-de-page">
+      <li class="li-pied-de-page"><a href="#mentions-legales">Mentions légales</a></li>
+      <li class="li-pied-de-page"><a href="#vie-privee">Vie privée</a></li>
+      <li class="li-pied-de-page">Tous droits réservés</li>
+    </ul>
+  </footer>
+
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <button class="close-modal" aria-label="Fermer la modale">&times;</button>
+      <div class="contact-header">
+        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/contact-header/contact-header.png" alt="contact header" />
+      </div>
+      <div id="contact-modal" class="modal">
+        <?php echo do_shortcode('[contact-form-7 id="3c6e00f" title="Contact"]'); ?>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+/* Theme Name: Mota photo
+   Author: Cécile
+   Description: Thème pour une photographe
+   Text Domain: motaphoto
+*/
+
+#select2-categorie-container, #select2-format-container, #select2-tri-container {
+   text-transform: uppercase;
+}
+
+.select2-container--default .select2-results__option {
+  padding: 8px 12px;
+  font-size: 1rem;
+}
+
+/* .select2-container {
+    width: 100%!important;
+} */
+
+select {
+   width: 19vw;
+}
+
+/* option survolée */
+.select2-container--default .select2-results__option--highlighted {
+  background-color: #E00000 !important;
+  color: #fff;
+
+}
+
+.select2-container--default {
+  .select2-selection--single {
+    border: 2px solid blue;
+    border-radius: 20px;
+    height: 40px;
+    padding: 0 12px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    color: #333;
+    display: flex;
+    align-items: center;
+
+    .select2-selection__arrow {
+      height: 100%;
+      right: 10px;
+      top: 0;
+      width: 20px;
+
+      b {
+        border-color: blue;
+        border-width: 5px 4px 0 4px;
+      }
+    }
+
+    .select2-selection__rendered {
+      line-height: 40px;
+      color: #333;
+    }
+  }
+
+  .select2-results__option--highlighted {
+    background-color: #b60000 !important;
+    color: #fff;
+  }
+
+  .select2-results__option[aria-disabled="true"] {
+    color: black;
+    /*background-color: #f5f5f5;*/
+    cursor: default;
+  }
+
+  .select2-custom-dropdown {
+    padding-top: 5px;
+
+    .select2-results__option:first-child {
+      border-bottom: 1px solid blue;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      /*background-color: #f5f5f5;*/
+      text-transform: uppercase;
+    }
+  }
+}
+
+/* cache texte sélectionné dans bouton fermé */
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  color: transparent;  /* Cache texte sélectionné */
+  position: relative;
+}
+
+/* affiche toujours placeholder / titre dans bouton */
+.select2-container--default .select2-selection--single .select2-selection__rendered::after {
+  content: attr(data-placeholder);
+  color: #333;
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+
+
+.select2-results__option[aria-disabled="true"] + .select2-results__option:empty {
+  padding-top: 1.5em;
+  padding-bottom: 1.5em;
+}
+
+/* Cache la scrollbar verticale dans les résultats Select2 */
+#select2-categorie-results {
+  max-height: none !important; /* enlève limite hauteur qui cause scroll */
+  overflow-y: hidden !important; /* empêche scroll vertical et cache la scrollbar */
+}
+
+/* garder scroll mais cacher scrollbar */
+#select2-categorie-results::-webkit-scrollbar {
+  display: none;
+}
+#select2-categorie-results {
+  -ms-overflow-style: none;  /* IE et Edge */
+  scrollbar-width: none;  /* firefox */
+}
+
+#select2-categorie-results, #select2-format-results, #select2-tri-results, span.select2-dropdown.select2-custom-dropdown.select2-dropdown--below {
+   border: none;
+   border-radius: 10px;
+}
+
+li.select2-results__option--disabled {
+   border: solid 1px;
+   border-color: blue;
+   border-top-left-radius: 10px;
+   border-top-right-radius: 10px;
+}
+
+.select2-container {
+    width: 300px!important;
+}

@@ -1,0 +1,170 @@
+#categorie, #format, #tri {
+  text-transform: uppercase;
+  font-family: 'Poppins', sans-serif;
+}
+
+.zone-filtres {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 5vh;
+  margin-top: 9vh;
+  // margin: 0 9vw 2rem; // garde la même marge horizontale que la galerie + un margin-bottom
+}
+
+.filtres {
+  //padding: 10px 15px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+  cursor: pointer;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  transition: box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+}
+
+.titre-filtres {
+  margin-bottom: 0.3rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #222;
+}
+
+.filtres select {
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  background-color: #fff;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+
+  &:hover,
+  &:focus {
+    border-color: #000;
+    outline: none;
+  }
+}
+
+.filtres-gauche,
+.filtres-droite {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1vh;
+}
+
+button.filtre-bouton {
+  height: fit-content;
+}
+
+.filtre-bouton {
+  border: 1.3px solid #ccc;
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  background: none;
+  text-transform: uppercase;
+  padding: 0.6rem 1rem;
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  width: auto; // On laisse la largeur automatique, plus flexible
+  min-width: 150px;
+  transition: border-color 0.3s ease;
+
+  &:hover {
+    border-color: #E00000;
+    color: #E00000;
+  }
+}
+
+.chevron {
+  transition: transform 0.3s ease;
+  font-size: 1rem;
+  line-height: 1;
+  display: inline-block;
+}
+
+.filtres.open .chevron {
+  transform: rotate(180deg);
+}
+
+.filtre-options {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: 'Poppins', sans-serif;
+  z-index: 100;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.filtres.open .filtre-options {
+  display: block;
+}
+
+.filtre-options li {
+  margin: 0;
+  padding: 10px 15px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #E00000;
+    color: white;
+  }
+}
+ 
+@media (max-width: 768px) {
+  .zone-filtres {
+    flex-direction: column;
+    gap: 5vh;
+    //margin: 0 5vw 2rem;
+  }
+
+  .filtres-gauche,
+  .filtres-droite {
+    justify-content: center;
+  }
+
+  .filtres-gauche {
+    gap: 5vh;
+  }
+
+  .filtres-droite {
+    margin: 0;
+  }
+
+  .select2, .select2-container, .select2-container--default {
+    width: 200px;
+  }
+
+  .filtre-bouton {
+    min-width: 100%;
+    justify-content: center;
+    gap: 0.3rem;
+  }
+}
+

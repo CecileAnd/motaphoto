@@ -1,0 +1,146 @@
+/* Base modale */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4); // fond assombri
+  padding: 2rem;
+
+  // Scroll invisible mais actif
+  overflow-y: scroll;
+  scrollbar-width: none;           // Firefox
+  -ms-overflow-style: none;        // IE 10+
+
+  &::-webkit-scrollbar {
+    display: none;                 // Chrome, Safari
+  }
+}
+
+#contact-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+}
+
+.modal.show {
+  display: flex;
+}
+
+/* Contenu de la modale */
+.modal-content {
+  background-color: #fff;
+  width: 100%;   
+  max-width: 600px; 
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  position: relative;
+  animation: fadeInUp 0.3s ease;
+  padding: 2rem;
+  margin-top: 22vh;
+  border: solid 5px;
+  z-index: 999999999999;
+
+  // Scroll interne si contenu trop grand, sans barre visible
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Animation d’apparition */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Bouton de fermeture */
+.close-modal {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: #666;
+  cursor: pointer;
+  transition: color 0.2s;
+
+  &:hover {
+    color: #000;
+  }
+}
+
+/* En-tête image (optionnelle) */
+.contact-header {
+  display: block;
+  height: auto;
+  margin-bottom: 1.5rem;
+  margin-left: -2rem;
+  margin-right: -2rem;
+  overflow: hidden;
+}
+
+.contact-header img {
+  display: block;
+  width: 120%;
+  margin-left: -2rem;
+  margin-right: -2rem;
+  object-fit: cover;
+}
+
+/* Formulaire Contact Form 7 */
+.wpcf7 form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  input,
+  textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+
+    &:focus {
+      outline: none;
+      border-color: #aaa;
+    }
+  }
+
+  p:not(:last-of-type) {
+    width: 25vw;
+    display: block;
+    margin: 0 auto;
+
+  }
+}
+
+p:last-of-type {
+  align-items: center;
+}
+
+#photo-reference {
+  text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+
+  p:not(:last-of-type) {
+    width: 50vw!important;
+    display: block;
+    margin: 0 auto;
+  }
+
+}
